@@ -1,0 +1,15 @@
+/Users/denniszhu/Informatica/ProjectB/project-b/bin/Debug/net6.0/project-b
+/Users/denniszhu/Informatica/ProjectB/project-b/bin/Debug/net6.0/project-b.deps.json
+/Users/denniszhu/Informatica/ProjectB/project-b/bin/Debug/net6.0/project-b.runtimeconfig.json
+/Users/denniszhu/Informatica/ProjectB/project-b/bin/Debug/net6.0/project-b.dll
+/Users/denniszhu/Informatica/ProjectB/project-b/bin/Debug/net6.0/project-b.pdb
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.csproj.AssemblyReference.cache
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.GeneratedMSBuildEditorConfig.editorconfig
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.AssemblyInfoInputs.cache
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.AssemblyInfo.cs
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.csproj.CoreCompileInputs.cache
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.dll
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/refint/project-b.dll
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.pdb
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.genruntimeconfig.cache
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/ref/project-b.dll
