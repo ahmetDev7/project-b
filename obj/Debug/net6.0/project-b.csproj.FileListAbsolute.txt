@@ -13,3 +13,5 @@
 /Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.pdb
 /Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.genruntimeconfig.cache
 /Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/ref/project-b.dll
+/Users/denniszhu/Informatica/ProjectB/project-b/bin/Debug/net6.0/Newtonsoft.Json.dll
+/Users/denniszhu/Informatica/ProjectB/project-b/obj/Debug/net6.0/project-b.csproj.CopyComplete

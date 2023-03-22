@@ -12,14 +12,14 @@ public class Table
         Available = true;
     }
 
-    public void ReserveTable(string name, int numberOfPeople, DateTime time)
+    public void ReserveTable(string firstName, string lastName, int numberOfPeople, DateTime time)
     {
         if (!Available)
         {
             throw new InvalidOperationException("Table is already reserved.");
         }
 
-        Reservation = new Reservation(name, numberOfPeople, time);
+        Reservation = new Reservation(firstName, lastName, numberOfPeople, time);
         Available = false;
     }
 

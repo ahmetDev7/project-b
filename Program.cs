@@ -2,7 +2,9 @@
 {
     public static void Main(string[] args)
     {
-        Restaurant Jakes_restaurant = new Restaurant("Jake's Restaurant");
-        Jakes_restaurant.DisplayReservationOverview();
+        Admin Dennis = new("DennisZhu", "Testpassword", "TestMail@gmail.com");
+        Dennis.GetUsers();
+        Restaurant restaurant = new("Jacks restaurant");
+        restaurant.MakeReservation();
     }
 }

@@ -30,7 +30,7 @@ public class Restaurant
     // In case they expand, this overloaded constructor is meant for the new restaurants.
     public Restaurant(string restaurantName, List<Table> newTables) : this(restaurantName) => tables = newTables;
 
-    public void DisplayMap()
+    public void MakeReservation()
     {
         Console.WriteLine("Welcome to " + RestaurantName + "!\n");
 
@@ -43,7 +43,7 @@ public class Restaurant
         };
 
         // Loop through each row of the seat layout.
-            for (int i = 0; i < seatLayout.GetLength(0); i++)
+        for (int i = 0; i < seatLayout.GetLength(0); i++)
         {
             Console.Write("|");  // Start the row with a vertical line.
 
@@ -63,12 +63,18 @@ public class Restaurant
                     // If the seat is reserved, display the reservation holder's name.
                     if (!table.Available)
                     {
-                        Console.Write(" " + table.Reservation!.Name.Substring(0, 1) + " ");
+                        Console.Write($" {table.Reservation!.FullName.Substring(0, 1)} ");
                     }
-                    // Otherwise, display the table number and the number of seats.
+                    // Otherwise, display the appropriate number of empty boxes to represent the seats.
                     else
                     {
-                        Console.Write($" Table: {table.TableNumber.ToString().PadLeft(2)} Seats: {table.Capacity.ToString().PadRight(1)} ");
+                        string seatBox = "☐"; // Unicode box character
+                        Console.Write($" Table: {table.TableNumber.ToString().PadLeft(2)} Seats: ");
+                        for (int k = 0; k < table.Capacity; k++)
+                        {
+                            Console.Write(seatBox);
+                        }
+                        Console.Write(" ");
                     }
                 }
 
@@ -77,10 +83,22 @@ public class Restaurant
 
             Console.WriteLine();  // Move to the next line.
         }
-
-
         Console.WriteLine();
+        System.Console.WriteLine("Would you like to make a reservation? Y/N");
+        string UserInput = Console.ReadLine()!.ToUpper();
+        switch (UserInput) 
+        {
+            case "Y":
+                NavigationMenu.ReservationMenu(tables);
+                break;
+            case "N":
+                break;
+            default:
+                System.Console.WriteLine("Not an valid option");
+                break;
+        }
     }
+
     public void DisplayReservationOverview()
     {
         Console.WriteLine($"Map of {RestaurantName}:");
@@ -88,16 +106,17 @@ public class Restaurant
 
         // Display the layout of the restaurant's tables.
         Console.WriteLine("Layout:");
-        Console.WriteLine("+---------------+----------------------+---------------+----------------+");
-        Console.WriteLine("|    Table #    |  Reserved By Name    |    Status     |  Time arriving |");
-        Console.WriteLine("+---------------+----------------------+---------------+----------------+");
+        Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
+        Console.WriteLine("|    Table #    |  Reserved By Name    |  Amount Of People |  Time arriving |   Status   |");
+        Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
         foreach (var table in tables)
         {   
-            string reservationName = table.Reservation != null ? table.Reservation.Name : "-";
-            string reservationTime = table.Reservation != null ? table.Reservation.Time.ToString() : "-";
+            string reservationName = table.Reservation != null ? table.Reservation.FullName : "-";
+            string reservationTime = table.Reservation != null ? table.Reservation.Time.ToString("HH:mm") : "-";
+            string reservationAmount = table.Reservation != null ? table.Reservation.NumberOfPeople.ToString() : "-";
 
-            Console.WriteLine($"| {table.TableNumber,-13} | {reservationName,-20} | {(table.Available ? "Available" : "Occupied"),-13} | {reservationTime,-14} |");
-            Console.WriteLine("+---------------+----------------------+---------------+----------------+");
+            Console.WriteLine($"| {table.TableNumber,-13} | {reservationName,-20} | {reservationAmount,-17} | {reservationTime,-14} | {(table.Available ? "Available" : "Occupied"),-10} |");
+            Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
         }
 
         // Display the legend for the status of the tables.
