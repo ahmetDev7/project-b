@@ -1,12 +1,9 @@
 public class Reservation
 {
-    private string FirstName { get; set; }
-    private string LastName { get; set; }
-    public string FullName => $"{FirstName} {LastName}";
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
     public int NumberOfPeople { get; private set; }
     public DateTime Time { get; private set; }
-    private List<Reservation> reservations = JsonDataAccessor<Reservation>.LoadData("JsonFiles/Reservations.json") ?? new List<Reservation>();
-
     public Reservation(string firstName, string lastName, int numberOfPeople, DateTime time)
     {
         FirstName = firstName;
@@ -14,5 +11,4 @@ public class Reservation
         NumberOfPeople = numberOfPeople;
         Time = time;
     }
-
 }

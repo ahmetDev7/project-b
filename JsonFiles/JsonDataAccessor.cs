@@ -7,7 +7,7 @@ public static class JsonDataAccessor<T>
         try
         {
             string json = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<List<T>>(json) ?? throw new JsonReaderException("Deserialized object is null.");
+            return JsonConvert.DeserializeObject<List<T>>(json) ?? new List<T>();
         }
         catch (FileNotFoundException ex)
         {

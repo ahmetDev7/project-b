@@ -11,4 +11,9 @@ public class User
     }
     public void ChangeUserName(string newUserName) => UserName = newUserName;
     public void ChangePassWord(string NewPassWord) => PassWord = NewPassWord;
+    public virtual void ViewMenu()
+    {
+
+    }
+    
 }

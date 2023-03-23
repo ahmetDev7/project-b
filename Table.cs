@@ -20,6 +20,7 @@ public class Table
         }
 
         Reservation = new Reservation(firstName, lastName, numberOfPeople, time);
+        ReservationList.AddReservation(Reservation);
         Available = false;
     }
 
@@ -29,7 +30,7 @@ public class Table
         {
             throw new InvalidOperationException("Table is not reserved.");
         }
-
+        ReservationList.RemoveReservation(Reservation!);
         Reservation = null;
         Available = true;
     }

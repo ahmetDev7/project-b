@@ -5,5 +5,9 @@ class Customer : User
     {
 
     }
+    public void MakeReservation()
+    {
+        
+    }
 
 }

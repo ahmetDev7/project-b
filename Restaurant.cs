@@ -2,7 +2,7 @@
 public class Restaurant
 {   
     private string RestaurantName { get; set; }
-    private List<Table> tables { get; set; } = new()
+    public List<Table> tables { get; set; } = new()
     {   
         // five four-person tables.
         new Table(1, 4),  
@@ -30,7 +30,7 @@ public class Restaurant
     // In case they expand, this overloaded constructor is meant for the new restaurants.
     public Restaurant(string restaurantName, List<Table> newTables) : this(restaurantName) => tables = newTables;
 
-    public void MakeReservation()
+    public void DisplayRestaurantSeats()
     {
         Console.WriteLine("Welcome to " + RestaurantName + "!\n");
 
@@ -63,7 +63,7 @@ public class Restaurant
                     // If the seat is reserved, display the reservation holder's name.
                     if (!table.Available)
                     {
-                        Console.Write($" {table.Reservation!.FullName.Substring(0, 1)} ");
+                        Console.Write($" {table.Reservation!.FirstName.Substring(0, 1)} ");
                     }
                     // Otherwise, display the appropriate number of empty boxes to represent the seats.
                     else
@@ -84,19 +84,6 @@ public class Restaurant
             Console.WriteLine();  // Move to the next line.
         }
         Console.WriteLine();
-        System.Console.WriteLine("Would you like to make a reservation? Y/N");
-        string UserInput = Console.ReadLine()!.ToUpper();
-        switch (UserInput) 
-        {
-            case "Y":
-                NavigationMenu.ReservationMenu(tables);
-                break;
-            case "N":
-                break;
-            default:
-                System.Console.WriteLine("Not an valid option");
-                break;
-        }
     }
 
     public void DisplayReservationOverview()
@@ -111,7 +98,7 @@ public class Restaurant
         Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
         foreach (var table in tables)
         {   
-            string reservationName = table.Reservation != null ? table.Reservation.FullName : "-";
+            string reservationName = table.Reservation != null ? table.Reservation.FirstName : "-";
             string reservationTime = table.Reservation != null ? table.Reservation.Time.ToString("HH:mm") : "-";
             string reservationAmount = table.Reservation != null ? table.Reservation.NumberOfPeople.ToString() : "-";
 
