@@ -6,17 +6,14 @@ public static class NavigationMenu
         {   
             System.Console.WriteLine("What would you like to do?");
             System.Console.WriteLine("1: Reserve table");
-            System.Console.WriteLine("2: ..");
-            System.Console.WriteLine("3: ..");
-            System.Console.WriteLine("4: ..");
-            System.Console.WriteLine("5: Log in");
+            System.Console.WriteLine("2: Log in");
             int UserInput = int.Parse(Console.ReadLine()!);
             switch (UserInput)
             {
                 case 1:
                     ReservationMenu();
                     break;
-                case 5:
+                case 2:
                     LoginMenu();
                     break;
                 default:
