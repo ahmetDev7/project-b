@@ -13,7 +13,7 @@ public class User
     public void ChangePassWord(string NewPassWord) => PassWord = NewPassWord;
     public virtual void ViewMenu()
     {
-
+        
     }
     
 }

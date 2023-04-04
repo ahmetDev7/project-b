@@ -2,11 +2,15 @@ public static class NavigationMenu
 {   
     public static void Menu()
     {
+        Restaurant restaurant = new("Restaurant");
+
         while (true)
         {   
             System.Console.WriteLine("What would you like to do?");
             System.Console.WriteLine("1: Reserve table");
             System.Console.WriteLine("2: Log in");
+            System.Console.WriteLine("3: View reservations");
+            System.Console.WriteLine("4: View menu");
             int UserInput = int.Parse(Console.ReadLine()!);
             switch (UserInput)
             {
@@ -15,6 +19,9 @@ public static class NavigationMenu
                     break;
                 case 2:
                     LoginMenu();
+                    break;
+                case 3:
+                    restaurant.DisplayReservationOverview();
                     break;
                 default:
                     break;
@@ -25,13 +32,13 @@ public static class NavigationMenu
     {
         // Ask for which table they want to go for.
         Restaurant JacksRestaurant = new Restaurant("Jacks restaurant");
-        List<Table> tables = JacksRestaurant.tables;
+        List<ISeatable> tables = JacksRestaurant.Seats;
         JacksRestaurant.DisplayRestaurantSeats();
         Console.Write("Enter the table number you want to reserve: ");
         int tableNumber = int.Parse(Console.ReadLine()!);
 
         // Find the table in the list with the matching table number.
-        Table? table = tables.Find(t => t.TableNumber == tableNumber);
+        ISeatable? table = tables.Find(t => t.TableNumber == tableNumber);
 
         if (table != null)
         {

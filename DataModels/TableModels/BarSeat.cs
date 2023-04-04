@@ -1,11 +1,11 @@
-public class Table
+class BarSeat : ISeatable
 {
-    public int TableNumber { get; private set; }
-    public int Capacity { get; private set; }
-    public bool Available { get; private set; }
-    public Reservation? Reservation { get; private set; }
+    public int TableNumber { get; set; }
+    public int Capacity { get; set; }
+    public bool Available { get; set; }
+    public Reservation? Reservation { get; set; }
 
-    public Table(int tableNumber, int capacity)
+    public BarSeat(int tableNumber, int capacity)
     {
         TableNumber = tableNumber;
         Capacity = capacity;
