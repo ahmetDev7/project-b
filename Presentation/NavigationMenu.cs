@@ -3,6 +3,8 @@ public static class NavigationMenu
     public static void Menu()
     {
         Restaurant restaurant = new("Restaurant");
+        RestaurantInfo restaurantInfo = new();
+        // RestaurantInfoAdmin adminRestaurantInfo = new();
 
         while (true)
         {   
@@ -10,7 +12,8 @@ public static class NavigationMenu
             System.Console.WriteLine("1: Reserve table");
             System.Console.WriteLine("2: Log in");
             System.Console.WriteLine("3: View reservations");
-            System.Console.WriteLine("4: View menu");
+            System.Console.WriteLine("4: Restaurant Information");
+            System.Console.WriteLine("5: Change opening hours");
             int UserInput = int.Parse(Console.ReadLine()!);
             switch (UserInput)
             {
@@ -22,6 +25,12 @@ public static class NavigationMenu
                     break;
                 case 3:
                     restaurant.DisplayReservationOverview();
+                    break;
+                case 4:
+                    restaurantInfo.RestaurantInfoMenu();
+                    break;
+                case 5:
+                    // adminRestaurantInfo.AdminRestaurantInfoMenu();
                     break;
                 default:
                     break;
