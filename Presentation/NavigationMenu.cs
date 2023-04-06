@@ -1,5 +1,5 @@
 public static class NavigationMenu
-{   
+{
     public static void Menu()
     {
         Restaurant restaurant = new("Restaurant");
@@ -7,13 +7,14 @@ public static class NavigationMenu
         RestaurantInfoAdmin adminRestaurantInfo = new();
 
         while (true)
-        {   
+        {
             System.Console.WriteLine("What would you like to do?");
             System.Console.WriteLine("1: Reserve table");
             System.Console.WriteLine("2: Log in");
             System.Console.WriteLine("3: View reservations");
             System.Console.WriteLine("4: Restaurant Information");
             System.Console.WriteLine("5: Change opening hours");
+            System.Console.WriteLine("6: Show Menu");
             int UserInput = int.Parse(Console.ReadLine()!);
             switch (UserInput)
             {
@@ -31,6 +32,9 @@ public static class NavigationMenu
                     break;
                 case 5:
                     adminRestaurantInfo.RestaurantInfoAdminMenu();
+                    break;
+                case 6:
+                    FilterMenu.Filter();
                     break;
                 default:
                     break;
@@ -73,7 +77,7 @@ public static class NavigationMenu
     }
 
     public static void LoginMenu()
-    {   
+    {
         System.Console.WriteLine("Select an option:");
         System.Console.WriteLine("(1) Log in");
         System.Console.WriteLine("(2) Create a new account");
@@ -92,7 +96,7 @@ public static class NavigationMenu
         }
     }
     public static User Login()
-    {   
+    {
         User? CurrentUser = null;
         do
         {
@@ -103,7 +107,8 @@ public static class NavigationMenu
             System.Console.Write("Enter your email: ");
             string mail = Console.ReadLine()!;
             CurrentUser = AccountManager.users.FirstOrDefault(user => user.UserName == userName && user.PassWord == password && user.Mail == mail);
-            if (CurrentUser == null) {
+            if (CurrentUser == null)
+            {
                 Console.WriteLine("Invalid username or password, please try again.");
             }
         } while (CurrentUser != null);
