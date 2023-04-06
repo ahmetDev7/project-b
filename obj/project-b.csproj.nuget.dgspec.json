@@ -1,29 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ahmet\\Desktop\\ProjectB\\project-b\\project-b.csproj": {}
+    "/Users/denniszhu/Informatica/ProjectB/project-b/project-b.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ahmet\\Desktop\\ProjectB\\project-b\\project-b.csproj": {
+    "/Users/denniszhu/Informatica/ProjectB/project-b/project-b.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ahmet\\Desktop\\ProjectB\\project-b\\project-b.csproj",
+        "projectUniqueName": "/Users/denniszhu/Informatica/ProjectB/project-b/project-b.csproj",
         "projectName": "project-b",
-        "projectPath": "C:\\Users\\Ahmet\\Desktop\\ProjectB\\project-b\\project-b.csproj",
-        "packagesPath": "C:\\Users\\Ahmet\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ahmet\\Desktop\\ProjectB\\project-b\\obj\\",
+        "projectPath": "/Users/denniszhu/Informatica/ProjectB/project-b/project-b.csproj",
+        "packagesPath": "/Users/denniszhu/.nuget/packages/",
+        "outputPath": "/Users/denniszhu/Informatica/ProjectB/project-b/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ahmet\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/denniszhu/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://www.nuget.org/api/v2": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -62,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.405/RuntimeIdentifierGraph.json"
         }
       }
     }

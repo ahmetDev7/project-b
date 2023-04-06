@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "UIl7+SgkIQCm9xuPs3QTFswm6bNhgAuTuyEur1eUfj5e6d5cMtkpi+srJwHtnkUhMTWk05L8jPi+i5RRE9E5jw==",
+  "dgSpecHash": "uD0ovBaxanma8+MiIzxhHvz74CNRI08yTWBNI68qZo5SGtqOJpzdz6VRZ4UcgVXW/dRv1S6AG/2JuWHZjoONRQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ahmet\\Desktop\\ProjectB\\project-b\\project-b.csproj",
+  "projectFilePath": "/Users/denniszhu/Informatica/ProjectB/project-b/project-b.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Ahmet\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "/Users/denniszhu/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }
