@@ -4,7 +4,7 @@ public static class NavigationMenu
     {
         Restaurant restaurant = new("Restaurant");
         RestaurantInfo restaurantInfo = new();
-        // RestaurantInfoAdmin adminRestaurantInfo = new();
+        RestaurantInfoAdmin adminRestaurantInfo = new();
 
         while (true)
         {   
@@ -30,7 +30,7 @@ public static class NavigationMenu
                     restaurantInfo.RestaurantInfoMenu();
                     break;
                 case 5:
-                    // adminRestaurantInfo.AdminRestaurantInfoMenu();
+                    adminRestaurantInfo.RestaurantInfoAdminMenu();
                     break;
                 default:
                     break;
