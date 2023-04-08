@@ -2,43 +2,15 @@
   {
     "FirstName": "Dennis",
     "LastName": "Zhu",
-    "NumberOfPeople": 10,
-    "Time": "2023-03-23T13:30:00"
-  },
-  {
-    "FirstName": "Dennis",
-    "LastName": "Zhu",
-    "NumberOfPeople": 11,
-    "Time": "2023-03-23T10:30:00"
-  },
-  {
-    "FirstName": "Yale",
-    "LastName": "Smith",
-    "NumberOfPeople": 10,
-    "Time": "2023-03-23T15:20:00"
-  },
-  {
-    "FirstName": "Dennis",
-    "LastName": "YoMa",
-    "NumberOfPeople": 15,
-    "Time": "2023-03-23T13:30:00"
-  },
-  {
-    "FirstName": "Dennis",
-    "LastName": "Zhu",
-    "NumberOfPeople": 3,
-    "Time": "2023-03-30T13:30:00"
-  },
-  {
-    "FirstName": "c",
-    "LastName": "yy",
-    "NumberOfPeople": 2,
-    "Time": "2023-03-30T11:45:00"
+    "NumberOfPeople": 8,
+    "Time": "2023-04-08T13:30:00",
+    "TableNumber": 5
   },
   {
     "FirstName": "Dennis",
     "LastName": "Zhu",
     "NumberOfPeople": 4,
-    "Time": "2023-04-04T13:30:00"
+    "Time": "2023-04-08T13:30:00",
+    "TableNumber": 9
   }
 ]

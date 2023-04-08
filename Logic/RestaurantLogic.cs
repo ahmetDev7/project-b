@@ -38,9 +38,8 @@ public class Restaurant
     public Restaurant(string restaurantName) => RestaurantName = restaurantName;
 
     public void DisplayRestaurantSeats()
-    {
-        Console.WriteLine("Welcome to " + RestaurantName + "!\n");
-
+    {   
+        System.Console.WriteLine($"Hereby, an overview of our restaurant tables.");
         List<List<int>> seatLayout = new List<List<int>>()
         {
             new List<int>() { 1, 2, 3, 4, 5 },
@@ -95,7 +94,7 @@ public class Restaurant
 
     public void DisplayReservationOverview()
     {
-        Console.WriteLine($"Map of {RestaurantName}:");
+        Console.WriteLine($"{RestaurantName}'s reservations of the current day:");
         Console.WriteLine();
 
         // Display the layout of the restaurant's Seats.
