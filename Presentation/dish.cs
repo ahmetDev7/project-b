@@ -16,7 +16,6 @@ public static class FilterMenu
 
         // Initialize variables
         bool isSelected = false;
-        int num = 0;
         var option = 1;
 
         var decorator = $"\u001b[38;2;196;102;217m>  ";

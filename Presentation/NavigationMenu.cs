@@ -47,6 +47,7 @@ public static class NavigationMenu
         Restaurant JacksRestaurant = new Restaurant("Jacks restaurant");
         List<ISeatable> tables = JacksRestaurant.Seats;
         JacksRestaurant.DisplayRestaurantSeats();
+        System.Console.WriteLine("Note! We only accept online reservations between 0 and 20 people.\n For reservations larger than 20, please call the restaurant.");
         Console.Write("Enter the table number you want to reserve: ");
         int tableNumber = int.Parse(Console.ReadLine()!);
 
@@ -60,11 +61,41 @@ public static class NavigationMenu
             string? firstName = Console.ReadLine();
             Console.Write("Enter your last name: ");
             string? lastName = Console.ReadLine();
-            Console.Write("Enter the reservation time (HH:mm): ");
-            DateTime time = DateTime.Parse(Console.ReadLine()!);
+            DateTime time;
+            while (true)
+            {
+                Console.Write("Enter the reservation time (HH:mm): ");
+                string input = Console.ReadLine()!;
+                try
+                {
+                    time = DateTime.ParseExact(input, "HH:mm", null);
+                    break;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid time format. Please enter time in HH:mm format.");
+                }
+            }
             while (true) {
-                Console.Write("Enter the amount of people: ");
-                amountOfPeople = int.Parse(Console.ReadLine()!);
+                while (true)
+                {
+                    Console.Write("Enter the amount of people: ");
+                    string input = Console.ReadLine()!;
+                    try
+                    {
+                        amountOfPeople = int.Parse(input);
+                        if (amountOfPeople > 20 && amountOfPeople < 0) {
+                            System.Console.WriteLine("The amount of people has to be between 0/20. Please enter a number within this range.");
+                            continue;
+                        } else {
+                            break;
+                        }
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid integer.");
+                    }
+                }
                 if (amountOfPeople > table!.Capacity) {
                     System.Console.WriteLine($"Table number {table.TableNumber} does not fit {amountOfPeople} people.");
                     System.Console.WriteLine("1: Choose another table\n2: Combine tables to fit the desired reservation amount:");
@@ -72,9 +103,12 @@ public static class NavigationMenu
                     switch (option)
                     {
                         case 1:
+                            // Provides the available restaurant seats again.
                             JacksRestaurant.DisplayRestaurantSeats();
+                            // Excecuting the reservation process again.
                             Console.Write("Enter the table number you want to reserve instead: ");
                             int newTableNumber = int.Parse(Console.ReadLine()!);
+
                             table = tables.Find(t => t.TableNumber == newTableNumber);
                             if (table == null) {
                                 Console.WriteLine($"Table number {newTableNumber} does not exist.");
@@ -84,7 +118,7 @@ public static class NavigationMenu
                                 continue;
                             } else {
                                 table.ReserveTable(firstName!, lastName!, amountOfPeople, time, table.TableNumber);
-                                Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}");
+                                Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} with {amountOfPeople} at {time.ToString("HH:mm")}");
                                 break;
                             }
                         case 2:
@@ -116,7 +150,6 @@ public static class NavigationMenu
                     break;
                 }
             }
-
         }
         else if (table != null && table is BarSeat)
         {
