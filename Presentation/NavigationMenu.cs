@@ -100,7 +100,7 @@ public static class NavigationMenu
             DateTime time = DateTime.Parse(Console.ReadLine()!);
 
             // Make the reservation for the selected table.
-            table.ReserveTable(firstName!, lastName!, amountOfPeople, time);
+            table.ReserveTable(firstName!, lastName!, amountOfPeople, time, tableNumber);
             Console.WriteLine();
             Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}");
         }
