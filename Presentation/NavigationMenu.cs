@@ -1,3 +1,6 @@
+using System;
+using System.Text;
+
 public static class NavigationMenu
 {
     public static void Menu()
@@ -6,165 +9,100 @@ public static class NavigationMenu
         RestaurantInfo restaurantInfo = new();
         RestaurantInfoAdmin adminRestaurantInfo = new();
 
-        while (true)
+        Console.OutputEncoding = Encoding.UTF8;
+        Console.CursorVisible = false;
+        Console.Clear();
+        (int left, int top) = Console.GetCursorPosition();
+        int selectedOption = 1;
+        bool isMenuOpen = true;
+        var decorator = $"\u001b[38;2;196;102;217m>  ";
+        Console.Clear();
+        while (isMenuOpen)
         {
-            System.Console.WriteLine("What would you like to do?");
-            System.Console.WriteLine("1: Reserve table");
-            System.Console.WriteLine("2: Log in");
-            System.Console.WriteLine("3: View reservations");
-            System.Console.WriteLine("4: Restaurant Information");
-            System.Console.WriteLine("5: Change opening hours");
-            System.Console.WriteLine("6: Show Menu");
-            int UserInput = int.Parse(Console.ReadLine()!);
-            switch (UserInput)
+
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine("What would you like to do?\n");
+
+            Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}Reserve table\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Log in\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}View reservations\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Restaurant Information\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Change opening hours\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Show Menu\u001b[0m");
+
+            ConsoleKeyInfo key = Console.ReadKey(true);
+
+            switch (key.Key)
             {
-                case 1:
-                    ReservationMenu();
+                case ConsoleKey.UpArrow:
+                    selectedOption = (selectedOption - 1 < 1) ? 6 : selectedOption - 1;
                     break;
-                case 2:
-                    LoginMenu();
+                case ConsoleKey.DownArrow:
+                    selectedOption = (selectedOption + 1 > 6) ? 1 : selectedOption + 1;
                     break;
-                case 3:
-                    restaurant.DisplayReservationOverview();
-                    break;
-                case 4:
-                    restaurantInfo.RestaurantInfoMenu();
-                    break;
-                case 5:
-                    adminRestaurantInfo.RestaurantInfoAdminMenu();
-                    break;
-                case 6:
-                    FilterMenu.Filter();
-                    break;
-                default:
+                case ConsoleKey.Enter:
+                    Console.Clear();
+                    isMenuOpen = HandleMenuOption(selectedOption, restaurant, restaurantInfo, adminRestaurantInfo);
                     break;
             }
         }
     }
+
+    private static bool HandleMenuOption(int option, Restaurant restaurant, RestaurantInfo restaurantInfo, RestaurantInfoAdmin adminRestaurantInfo)
+    {
+        switch (option)
+        {
+            case 1:
+                ReservationMenu();
+                break;
+            case 2:
+                LoginMenu();
+                break;
+            case 3:
+                restaurant.DisplayReservationOverview();
+                break;
+            case 4:
+                restaurantInfo.RestaurantInfoMenu();
+                break;
+            case 5:
+                adminRestaurantInfo.RestaurantInfoAdminMenu();
+                break;
+            case 6:
+                FilterMenu.FilterOptions();
+                break;
+        }
+
+        return true;
+    }
+
     public static void ReservationMenu()
     {
         // Ask for which table they want to go for.
         Restaurant JacksRestaurant = new Restaurant("Jacks restaurant");
         List<ISeatable> tables = JacksRestaurant.Seats;
         JacksRestaurant.DisplayRestaurantSeats();
-        System.Console.WriteLine("Note! We only accept online reservations between 0 and 20 people.\n For reservations larger than 20, please call the restaurant.");
         Console.Write("Enter the table number you want to reserve: ");
         int tableNumber = int.Parse(Console.ReadLine()!);
 
         // Find the table in the list with the matching table number.
         ISeatable? table = tables.Find(t => t.TableNumber == tableNumber);
-        int amountOfPeople;
-        if (table != null && table is DineTable)
-        {   
-            // Prompt the user for reservation details.
-            Console.Write("Enter your first name: ");
-            string? firstName = Console.ReadLine();
-            Console.Write("Enter your last name: ");
-            string? lastName = Console.ReadLine();
-            DateTime time;
-            while (true)
-            {
-                Console.Write("Enter the reservation time (HH:mm): ");
-                string input = Console.ReadLine()!;
-                try
-                {
-                    time = DateTime.ParseExact(input, "HH:mm", null);
-                    break;
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Invalid time format. Please enter time in HH:mm format.");
-                }
-            }
-            while (true) {
-                while (true)
-                {
-                    Console.Write("Enter the amount of people: ");
-                    string input = Console.ReadLine()!;
-                    try
-                    {
-                        amountOfPeople = int.Parse(input);
-                        if (amountOfPeople > 20 && amountOfPeople < 0) {
-                            System.Console.WriteLine("The amount of people has to be between 0/20. Please enter a number within this range.");
-                            continue;
-                        } else {
-                            break;
-                        }
-                    }
-                    catch (FormatException)
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid integer.");
-                    }
-                }
-                if (amountOfPeople > table!.Capacity) {
-                    System.Console.WriteLine($"Table number {table.TableNumber} does not fit {amountOfPeople} people.");
-                    System.Console.WriteLine("1: Choose another table\n2: Combine tables to fit the desired reservation amount:");
-                    int option = int.Parse(Console.ReadLine()!);
-                    switch (option)
-                    {
-                        case 1:
-                            // Provides the available restaurant seats again.
-                            JacksRestaurant.DisplayRestaurantSeats();
-                            // Excecuting the reservation process again.
-                            Console.Write("Enter the table number you want to reserve instead: ");
-                            int newTableNumber = int.Parse(Console.ReadLine()!);
 
-                            table = tables.Find(t => t.TableNumber == newTableNumber);
-                            if (table == null) {
-                                Console.WriteLine($"Table number {newTableNumber} does not exist.");
-                                continue;
-                            } else if (amountOfPeople > table.Capacity) {
-                                Console.WriteLine($"Table number {newTableNumber} does not fit {amountOfPeople} people. Please try again.");
-                                continue;
-                            } else {
-                                table.ReserveTable(firstName!, lastName!, amountOfPeople, time, table.TableNumber);
-                                Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} with {amountOfPeople} at {time.ToString("HH:mm")}");
-                                break;
-                            }
-                        case 2:
-                            // Selection menu for the additional table.
-                            JacksRestaurant.DisplayRestaurantSeats();
-                            Console.Write("Enter the additional table number you want to add to the reservation: ");
-
-                            // Creation of the new table object. 
-                            newTableNumber = int.Parse(Console.ReadLine()!);
-                            ISeatable? newTable = tables.Find(t => t.TableNumber == newTableNumber);
-
-                            // The reservation for the initial table
-                            table.ReserveTable(firstName!, lastName!, amountOfPeople, time, table.TableNumber);
-
-                            // The reservation for the additional table
-                            newTable!.ReserveTable(firstName!, lastName!, amountOfPeople - table.Capacity, time, newTableNumber);
-
-                            // Prompt the user the succession message for reservation.
-                            System.Console.WriteLine($"Tables {table.TableNumber} and {newTable.TableNumber} are reserved for {firstName} {lastName} with {amountOfPeople} people at {time.ToString("HH:mm")}");
-                            System.Console.WriteLine($"Where table {table.TableNumber} is reserved for {amountOfPeople} and table {newTable.TableNumber} for {amountOfPeople - table.Capacity} people");
-                            break;
-                        default:
-                            System.Console.WriteLine("Not a valid option. Please try again.");
-                            continue;
-                    } break;
-                } else {
-                    table.ReserveTable(firstName!, lastName!, amountOfPeople, time, table.TableNumber);
-                    Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} with {amountOfPeople} people at {time.ToString("HH:mm")}");
-                    break;
-                }
-            }
-        }
-        else if (table != null && table is BarSeat)
+        if (table != null)
         {
             // Prompt the user for reservation details.
             Console.Write("Enter your first name: ");
             string? firstName = Console.ReadLine();
             Console.Write("Enter your last name: ");
             string? lastName = Console.ReadLine();
+            Console.Write("Enter the amount of people: ");
+            int amountOfPeople = int.Parse(Console.ReadLine()!);
             Console.Write("Enter the reservation time (HH:mm): ");
             DateTime time = DateTime.Parse(Console.ReadLine()!);
 
             // Make the reservation for the selected table.
-            table.ReserveTable(firstName!, lastName!, 1, time, table.TableNumber);
+            table.ReserveTable(firstName!, lastName!, amountOfPeople, time, tableNumber);
             Console.WriteLine();
-            Console.WriteLine($"{(table is DineTable ? "DineTable" : "BarSeat")} {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}");
+            Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}");
         }
         else
         {

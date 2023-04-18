@@ -11,16 +11,18 @@ public static class LogicDishes
     public static void Add()
     {
         Console.WriteLine("Enter dish name: ");
-        string title = Console.ReadLine()!;
+        string title = Console.ReadLine();
         Console.WriteLine("Enter dish ingredients seperated by a ',': ");
-        string ingredient = Console.ReadLine()!;
+        string ingredient = Console.ReadLine();
         Console.WriteLine("Enter dish catagory");
-        string catagory = Console.ReadLine()!;
+        string catagory = Console.ReadLine();
         Console.WriteLine("Enter dish discription");
-        string discription = Console.ReadLine()!;
+        string discription = Console.ReadLine();
         Console.WriteLine("Enter dish price");
-        string price = Console.ReadLine()!;
-        DishesDataAccess.AddDishToMenu(title, ingredient, catagory, discription, price);
+        string price = Console.ReadLine();
+        Console.WriteLine("Enter dish county");
+        string county = Console.ReadLine();
+        DishesDataAccess.AddDishToMenu(title, ingredient, catagory, discription, price, county);
         FilterMenu.Build();
     }
 
