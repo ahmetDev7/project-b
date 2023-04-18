@@ -1,7 +1,7 @@
 public class Restaurant
 {   
     private string RestaurantName { get; set; }
-    public List<ISeatable> Seats { get; set; } = new List<ISeatable>()
+    public List<ISeatable> Seats { get; set; } = new()
     {   
         // five four-person Seats.
         new DineTable(1, 4),  

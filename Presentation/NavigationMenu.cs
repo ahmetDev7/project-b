@@ -1,3 +1,6 @@
+using System;
+using System.Text;
+
 public static class NavigationMenu
 {
     public static void Menu()
@@ -6,41 +9,72 @@ public static class NavigationMenu
         RestaurantInfo restaurantInfo = new();
         RestaurantInfoAdmin adminRestaurantInfo = new();
 
-        while (true)
+        Console.OutputEncoding = Encoding.UTF8;
+        Console.CursorVisible = false;
+        Console.Clear();
+        (int left, int top) = Console.GetCursorPosition();
+        int selectedOption = 1;
+        bool isMenuOpen = true;
+        var decorator = $"\u001b[38;2;196;102;217m>  ";
+        Console.Clear();
+        while (isMenuOpen)
         {
-            System.Console.WriteLine("What would you like to do?");
-            System.Console.WriteLine("1: Reserve table");
-            System.Console.WriteLine("2: Log in");
-            System.Console.WriteLine("3: View reservations");
-            System.Console.WriteLine("4: Restaurant Information");
-            System.Console.WriteLine("5: Change opening hours");
-            System.Console.WriteLine("6: Show Menu");
-            int UserInput = int.Parse(Console.ReadLine()!);
-            switch (UserInput)
+
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine("What would you like to do?\n");
+
+            Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}Reserve table\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Log in\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}View reservations\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Restaurant Information\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Change opening hours\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Show Menu\u001b[0m");
+
+            ConsoleKeyInfo key = Console.ReadKey(true);
+
+            switch (key.Key)
             {
-                case 1:
-                    ReservationMenu();
+                case ConsoleKey.UpArrow:
+                    selectedOption = (selectedOption - 1 < 1) ? 6 : selectedOption - 1;
                     break;
-                case 2:
-                    LoginMenu();
+                case ConsoleKey.DownArrow:
+                    selectedOption = (selectedOption + 1 > 6) ? 1 : selectedOption + 1;
                     break;
-                case 3:
-                    restaurant.DisplayReservationOverview();
-                    break;
-                case 4:
-                    restaurantInfo.RestaurantInfoMenu();
-                    break;
-                case 5:
-                    adminRestaurantInfo.RestaurantInfoAdminMenu();
-                    break;
-                case 6:
-                    FilterMenu.Filter();
-                    break;
-                default:
+                case ConsoleKey.Enter:
+                    Console.Clear();
+                    isMenuOpen = HandleMenuOption(selectedOption, restaurant, restaurantInfo, adminRestaurantInfo);
                     break;
             }
         }
     }
+
+    private static bool HandleMenuOption(int option, Restaurant restaurant, RestaurantInfo restaurantInfo, RestaurantInfoAdmin adminRestaurantInfo)
+    {
+        switch (option)
+        {
+            case 1:
+                ReservationMenu();
+                break;
+            case 2:
+                LoginMenu();
+                break;
+            case 3:
+                restaurant.DisplayReservationOverview();
+                break;
+            case 4:
+                restaurantInfo.RestaurantInfoMenu();
+                break;
+            case 5:
+                adminRestaurantInfo.RestaurantInfoAdminMenu();
+                break;
+            case 6:
+                FilterMenu.FilterOptions();
+                break;
+        }
+
+        return true;
+    }
+
     public static void ReservationMenu()
     {
         // Ask for which table they want to go for.
