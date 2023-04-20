@@ -20,5 +20,6 @@ public class RestaurantInfo
         Console.WriteLine("------------------------------------------------------");
         Console.WriteLine("Press enter to return back to home.");
         Console.ReadKey();
+        Console.Clear();
     }
 }

@@ -95,6 +95,7 @@ public class RestaurantInfoAdmin
             restaurantInfoLogic.editRestaurantInfo(restaurantInfo);
             Console.WriteLine("Press enter to continue...");
             Console.ReadKey();
+            Console.Clear();
         }
     }
 }

@@ -96,11 +96,8 @@ public static class NavigationMenu
             }
 
             return true;
+            Console.Clear();
         }
-
-        
-
-
         public static void ReservationMenu()
     {
         // Ask for which table they want to go for.
@@ -134,6 +131,7 @@ public static class NavigationMenu
         {
             Console.WriteLine("Table not found.");
         }
+        Console.Clear();
     }
 
     public static void LoginMenu()
@@ -154,6 +152,7 @@ public static class NavigationMenu
                 System.Console.WriteLine("Invalid input");
                 break;
         }
+        Console.Clear();
     }
     public static User Login()
     {
@@ -173,6 +172,7 @@ public static class NavigationMenu
             }
         } while (CurrentUser != null);
         return CurrentUser!;
+        Console.Clear();
     }
     public static void MakeNewAccount()
     {
@@ -183,5 +183,6 @@ public static class NavigationMenu
         System.Console.Write("Enter your email: ");
         string mail = Console.ReadLine()!;
         AccountManager.AddUser(new User(userName, passWord, mail));
+        Console.Clear();
     }
 }
