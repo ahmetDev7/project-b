@@ -1,7 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\DataAccess",
+    "\\DataModels",
+    "\\DataModels\\Reservations",
+    "\\DataModels\\RestaurantInfo",
+    "\\DataSources",
+    "\\Logic",
+    "\\obj\\Debug",
+    "\\obj\\Debug\\net6.0",
+    "\\Presentation"
   ],
-  "SelectedNode": "\\C:\\Users\\Ahmet\\Source\\Repos\\project-b-final",
+  "SelectedNode": "\\Presentation\\RestaurantInfoAdmin.cs",
   "PreviewInSolutionExplorer": false
 }

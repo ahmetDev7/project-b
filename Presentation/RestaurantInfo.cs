@@ -25,5 +25,6 @@ public class RestaurantInfo
         Console.WriteLine("Saturday " + restaurantInfoLogic.GetOpeningHourPerDay("Saturday"));
         Console.WriteLine("Sunday: " + restaurantInfoLogic.GetOpeningHourPerDay("Sunday"));
         Console.WriteLine("------------------------------------------------------");
+        Console.ReadKey();
     }
 }

@@ -1,0 +1,9 @@
+[
+  {
+    "RestaurantName": "testrestaurant",
+    "Description": "infoRestaurant",
+    "OpeningHours": {
+      "Monday": "10uur-1uur"
+    }
+  }
+]

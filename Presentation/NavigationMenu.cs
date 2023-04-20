@@ -9,6 +9,29 @@ public static class NavigationMenu
         RestaurantInfo restaurantInfo = new();
         RestaurantInfoAdmin adminRestaurantInfo = new();
 
+        /*        int selection = 5;
+                switch (selection)
+                {
+                    case 1:
+                        ReservationMenu();
+                        break;
+                    case 2:
+                        LoginMenu();
+                        break;
+                    case 3:
+                        restaurant.DisplayReservationOverview();
+                        break;
+                    case 4:
+                        restaurantInfo.RestaurantInfoMenu();
+                        break;
+                    case 5:
+                        adminRestaurantInfo.RestaurantInfoAdminMenu();
+                        break;
+                    case 6:
+                        FilterMenu.FilterOptions();
+                        break;
+                }*/
+
         Console.OutputEncoding = Encoding.UTF8;
         Console.CursorVisible = false;
         Console.Clear();
@@ -48,34 +71,37 @@ public static class NavigationMenu
         }
     }
 
-    private static bool HandleMenuOption(int option, Restaurant restaurant, RestaurantInfo restaurantInfo, RestaurantInfoAdmin adminRestaurantInfo)
-    {
-        switch (option)
+        public static bool HandleMenuOption(int option, Restaurant restaurant, RestaurantInfo restaurantInfo, RestaurantInfoAdmin adminRestaurantInfo)
         {
-            case 1:
-                ReservationMenu();
-                break;
-            case 2:
-                LoginMenu();
-                break;
-            case 3:
-                restaurant.DisplayReservationOverview();
-                break;
-            case 4:
-                restaurantInfo.RestaurantInfoMenu();
-                break;
-            case 5:
-                adminRestaurantInfo.RestaurantInfoAdminMenu();
-                break;
-            case 6:
-                FilterMenu.FilterOptions();
-                break;
+            switch (option)
+            {
+                case 1:
+                    ReservationMenu();
+                    break;
+                case 2:
+                    LoginMenu();
+                    break;
+                case 3:
+                    restaurant.DisplayReservationOverview();
+                    break;
+                case 4:
+                    restaurantInfo.RestaurantInfoMenu();
+                    break;
+                case 5:
+                    adminRestaurantInfo.RestaurantInfoAdminMenu();
+                    break;
+                case 6:
+                    FilterMenu.FilterOptions();
+                    break;
+            }
+
+            return true;
         }
 
-        return true;
-    }
+        
 
-    public static void ReservationMenu()
+
+        public static void ReservationMenu()
     {
         // Ask for which table they want to go for.
         Restaurant JacksRestaurant = new Restaurant("Jacks restaurant");
