@@ -50,7 +50,7 @@ public static class NavigationMenu
             Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Log in\u001b[0m");
             Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}View reservations\u001b[0m");
             Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Restaurant Information\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Change opening hours\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Change Restaurant info & opening hours\u001b[0m");
             Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Show Menu\u001b[0m");
 
             ConsoleKeyInfo key = Console.ReadKey(true);
