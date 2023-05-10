@@ -65,12 +65,17 @@ public static class NavigationMenu
                     break;
                 case 3:
                     restaurantInfo.RestaurantInfoMenu();
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 4:
                     FilterMenu.FilterOptions();
                     break;
                 case 5:
                     restaurant.PrintTableMap();
+                    Console.WriteLine("Press a key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 6:
                     restaurant.DisplayReservationOverview();
@@ -80,9 +85,13 @@ public static class NavigationMenu
                     break;
                 case 7:
                     removeReservation.RemoveReservationMenu();
+                    Console.WriteLine("Press a key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 8:
                     adminRestaurantInfo.RestaurantInfoAdminMenu();
+                    Console.Clear();
                     break;
             }
 

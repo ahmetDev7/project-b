@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/vice/Desktop/project-b-new/project-b.csproj": {}
+    "C:\\Users\\Jurry\\Documents\\GitHub\\project-b\\project-b.csproj": {}
   },
   "projects": {
-    "/Users/vice/Desktop/project-b-new/project-b.csproj": {
+    "C:\\Users\\Jurry\\Documents\\GitHub\\project-b\\project-b.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/vice/Desktop/project-b-new/project-b.csproj",
+        "projectUniqueName": "C:\\Users\\Jurry\\Documents\\GitHub\\project-b\\project-b.csproj",
         "projectName": "project-b",
-        "projectPath": "/Users/vice/Desktop/project-b-new/project-b.csproj",
-        "packagesPath": "/Users/vice/.nuget/packages/",
-        "outputPath": "/Users/vice/Desktop/project-b-new/obj/",
+        "projectPath": "C:\\Users\\Jurry\\Documents\\GitHub\\project-b\\project-b.csproj",
+        "packagesPath": "C:\\Users\\Jurry\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jurry\\Documents\\GitHub\\project-b\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/vice/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Jurry\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -59,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.408/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
         }
       }
     }
