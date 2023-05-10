@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+
 public class RestaurantInfoAdmin
 {
     public void RestaurantInfoAdminMenu()

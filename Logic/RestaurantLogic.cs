@@ -135,8 +135,6 @@ public class Restaurant
         Console.WriteLine("  - Available: Seat is unoccupied and available for seating.");
         Console.WriteLine("  - Occupied: Seat is currently occupied by guests.");
         Console.WriteLine("  - Out of Order: Seat is currently unavailable due to maintenance or other issues.");
-        Console.WriteLine("Press a key to continue...");
-        Console.ReadKey();
     }
     public void PrintTableMap()
 {

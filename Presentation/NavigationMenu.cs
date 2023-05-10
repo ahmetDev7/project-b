@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using static RemoveReservation;
 
 public static class NavigationMenu
 {
@@ -29,17 +30,18 @@ public static class NavigationMenu
             Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Show Menu\u001b[0m");
             Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Show Map\u001b[0m");
             Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}(ADMIN) View reservations\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 7 ? decorator : "   ")}(ADMIN) Change Restaurant info & opening hours\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 7 ? decorator : "   ")}(ADMIN) Remove a reservation\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 8 ? decorator : "   ")}(ADMIN) Change Restaurant info & opening hours\u001b[0m");
 
             ConsoleKeyInfo key = Console.ReadKey(true);
 
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    selectedOption = (selectedOption - 1 < 1) ? 6 : selectedOption - 1;
+                    selectedOption = (selectedOption - 1 < 1) ? 8 : selectedOption - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    selectedOption = (selectedOption + 1 > 7) ? 1 : selectedOption + 1;
+                    selectedOption = (selectedOption + 1 > 8) ? 1 : selectedOption + 1;
                     break;
                 case ConsoleKey.Enter:
                     Console.Clear();
@@ -51,6 +53,8 @@ public static class NavigationMenu
 
         public static bool HandleMenuOption(int option, Restaurant restaurant, RestaurantInfo restaurantInfo, RestaurantInfoAdmin adminRestaurantInfo)
         {
+            RemoveReservation removeReservation = new RemoveReservation();
+
             switch (option)
             {
                 case 1:
@@ -70,8 +74,14 @@ public static class NavigationMenu
                     break;
                 case 6:
                     restaurant.DisplayReservationOverview();
+                    Console.WriteLine("Press a key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 7:
+                    removeReservation.RemoveReservationMenu();
+                    break;
+                case 8:
                     adminRestaurantInfo.RestaurantInfoAdminMenu();
                     break;
             }
