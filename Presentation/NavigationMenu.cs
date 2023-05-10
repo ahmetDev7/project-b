@@ -52,6 +52,7 @@ public static class NavigationMenu
             Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Restaurant Information\u001b[0m");
             Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Change Restaurant info & opening hours\u001b[0m");
             Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Show Menu\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 7 ? decorator : "   ")}Show Map\u001b[0m");
 
             ConsoleKeyInfo key = Console.ReadKey(true);
 
@@ -61,7 +62,7 @@ public static class NavigationMenu
                     selectedOption = (selectedOption - 1 < 1) ? 6 : selectedOption - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    selectedOption = (selectedOption + 1 > 6) ? 1 : selectedOption + 1;
+                    selectedOption = (selectedOption + 1 > 7) ? 1 : selectedOption + 1;
                     break;
                 case ConsoleKey.Enter:
                     Console.Clear();
@@ -92,6 +93,9 @@ public static class NavigationMenu
                     break;
                 case 6:
                     FilterMenu.FilterOptions();
+                    break;
+                case 7:
+                    restaurant.PrintTableMap();
                     break;
             }
 

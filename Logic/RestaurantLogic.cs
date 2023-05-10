@@ -119,5 +119,79 @@ public class Restaurant
         Console.WriteLine("  - Occupied: Seat is currently occupied by guests.");
         Console.WriteLine("  - Out of Order: Seat is currently unavailable due to maintenance or other issues.");
     }
+    public void PrintTableMap()
+{
+    Console.WriteLine("┌──────────────────────────────────────────────────────────────────────────────────────────┐");
+    Console.WriteLine("│                                        Dining Area                                       │");
+    Console.WriteLine("└──────────────────────────────────────────────────────────────────────────────────────────┘");
+
+    // Iterate through the list of seats
+    for (int i = 0; i < Seats.Count; i++)
+    {
+        ISeatable seat = Seats[i];
+
+        // Check if the seat is not a BarSeat, print it in the dining area
+        if (seat.GetType() != typeof(BarSeat))
+        {
+            // Print the table number and capacity
+            Console.Write($"  ");
+
+            // Print the seats based on the capacity
+            for (int j = 0; j < seat.Capacity; j++)
+            {
+                Console.Write(" ");
+
+                if (seat.Available)
+                {
+                    Console.Write("☐");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("☒");
+                    Console.ResetColor();
+                }
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("  _______________ ");
+            Console.WriteLine($" │   Table {seat.TableNumber.ToString().PadLeft(2)}    │  ");
+            Console.WriteLine(" └───────────────┘ \n");
+        }
+    }
+
+    // Get the list of bar seats and print them
+    var BarSeats = Seats.Where(s => s.GetType() == typeof(BarSeat)).ToList();
+    if (BarSeats.Any())
+    {
+        Console.Write("  ");
+        for (int i = 0; i < BarSeats.Count; i++)
+        {
+            ISeatable seat = BarSeats[i];
+            for (int j = 0; j < seat.Capacity; j++)
+            {
+                Console.Write(" ");
+
+                if (seat.Available)
+                {
+                    Console.Write("☐");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("☒");
+                    Console.ResetColor();
+                }
+            }
+
+            Console.Write("    ");
+        }
+
+        Console.WriteLine("");
+        Console.WriteLine("  ______________________________________________  ");
+        Console.WriteLine($" │                     BAR                      │   ");
+        Console.WriteLine(" └──────────────────────────────────────────────┘ \n");
+    }
+}
 
 }
