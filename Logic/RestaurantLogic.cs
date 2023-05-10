@@ -40,61 +40,6 @@ public class Restaurant
 
     public Restaurant(string restaurantName) => RestaurantName = restaurantName;
 
-    public void DisplayRestaurantSeats()
-    {   
-        System.Console.WriteLine($"Hereby, an overview of our restaurant tables.");
-        List<List<int>> seatLayout = new List<List<int>>()
-        {
-            new List<int>() { 1, 2, 3, 4, 5 },
-            new List<int>() { 6, 7, 8, 9, 10 },
-            new List<int>() { 11, 12, 13, 14, 15 },
-            new List<int>() { 16, 17, 18, 20, 21 },
-            new List<int>() { 22, 23}
-        };
-
-        // Loop through each row of the seat layout.
-        for (int i = 0; i < seatLayout.Count; i++)
-        {
-            Console.Write("|");  // Start the row with a vertical line.
-
-            // Loop through each seat in the row.
-            for (int j = 0; j < seatLayout[i].Count; j++)
-            {
-                int SeatNumber = seatLayout[i][j];
-                ISeatable? Seat = Seats.Find(t => ((t as DineTable)?.TableNumber == SeatNumber) || (t as BarSeat)?.TableNumber == SeatNumber);
-
-                // If the seat is empty, display a blank space.
-                if (Seat == null)
-                {
-                    Console.Write("    ");
-                }
-                else
-                {
-                    // If the seat is reserved, display the reservation holder's name.
-                    if (!Seat.Available)
-                    {
-                        Console.Write($" {Seat.Reservation!.FirstName.Substring(0, 1)} ");
-                    }
-                    // Otherwise, display the appropriate number of empty boxes to represent the seats.
-                    else
-                    {   
-                        string seatBox = "☐"; // Unicode box character
-                    
-                        Console.Write($" {(Seat is DineTable ? "DineTable" : "BarSeat")}: {Seat.TableNumber.ToString().PadLeft(2)} Seats: ");
-                        for (int k = 0; k < Seat.Capacity; k++)
-                        {
-                            Console.Write(seatBox);
-                        }
-                        Console.Write(" ");
-                    }
-                }
-                Console.Write("|");  // End the seat with a vertical line.
-            }
-            Console.WriteLine();  // Move to the next line.
-        }
-        Console.WriteLine();
-    }
-
     public void DisplayReservationOverview()
     {
         Console.WriteLine($"{RestaurantName}'s reservations of the current day:");

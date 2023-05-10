@@ -103,7 +103,7 @@ public static class NavigationMenu
         // Ask for which table they want to go for.
         Restaurant JacksRestaurant = new Restaurant("Jacks restaurant");
         List<ISeatable> tables = JacksRestaurant.Seats;
-        JacksRestaurant.DisplayRestaurantSeats();
+        JacksRestaurant.PrintTableMap();
         Console.Write("Enter the table number you want to reserve: ");
         int tableNumber = int.Parse(Console.ReadLine()!);
 

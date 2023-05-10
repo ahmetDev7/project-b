@@ -1,9 +1,9 @@
 [
   {
-    "FirstName": "Ahmet",
-    "LastName": "M",
-    "NumberOfPeople": 3,
-    "Time": "2023-05-10T16:50:00",
-    "TableNumber": 2
+    "FirstName": "ahmet",
+    "LastName": "m",
+    "NumberOfPeople": 2,
+    "Time": "2023-05-10T16:30:00",
+    "TableNumber": 3
   }
 ]
