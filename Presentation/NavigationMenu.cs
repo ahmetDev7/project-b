@@ -9,29 +9,6 @@ public static class NavigationMenu
         RestaurantInfo restaurantInfo = new();
         RestaurantInfoAdmin adminRestaurantInfo = new();
 
-        /*        int selection = 5;
-                switch (selection)
-                {
-                    case 1:
-                        ReservationMenu();
-                        break;
-                    case 2:
-                        LoginMenu();
-                        break;
-                    case 3:
-                        restaurant.DisplayReservationOverview();
-                        break;
-                    case 4:
-                        restaurantInfo.RestaurantInfoMenu();
-                        break;
-                    case 5:
-                        adminRestaurantInfo.RestaurantInfoAdminMenu();
-                        break;
-                    case 6:
-                        FilterMenu.FilterOptions();
-                        break;
-                }*/
-
         Console.OutputEncoding = Encoding.UTF8;
         Console.CursorVisible = false;
         Console.Clear();
