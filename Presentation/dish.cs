@@ -11,7 +11,7 @@ public static class FilterMenu
         bool isSelected = false;
         var option = 1;
 
-        var decorator = $"\u001b[38;2;196;102;217m>  ";
+        var decorator = $"\u001B[34m>  ";
         ConsoleKeyInfo key;
         (int left, int top) = Console.GetCursorPosition();
 
@@ -90,7 +90,7 @@ public static class FilterMenu
         int num = 0;
         var option = 1;
 
-        var decorator = $"\u001b[38;2;196;102;217m>  ";
+        var decorator = $"\u001B[34m>  ";
         ConsoleKeyInfo key;
         (int left, int top) = Console.GetCursorPosition();
 
@@ -174,7 +174,7 @@ public static class FilterMenu
         int num = 0;
         var option = 1;
 
-        var decorator = $"\u001b[38;2;196;102;217m>  ";
+        var decorator = $"\u001B[34m>  ";
         ConsoleKeyInfo key;
         (int left, int top) = Console.GetCursorPosition();
 

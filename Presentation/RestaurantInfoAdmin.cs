@@ -6,14 +6,6 @@ public class RestaurantInfoAdmin
     {
         RestaurantInfoLogic restaurantInfoLogic = new();
 
-        // restaurantInfoLogic.AddOpeningHours("Monday", "10pm-9am");
-        // restaurantInfoLogic.AddOpeningHours("Tuesday", "10pm-9am");
-        // restaurantInfoLogic.AddOpeningHours("Wednesday", "10pm-9am");
-        // restaurantInfoLogic.AddOpeningHours("Thursday", "10pm-9am");
-        // restaurantInfoLogic.AddOpeningHours("Friday", "10pm-9am");
-        // restaurantInfoLogic.AddOpeningHours("Saturday", "10pm-9am");
-        // restaurantInfoLogic.AddOpeningHours("Sunday", "10pm-9am");
-
         while (true)
         {
             Console.Clear();

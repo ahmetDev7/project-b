@@ -16,7 +16,7 @@ public static class NavigationMenu
         (int left, int top) = Console.GetCursorPosition();
         int selectedOption = 1;
         bool isMenuOpen = true;
-        var decorator = $"\u001b[38;2;196;102;217m>  ";
+        var decorator = $"\u001B[34m>  ";
         Console.Clear();
         while (isMenuOpen)
         {
