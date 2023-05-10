@@ -48,11 +48,11 @@ public static class NavigationMenu
 
             Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}Reserve table\u001b[0m");
             Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Log in\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}View reservations\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Restaurant Information\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Change Restaurant info & opening hours\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Show Menu\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 7 ? decorator : "   ")}Show Map\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Restaurant Information\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Show Menu\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Show Map\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}(ADMIN) View reservations\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 7 ? decorator : "   ")}(ADMIN) Change Restaurant info & opening hours\u001b[0m");
 
             ConsoleKeyInfo key = Console.ReadKey(true);
 
@@ -83,19 +83,19 @@ public static class NavigationMenu
                     LoginMenu();
                     break;
                 case 3:
-                    restaurant.DisplayReservationOverview();
-                    break;
-                case 4:
                     restaurantInfo.RestaurantInfoMenu();
                     break;
-                case 5:
-                    adminRestaurantInfo.RestaurantInfoAdminMenu();
-                    break;
-                case 6:
+                case 4:
                     FilterMenu.FilterOptions();
                     break;
-                case 7:
+                case 5:
                     restaurant.PrintTableMap();
+                    break;
+                case 6:
+                    restaurant.DisplayReservationOverview();
+                    break;
+                case 7:
+                    adminRestaurantInfo.RestaurantInfoAdminMenu();
                     break;
             }
 

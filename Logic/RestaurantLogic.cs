@@ -1,6 +1,13 @@
+using static ReservationList;
+
+
 public class Restaurant
-{   
+{
+    List<Reservation> _reservations = ReservationList._reservations;
+
     private string RestaurantName { get; set; }
+
+
     public List<ISeatable> Seats { get; set; } = new()
     {   
         // five four-person Seats.
@@ -94,23 +101,40 @@ public class Restaurant
 
     public void DisplayReservationOverview()
     {
+    
+
         Console.WriteLine($"{RestaurantName}'s reservations of the current day:");
         Console.WriteLine();
 
         // Display the layout of the restaurant's Seats.
-        Console.WriteLine("Layout:");
+        Console.WriteLine("Reservations:");
         Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
         Console.WriteLine("|    Seat #    |  Reserved By Name    |  Amount Of People |  Time arriving |   Status   |");
         Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
-        foreach (var Seat in Seats)
-        {   
-            string reservationName = Seat.Reservation != null ? Seat.Reservation.FirstName : "-";
-            string reservationTime = Seat.Reservation != null ? Seat.Reservation.Time.ToString("HH:mm") : "-";
-            string reservationAmount = Seat.Reservation != null ? Seat.Reservation.NumberOfPeople.ToString() : "-";
 
-            Console.WriteLine($"| {Seat.TableNumber,-13} | {reservationName,-20} | {reservationAmount,-17} | {reservationTime,-14} | {(Seat.Available ? "Available" : "Occupied"),-10} |");
-            Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
-        }
+        foreach (var Seat in Seats)
+{
+    // Check if the reservation is for the current table
+    var reservation = _reservations.FirstOrDefault(r => r.TableNumber == Seat.TableNumber);
+    if (reservation != null)
+    {
+        string reservationName = reservation.FirstName ?? "-";
+        string reservationTime = reservation.Time.ToString("HH:mm");
+        string reservationAmount = reservation.NumberOfPeople.ToString();
+
+        Console.WriteLine($"| {Seat.TableNumber,-13} | {reservationName,-20} | {reservationAmount,-17} | {reservationTime,-14} | Occupied    |");
+        Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
+    }
+    else
+    {
+        string reservationName = Seat.Reservation != null ? Seat.Reservation.FirstName : "-";
+        string reservationTime = Seat.Reservation != null ? Seat.Reservation.Time.ToString("HH:mm") : "-";
+        string reservationAmount = Seat.Reservation != null ? Seat.Reservation.NumberOfPeople.ToString() : "-";
+
+        Console.WriteLine($"| {Seat.TableNumber,-13} | {reservationName,-20} | {reservationAmount,-17} | {reservationTime,-14} | {(Seat.Available ? "Available" : "Occupied"),-10} |");
+        Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
+    }
+}
 
         // Display the legend for the status of the Seats.
         Console.WriteLine();
@@ -118,9 +142,13 @@ public class Restaurant
         Console.WriteLine("  - Available: Seat is unoccupied and available for seating.");
         Console.WriteLine("  - Occupied: Seat is currently occupied by guests.");
         Console.WriteLine("  - Out of Order: Seat is currently unavailable due to maintenance or other issues.");
+        Console.WriteLine("Press a key to continue...");
+        Console.ReadKey();
     }
+
+
     public void PrintTableMap()
-{
+    {
     Console.WriteLine("┌──────────────────────────────────────────────────────────────────────────────────────────┐");
     Console.WriteLine("│                                        Dining Area                                       │");
     Console.WriteLine("└──────────────────────────────────────────────────────────────────────────────────────────┘");

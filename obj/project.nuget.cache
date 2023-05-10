@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Z9bX8UUHg/jQnz0+F/cOc5pNHO4I5a9zRTL8L4G+yguFc73puNpqL1Sme7od6CHv81SnynG09gTYtA7IL4l5ow==",
+  "dgSpecHash": "1Tba+an2YgbeHHjGeXsJvJgT1u3FiO7pfaB60jcLQixdYxwaeDGHTVeNjwpCWi0uzdB7liiqlGfWJnN5ysMWkA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jurry\\Documents\\GitHub\\project-b\\project-b.csproj",
+  "projectFilePath": "/Users/vice/Desktop/projectb/project-b/project-b.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Jurry\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "/Users/vice/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }
