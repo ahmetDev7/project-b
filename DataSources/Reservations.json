@@ -12,12 +12,5 @@
     "NumberOfPeople": 4,
     "Time": "2023-04-08T13:30:00",
     "TableNumber": 9
-  },
-  {
-    "FirstName": "Ahmet",
-    "LastName": "M",
-    "NumberOfPeople": 3,
-    "Time": "2023-05-10T16:50:00",
-    "TableNumber": 2
   }
 ]
