@@ -11,7 +11,7 @@ public static class FilterMenu
         bool isSelected = false;
         var option = 1;
 
-        var decorator = $"\u001b[38;2;196;102;217m>  ";
+        var decorator = $"\u001B[34m>  ";
         ConsoleKeyInfo key;
         (int left, int top) = Console.GetCursorPosition();
 
@@ -32,10 +32,10 @@ public static class FilterMenu
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    option = option == 0 ? 6 : option - 1;
+                    option = option == 1 ? 6 : option - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    option = option == 6 ? 0 : option + 1;
+                    option = option == 6 ? 1 : option + 1;
                     break;
                 case ConsoleKey.Enter:
                     isSelected = true;
@@ -90,7 +90,7 @@ public static class FilterMenu
         int num = 0;
         var option = 1;
 
-        var decorator = $"\u001b[38;2;196;102;217m>  ";
+        var decorator = $"\u001B[34m>  ";
         ConsoleKeyInfo key;
         (int left, int top) = Console.GetCursorPosition();
 
@@ -138,10 +138,10 @@ public static class FilterMenu
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    option = option == 0 ? num : option - 1;
+                    option = option == 1 ? num : option - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    option = option == num ? 0 : option + 1;
+                    option = option == num ? 1 : option + 1;
                     break;
                 case ConsoleKey.Enter:
                     isSelected = true;
@@ -174,7 +174,7 @@ public static class FilterMenu
         int num = 0;
         var option = 1;
 
-        var decorator = $"\u001b[38;2;196;102;217m>  ";
+        var decorator = $"\u001B[34m>  ";
         ConsoleKeyInfo key;
         (int left, int top) = Console.GetCursorPosition();
 

@@ -16,7 +16,7 @@ public static class NavigationMenu
         (int left, int top) = Console.GetCursorPosition();
         int selectedOption = 1;
         bool isMenuOpen = true;
-        var decorator = $"\u001b[38;2;196;102;217m>  ";
+        var decorator = $"\u001B[34m>  ";
         Console.Clear();
         while (isMenuOpen)
         {
@@ -65,12 +65,17 @@ public static class NavigationMenu
                     break;
                 case 3:
                     restaurantInfo.RestaurantInfoMenu();
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 4:
                     FilterMenu.FilterOptions();
                     break;
                 case 5:
                     restaurant.PrintTableMap();
+                    Console.WriteLine("Press a key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 6:
                     restaurant.DisplayReservationOverview();
@@ -80,9 +85,13 @@ public static class NavigationMenu
                     break;
                 case 7:
                     removeReservation.RemoveReservationMenu();
+                    Console.WriteLine("Press a key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 8:
                     adminRestaurantInfo.RestaurantInfoAdminMenu();
+                    Console.Clear();
                     break;
             }
 
@@ -94,7 +103,7 @@ public static class NavigationMenu
         // Ask for which table they want to go for.
         Restaurant JacksRestaurant = new Restaurant("Jacks restaurant");
         List<ISeatable> tables = JacksRestaurant.Seats;
-        JacksRestaurant.DisplayRestaurantSeats();
+        JacksRestaurant.PrintTableMap();
         Console.Write("Enter the table number you want to reserve: ");
         int tableNumber = int.Parse(Console.ReadLine()!);
 

@@ -20,9 +20,6 @@ public class RemoveReservation
             ReservationList.DeleteReservationByTableNumber(selectedTable);
             restaurant.DisplayReservationOverview();
             Console.WriteLine("Removed from reservations..");
-            Console.WriteLine("Press a key to continue...");
-            Console.ReadKey();
-            Console.Clear();
             break;
         }
     }

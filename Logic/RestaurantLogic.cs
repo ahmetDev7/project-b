@@ -40,61 +40,6 @@ public class Restaurant
 
     public Restaurant(string restaurantName) => RestaurantName = restaurantName;
 
-    public void DisplayRestaurantSeats()
-    {   
-        System.Console.WriteLine($"Hereby, an overview of our restaurant tables.");
-        List<List<int>> seatLayout = new List<List<int>>()
-        {
-            new List<int>() { 1, 2, 3, 4, 5 },
-            new List<int>() { 6, 7, 8, 9, 10 },
-            new List<int>() { 11, 12, 13, 14, 15 },
-            new List<int>() { 16, 17, 18, 20, 21 },
-            new List<int>() { 22, 23}
-        };
-
-        // Loop through each row of the seat layout.
-        for (int i = 0; i < seatLayout.Count; i++)
-        {
-            Console.Write("|");  // Start the row with a vertical line.
-
-            // Loop through each seat in the row.
-            for (int j = 0; j < seatLayout[i].Count; j++)
-            {
-                int SeatNumber = seatLayout[i][j];
-                ISeatable? Seat = Seats.Find(t => ((t as DineTable)?.TableNumber == SeatNumber) || (t as BarSeat)?.TableNumber == SeatNumber);
-
-                // If the seat is empty, display a blank space.
-                if (Seat == null)
-                {
-                    Console.Write("    ");
-                }
-                else
-                {
-                    // If the seat is reserved, display the reservation holder's name.
-                    if (!Seat.Available)
-                    {
-                        Console.Write($" {Seat.Reservation!.FirstName.Substring(0, 1)} ");
-                    }
-                    // Otherwise, display the appropriate number of empty boxes to represent the seats.
-                    else
-                    {   
-                        string seatBox = "☐"; // Unicode box character
-                    
-                        Console.Write($" {(Seat is DineTable ? "DineTable" : "BarSeat")}: {Seat.TableNumber.ToString().PadLeft(2)} Seats: ");
-                        for (int k = 0; k < Seat.Capacity; k++)
-                        {
-                            Console.Write(seatBox);
-                        }
-                        Console.Write(" ");
-                    }
-                }
-                Console.Write("|");  // End the seat with a vertical line.
-            }
-            Console.WriteLine();  // Move to the next line.
-        }
-        Console.WriteLine();
-    }
-
     public void DisplayReservationOverview()
     {
         Console.WriteLine($"{RestaurantName}'s reservations of the current day:");
@@ -136,6 +81,7 @@ public class Restaurant
         Console.WriteLine("  - Occupied: Seat is currently occupied by guests.");
         Console.WriteLine("  - Out of Order: Seat is currently unavailable due to maintenance or other issues.");
     }
+    
     public void PrintTableMap()
 {
     Console.WriteLine("┌──────────────────────────────────────────────────────────────────────────────────────────┐");
@@ -150,6 +96,9 @@ public class Restaurant
         // Check if the seat is not a BarSeat, print it in the dining area
         if (seat.GetType() != typeof(BarSeat))
         {
+            // Check if the table number is present in the reservations JSON file
+            bool isTableReserved = _reservations.Any(r => r.TableNumber == seat.TableNumber);
+
             // Print the table number and capacity
             Console.Write($"  ");
 
@@ -158,16 +107,33 @@ public class Restaurant
             {
                 Console.Write(" ");
 
-                if (seat.Available)
+                if (isTableReserved)
                 {
-                    Console.Write("☐");
+                    var reservation = _reservations.FirstOrDefault(r => r.TableNumber == seat.TableNumber);
+
+                    if (reservation != null && reservation.NumberOfPeople > j)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("☒");
+                    }
+                    else
+                    {
+                        Console.Write("☐");
+                    }
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("☒");
-                    Console.ResetColor();
+                    if (j < seat.Capacity)
+                    {
+                        Console.Write("☐");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
                 }
+
+                Console.ResetColor();
             }
 
             Console.WriteLine("");
@@ -185,20 +151,41 @@ public class Restaurant
         for (int i = 0; i < BarSeats.Count; i++)
         {
             ISeatable seat = BarSeats[i];
+
+            // Check if the table number is present in the reservations JSON file
+            bool isTableReserved = _reservations.Any(r => r.TableNumber == seat.TableNumber);
+
             for (int j = 0; j < seat.Capacity; j++)
             {
                 Console.Write(" ");
 
-                if (seat.Available)
+                if (isTableReserved)
                 {
-                    Console.Write("☐");
+                    var reservation = _reservations.FirstOrDefault(r => r.TableNumber == seat.TableNumber);
+
+                    if (reservation != null && reservation.NumberOfPeople > j)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("☒");
+                    }
+                    else
+                    {
+                        Console.Write("☐");
+                    }
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("☒");
-                    Console.ResetColor();
+                    if (j < seat.Capacity)
+                    {
+                        Console.Write("☐");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
                 }
+
+                Console.ResetColor();
             }
 
             Console.Write("    ");
@@ -210,5 +197,8 @@ public class Restaurant
         Console.WriteLine(" └──────────────────────────────────────────────┘ \n");
     }
 }
+
+
+
 
 }
