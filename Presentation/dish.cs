@@ -138,10 +138,10 @@ public static class FilterMenu
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    option = option == 0 ? num : option - 1;
+                    option = option == 1 ? num : option - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    option = option == num ? 0 : option + 1;
+                    option = option == num ? 1 : option + 1;
                     break;
                 case ConsoleKey.Enter:
                     isSelected = true;

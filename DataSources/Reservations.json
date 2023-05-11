@@ -5,5 +5,12 @@
     "NumberOfPeople": 2,
     "Time": "2023-05-10T16:30:00",
     "TableNumber": 3
+  },
+  {
+    "FirstName": "Tristan",
+    "LastName": "Minnen",
+    "NumberOfPeople": 4,
+    "Time": "2023-05-11T12:14:00",
+    "TableNumber": 14
   }
 ]
