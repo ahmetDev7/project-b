@@ -32,10 +32,10 @@ public static class FilterMenu
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    option = option == 0 ? 6 : option - 1;
+                    option = option == 1 ? 6 : option - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    option = option == 6 ? 0 : option + 1;
+                    option = option == 6 ? 1 : option + 1;
                     break;
                 case ConsoleKey.Enter:
                     isSelected = true;
