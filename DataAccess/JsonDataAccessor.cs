@@ -25,7 +25,7 @@ public static class JsonDataAccessor<T>
         string json = JsonConvert.SerializeObject(RandomList, Formatting.Indented);
         File.WriteAllText(filePath, json);
     }
-    // Method overloading: passing a object as argument, which writes the data to the JSONFile.
+    // Method overloading: passing an object as argument, which writes the data to the JSONFile.
     public static void WriteData(string filePath, T RandomItem)
     {
         string json = JsonConvert.SerializeObject(RandomItem, Formatting.Indented);

@@ -22,7 +22,7 @@ public static class NavigationMenu
         {
 
             Console.SetCursorPosition(left, top);
-            Console.WriteLine("What would you like to do?\n");
+            Console.WriteLine("Welcome to our restaurant reservation page!\nSelect one of the following options.\n");
 
             Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}Reserve table\u001b[0m");
             Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Log in\u001b[0m");
@@ -317,7 +317,6 @@ public static class NavigationMenu
                         System.Console.WriteLine();
                         System.Console.WriteLine("Press enter to continue...");
                         Console.ReadLine();
-                        
                         break;
                     }
                     else
@@ -330,7 +329,6 @@ public static class NavigationMenu
         }
         Console.Clear();
     }
-
 
     public static void LoginMenu()
     {
