@@ -48,7 +48,7 @@ public class Restaurant
         // Display the layout of the restaurant's Seats.
         Console.WriteLine("Reservations:");
         Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
-        Console.WriteLine("|    Seat #    |  Reserved By Name    |  Amount Of People |  Time arriving |   Status   |");
+        Console.WriteLine("|    Seat #     |  Reserved By Name    |  Amount Of People |  Time arriving |   Status   |");
         Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
         foreach (var Seat in Seats)
         {
@@ -60,7 +60,7 @@ public class Restaurant
                 string reservationTime = reservation.Time.ToString("HH:mm");
                 string reservationAmount = reservation.NumberOfPeople.ToString();
 
-                Console.WriteLine($"| {Seat.TableNumber,-13} | {reservationName,-20} | {reservationAmount,-17} | {reservationTime,-14} | Occupied    |");
+                Console.WriteLine($"| {Seat.TableNumber,-13} | {reservationName,-20} | {reservationAmount,-17} | {reservationTime,-14} | Occupied   |");
                 Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
             }
             else
@@ -69,7 +69,7 @@ public class Restaurant
                 string reservationTime = Seat.Reservation != null ? Seat.Reservation.Time.ToString("HH:mm") : "-";
                 string reservationAmount = Seat.Reservation != null ? Seat.Reservation.NumberOfPeople.ToString() : "-";
 
-                Console.WriteLine($"| {Seat.TableNumber,-13} | {reservationName,-20} | {reservationAmount,-17} | {reservationTime,-14} | {(Seat.Available ? "Available" : "Occupied"),-10} |");
+                Console.WriteLine($"| {Seat.TableNumber,-13} | {reservationName,-20} | {reservationAmount,-17} | {reservationTime,-14} | {(Seat.Available ? "Available " : "Occupied")} |");
                 Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+");
             }
         }
