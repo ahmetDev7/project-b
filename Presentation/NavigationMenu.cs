@@ -135,11 +135,29 @@ public static class NavigationMenu
         // Find the table in the list with the matching table number.
         ISeatable table = tables[tableNumber];
 
-        // Prompt the user for reservation details.
         // Asks for the time of reservation.
-        Console.Write("Enter the reservation time (HH:mm): ");
-    string inputTime = Console.ReadLine();
-    DateTime time = DateTime.Parse(inputTime);
+        bool validTime = false;
+        DateTime time = DateTime.MinValue;
+
+        while (!validTime)
+        {
+            Console.Write("Enter the reservation time (HH:mm): ");
+            string inputTime = Console.ReadLine();
+
+            try
+            {
+                time = DateTime.Parse(inputTime);
+                validTime = true; // Set validTime to true if parsing succeeds
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid time format. Please enter the time in HH:mm format.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+        }
 
         // Asks for the first name.
         Console.Write("Enter your first name: ");
@@ -167,8 +185,10 @@ public static class NavigationMenu
 
         while (true)
         {
-            amountOfPeople = int.Parse(Console.ReadLine());
-
+            while (!int.TryParse(Console.ReadLine(), out amountOfPeople))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid integer.");
+            }
             if (amountOfPeople <= 0)
             {
                 Console.WriteLine("Error: Number of people must be greater than zero.");
