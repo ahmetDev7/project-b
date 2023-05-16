@@ -26,22 +26,23 @@ public static class NavigationMenu
 
             Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}Reserve table\u001b[0m");
             Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Log in\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Restaurant Information\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Create an account\u001b[0m");
             Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Show Menu\u001b[0m");
             Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Show Map\u001b[0m");
             Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}(ADMIN) View reservations\u001b[0m");
             Console.WriteLine($"{(selectedOption == 7 ? decorator : "   ")}(ADMIN) Remove a reservation\u001b[0m");
             Console.WriteLine($"{(selectedOption == 8 ? decorator : "   ")}(ADMIN) Change Restaurant info & opening hours\u001b[0m");
+            Console.WriteLine($"{(selectedOption == 9 ? decorator : "   ")}Restaurant information\u001b[0m");
 
             ConsoleKeyInfo key = Console.ReadKey(true);
 
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    selectedOption = (selectedOption - 1 < 1) ? 8 : selectedOption - 1;
+                    selectedOption = (selectedOption - 1 < 1) ? 9 : selectedOption - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    selectedOption = (selectedOption + 1 > 8) ? 1 : selectedOption + 1;
+                    selectedOption = (selectedOption + 1 > 9) ? 1 : selectedOption + 1;
                     break;
                 case ConsoleKey.Enter:
                     Console.Clear();
@@ -64,7 +65,7 @@ public static class NavigationMenu
                     LoginMenu();
                     break;
                 case 3:
-                    restaurantInfo.RestaurantInfoMenu();
+                    MakeNewAccount();
                     Console.ReadKey();
                     Console.Clear();
                     break;
@@ -91,6 +92,10 @@ public static class NavigationMenu
                     break;
                 case 8:
                     adminRestaurantInfo.RestaurantInfoAdminMenu();
+                    Console.Clear();
+                    break;
+                case 9:
+                    restaurantInfo.RestaurantInfoMenu();
                     Console.Clear();
                     break;
             }
@@ -354,7 +359,7 @@ public static class NavigationMenu
     {
         User? CurrentUser = null;
         do
-        {
+        {   
             System.Console.Write("Enter your username: ");
             string userName = Console.ReadLine()!;
             System.Console.Write("Enter your password");
@@ -379,6 +384,9 @@ public static class NavigationMenu
         System.Console.Write("Enter your email: ");
         string mail = Console.ReadLine()!;
         AccountManager.AddUser(new User(userName, passWord, mail));
+        System.Console.WriteLine($"Congrats {userName}! You successfully created your account!");
+        System.Console.WriteLine("\nPress enter to continue...");
+        Console.ReadLine();
         Console.Clear();
     }
 }
