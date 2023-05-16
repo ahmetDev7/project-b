@@ -24,4 +24,9 @@ public static class ReservationList
             JsonDataAccessor<Reservation>.WriteData("DataSources/Reservations.json", _reservations);
         }
     }
+    public static void DeleteAllReservations()
+    {
+        _reservations.Clear();
+        JsonDataAccessor<Reservation>.WriteData("DataSources/Reservations.json", _reservations);
+    }
 }
