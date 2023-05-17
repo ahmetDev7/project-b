@@ -10,7 +10,6 @@ public class RemoveReservation
     {
         while (true)
         {
-            Console.Clear();
             restaurant.DisplayReservationOverview();
             System.Console.WriteLine("(1) Remove reservation by number\n(2) Remove all reservations");
             System.Console.Write("Enter your option: ");
@@ -23,11 +22,11 @@ public class RemoveReservation
             else if (userOption == 2)
             {
                 ReservationList.DeleteAllReservations();
-                System.Console.WriteLine("\nSuccessfully deleted all reservations.\nPress enter to continue...\n");
-                Console.ReadLine();
+                System.Console.WriteLine("\nSuccessfully deleted all reservations.\n");
                 break;
             }
         }
+        Console.Clear();
     }
     public void RemoveReservationByNumber()
     {   
@@ -37,6 +36,6 @@ public class RemoveReservation
         ReservationList.DeleteReservationByTableNumber(selectedTable);
         restaurant.DisplayReservationOverview();
         Console.WriteLine("Removed from reservations..");
-        
+
     }
 }

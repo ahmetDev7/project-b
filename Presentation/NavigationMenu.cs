@@ -118,27 +118,33 @@ public static class NavigationMenu
 
             if (string.IsNullOrEmpty(input))
             {
-                Console.WriteLine("Error: Please enter a valid table number.");
+                Console.WriteLine("Error: Please enter a valid table number.\n");
                 continue;
             }
-
-            if (!int.TryParse(input, out tableNumber))
+            else if (!int.TryParse(input, out tableNumber))
             {
-                Console.WriteLine("Error: Please enter a valid table number.");
+                Console.WriteLine("Error: Please enter a valid table number.\n");
                 continue;
             }
-
-            if (tableNumber >= tables.Count || tableNumber < 0)
+            else if (tableNumber >= tables.Count || tableNumber < 0)
             {
-                Console.WriteLine($"Table number {tableNumber} does not exist.");
+                Console.WriteLine($"Table number {tableNumber} does not exist.\n");
                 continue;
             }
 
+            bool tableAvailable = !ReservationList._reservations.Any(reservation => reservation.TableNumber == tableNumber);
+
+            if (!tableAvailable)
+            {
+                Console.WriteLine($"Table number {tableNumber} is not available.\nPlease choose another table.\n");
+                continue;
+            }
             break;
         }
 
+
         // Find the table in the list with the matching table number.
-        ISeatable table = tables[tableNumber];
+        ISeatable table = tables[tableNumber - 1];
 
         // Asks for the time of reservation.
         bool validTime = false;
@@ -156,11 +162,12 @@ public static class NavigationMenu
             }
             catch (FormatException)
             {
-                Console.WriteLine("Invalid time format. Please enter the time in HH:mm format.");
+                Console.WriteLine("Invalid time format. Please enter the time in HH:mm format.\n");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
+                System.Console.WriteLine();
             }
         }
 
@@ -170,7 +177,7 @@ public static class NavigationMenu
 
         if (string.IsNullOrEmpty(firstName))
         {
-            Console.WriteLine("Error: Please enter a valid first name.");
+            Console.WriteLine("Error: Please enter a valid first name.\n");
             return;
         }
 
@@ -180,23 +187,23 @@ public static class NavigationMenu
 
         if (string.IsNullOrEmpty(lastName))
         {
-            Console.WriteLine("Error: Please enter a valid last name.");
+            Console.WriteLine("Error: Please enter a valid last name.\n");
             return;
         }
 
         // Asks for the amount of people.
-        Console.Write("Enter the number of people: ");
         int amountOfPeople;
-
         while (true)
-        {
+        {   
+            Console.Write("Enter the number of people: ");
             while (!int.TryParse(Console.ReadLine(), out amountOfPeople))
             {
-                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                Console.WriteLine("Invalid input. Please enter a valid integer.\n");
+                Console.Write("Enter the number of people: ");
             }
             if (amountOfPeople <= 0)
             {
-                Console.WriteLine("Error: Number of people must be greater than zero.");
+                Console.WriteLine("Error: Number of people must be greater than zero.\n");
                 continue;
             }
 
@@ -204,15 +211,14 @@ public static class NavigationMenu
             {
                 // Make the reservation for the selected table.
                 table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber);
-                Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}");
-                System.Console.WriteLine();
+                Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
                 System.Console.WriteLine("Press enter to continue...");
                 Console.ReadLine();
                 break;
             }
             else
             {
-                Console.WriteLine($"Error: The selected table has a capacity of {table.Capacity} people. Please enter a valid number of people.");
+                Console.WriteLine($"Error: The selected table number {tableNumber} has a capacity of {table.Capacity} people.\n");
                 Console.WriteLine("You have two options:");
                 Console.WriteLine("(1) Choose another table");
                 Console.WriteLine("(2) Combine tables");
@@ -226,13 +232,13 @@ public static class NavigationMenu
 
                     if (string.IsNullOrEmpty(inputChoice) || !int.TryParse(inputChoice, out choice))
                     {
-                        Console.WriteLine("Error: Please enter a valid choice.");
+                        Console.WriteLine("Error: Please enter a valid choice.\n");
                         continue;
                     }
 
                     if (choice != 1 && choice != 2)
                     {
-                        Console.WriteLine("Error: Invalid choice. Please enter either 1 or 2.");
+                        Console.WriteLine("Error: Invalid choice. Please enter either 1 or 2.\n");
                         continue;
                     }
 
@@ -251,13 +257,13 @@ public static class NavigationMenu
 
                         if (string.IsNullOrEmpty(inputNewTable) || !int.TryParse(inputNewTable, out newTableNumber))
                         {
-                            Console.WriteLine("Error: Please enter a valid table number.");
+                            Console.WriteLine("Error: Please enter a valid table number.\n");
                             continue;
                         }
 
                         if (newTableNumber >= tables.Count || newTableNumber < 0)
                         {
-                            Console.WriteLine($"Table number {newTableNumber} does not exist.");
+                            Console.WriteLine($"Table number {newTableNumber} does not exist.\n");
                             continue;
                         }
 
@@ -265,21 +271,20 @@ public static class NavigationMenu
                     }
 
                     // Find the new table in the list
-                    ISeatable newTable = tables[newTableNumber];
+                    ISeatable newTable = tables[newTableNumber - 1];
 
                     if (amountOfPeople <= newTable.Capacity)
                     {
                         // Make the reservation for the new table
                         newTable.ReserveTable(firstName, lastName, amountOfPeople, time, newTableNumber);
-                        Console.WriteLine($"Table {newTable.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}");
-                        System.Console.WriteLine();
+                        Console.WriteLine($"Table {newTable.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
                         System.Console.WriteLine("Press enter to continue...");
                         Console.ReadLine();
                         break;
                     }
                     else
                     {
-                        Console.WriteLine($"Error: The selected table has a capacity of {newTable.Capacity} people. Please enter a valid amount of people.");
+                        Console.WriteLine($"Error: The selected table number {newTableNumber} has a capacity of {newTable.Capacity} people. Please enter a valid amount of people.\n");
                         continue;
                     }
                 }
@@ -294,18 +299,24 @@ public static class NavigationMenu
                         Console.Write("Enter the additional table number: ");
                         string inputAdditionalTable = Console.ReadLine();
 
-                        if (!int.TryParse(inputAdditionalTable, out int additionalTableNumber) || additionalTableNumber < 0 || additionalTableNumber >= tables.Count)
+                        if (!int.TryParse(inputAdditionalTable, out int additionalTableNumber))
                         {
-                            Console.WriteLine("Error: Please enter a valid table number.");
+                            Console.WriteLine("Error: Please enter a valid table number.\n");
                             continue;
                         }
 
                         if (additionalTableNumbers.Contains(additionalTableNumber))
                         {
-                            Console.WriteLine($"Table number {additionalTableNumber} is already selected. Please choose a different table number.");
+                            Console.WriteLine($"Table number {additionalTableNumber} is already selected. Please choose a different table.\n");
                             continue;
                         }
 
+                        if (ReservationList._reservations.Any(reservation => reservation.TableNumber == additionalTableNumber))
+                        {   
+                            System.Console.WriteLine($"Table number {additionalTableNumber} is already reserved. Please choose a different table.\n");
+                            continue;
+                        }
+    
                         ISeatable additionalTable = tables[additionalTableNumber];
 
                         totalCapacity += additionalTable.Capacity;
@@ -313,42 +324,32 @@ public static class NavigationMenu
 
                         if (amountOfPeople > totalCapacity)
                         {   
-                            System.Console.Write($"Table number {tableNumber}");
+                            System.Console.Write($"\nTable number {tableNumber}");
                             for (int i = 0; i < additionalTableNumbers.Count(); i++)
                             {
                                 System.Console.Write($" and {additionalTableNumbers[i]}");
                             }
-                            System.Console.WriteLine($" do not reach the desired amount of {amountOfPeople} people.");
+                            System.Console.WriteLine($" totals the capacity of {totalCapacity} people, do not reach the desired amount of {amountOfPeople} people.");
+                            System.Console.WriteLine($"You have {amountOfPeople - totalCapacity} more {(amountOfPeople - totalCapacity == 1 ? "person" : "people")}!");
                             System.Console.WriteLine("Choose another table.\n");
                         }
                     }
+                    // Make the reservation for the combined tables
+                    table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber);
+                    Console.Write($"\nTables {table.TableNumber}");
 
-                    if (amountOfPeople <= totalCapacity)
+                    foreach (int additionalTableNumber in additionalTableNumbers)
                     {
-                        // Make the reservation for the combined tables
-                        table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber);
-                        Console.Write($"Tables {table.TableNumber}");
-
-                        foreach (int additionalTableNumber in additionalTableNumbers)
-                        {
-                            ISeatable additionalTable = tables[additionalTableNumber];
-                            additionalTable.ReserveTable(firstName, lastName, amountOfPeople, time, additionalTableNumber);
-                            Console.Write($" and {additionalTableNumber}");
-                        }
-
-                        Console.WriteLine($" are reserved for {firstName} {lastName} at {time.ToString("HH:mm")}");
-                        System.Console.WriteLine();
-                        System.Console.WriteLine("Press enter to continue...");
-                        Console.ReadLine();
-                        break;
+                        ISeatable additionalTable = tables[additionalTableNumber - 1];
+                        additionalTable.ReserveTable(firstName, lastName, amountOfPeople, time, additionalTableNumber);
+                        Console.Write($" and {additionalTableNumber}");
                     }
-                    else
-                    {
-                        Console.WriteLine($"Error: The combined tables have a capacity of {totalCapacity} people. Please enter a valid amount of people.");
-                        continue;
-                    }
+
+                    Console.WriteLine($" are reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
+                    System.Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    break;
                 }
-
             }
         }
         Console.Clear();
@@ -374,6 +375,7 @@ public static class NavigationMenu
         }
         Console.Clear();
     }
+
     public static User Login()
     {
         User? CurrentUser = null;
