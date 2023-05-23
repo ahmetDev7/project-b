@@ -167,18 +167,18 @@ public class Restaurant
                     if (reservation != null && reservation.NumberOfPeople > j)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("☒");
+                        Console.Write($"{seat.TableNumber.ToString().PadLeft(2)}☒");
                     }
                     else
                     {
-                        Console.Write("☐");
+                        Console.Write($"{seat.TableNumber.ToString().PadLeft(2)}☐");
                     }
                 }
                 else
                 {
                     if (j < seat.Capacity)
                     {
-                        Console.Write("☐");
+                        Console.Write($"{seat.TableNumber.ToString().PadLeft(2)}☐");
                     }
                     else
                     {
@@ -193,9 +193,9 @@ public class Restaurant
         }
 
         Console.WriteLine("");
-        Console.WriteLine("  ______________________________________________  ");
-        Console.WriteLine($" │                     BAR                      │   ");
-        Console.WriteLine(" └──────────────────────────────────────────────┘ \n");
+        Console.WriteLine("  ________________________________________________________________  ");
+        Console.WriteLine($" │                              BAR                               │   ");
+        Console.WriteLine(" └────────────────────────────────────────────────────────────────┘ \n");
     }
 }
 }
