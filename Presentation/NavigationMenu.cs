@@ -4,12 +4,13 @@ using static RemoveReservation;
 
 public static class NavigationMenu
 {
+    private static Restaurant restaurant = new Restaurant("Restaurant");
+    private static RestaurantInfo restaurantInfo = new RestaurantInfo();
+    private static RestaurantInfoAdmin adminRestaurantInfo = new RestaurantInfoAdmin();
+    private static RemoveReservation removeReservation = new RemoveReservation();
+    private static UserRoleManager roleManager = new UserRoleManager();
     public static void Menu()
     {
-        Restaurant restaurant = new("Restaurant");
-        RestaurantInfo restaurantInfo = new();
-        RestaurantInfoAdmin adminRestaurantInfo = new();
-
         Console.OutputEncoding = Encoding.UTF8;
         Console.CursorVisible = false;
         Console.Clear();
@@ -18,91 +19,194 @@ public static class NavigationMenu
         bool isMenuOpen = true;
         var decorator = $"\u001B[34m>  ";
         Console.Clear();
+
         while (isMenuOpen)
         {
-
             Console.SetCursorPosition(left, top);
-            Console.WriteLine("Welcome to our restaurant reservation page!\nSelect one of the following options.\n");
 
-            Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}Reserve table\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Log in\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Create an account\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Show Menu\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Show Map\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}(ADMIN) View reservations\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 7 ? decorator : "   ")}(ADMIN) Remove a reservation\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 8 ? decorator : "   ")}(ADMIN) Change Restaurant info & opening hours\u001b[0m");
-            Console.WriteLine($"{(selectedOption == 9 ? decorator : "   ")}Restaurant information\u001b[0m");
+            if (!roleManager.IsLoggedIn)
+            {
+                Console.Clear();
+                Console.WriteLine($"Welcome to Jake's Restaurant!\nYou are currently not logged in.\n\nSelect one of the following options:\n");
+                Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}Log in\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Create an account\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Reserve table\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Show Menu\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Show Map\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Restaurant information\u001b[0m");
+            }
+            else if (roleManager.IsLoggedIn && roleManager.CurrentUserRole == "user")
+            {
+                Console.Clear();
+                Console.WriteLine($"Customer, Welcome to Jake's Restaurant!\n\nSelect one of the following options:\n");
+                Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}Reserve table\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Show Menu\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Show Map\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Restaurant information\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Log Out\u001b[0m");
+            }
+            else if (roleManager.IsLoggedIn && roleManager.CurrentUserRole == "employee")
+            {
+                Console.Clear();
+                Console.WriteLine($"Employee, Welcome to Jake's Restaurant!\n\nSelect one of the following options:\n");
+                Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}View reservations\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Remove a reservation\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Log Out\u001b[0m");
+            }
+            else if (roleManager.IsLoggedIn && roleManager.CurrentUserRole == "admin")
+            {
+                Console.Clear();
+                Console.WriteLine($"Admin, Welcome to Jake's Restaurant!\n\nSelect one of the following options:\n");
+                Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}View reservations\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Remove a reservation\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Change Restaurant info & opening hours\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Log Out\u001b[0m");
+            }
 
             ConsoleKeyInfo key = Console.ReadKey(true);
 
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    selectedOption = (selectedOption - 1 < 1) ? 9 : selectedOption - 1;
+                    if (!roleManager.IsLoggedIn)
+                    {
+                        selectedOption = (selectedOption - 1 < 1) ? 6 : selectedOption - 1;
+                    }
+                    else
+                    {
+                        switch (roleManager.CurrentUserRole)
+                        {
+                            case "user":
+                                selectedOption = (selectedOption - 1 < 1) ? 5 : selectedOption - 1;
+                                break;
+                            case "employee":
+                                selectedOption = (selectedOption - 1 < 1) ? 3 : selectedOption - 1;
+                                break;
+                            case "admin":
+                                selectedOption = (selectedOption - 1 < 1) ? 4 : selectedOption - 1;
+                                break;
+                        }
+                    }
                     break;
+                
                 case ConsoleKey.DownArrow:
-                    selectedOption = (selectedOption + 1 > 9) ? 1 : selectedOption + 1;
+                    if (!roleManager.IsLoggedIn)
+                    {
+                        selectedOption = (selectedOption + 1 > 6) ? 1 : selectedOption + 1;
+                    }
+                    else
+                    {
+                        switch (roleManager.CurrentUserRole)
+                        {
+                            case "user":
+                                selectedOption = (selectedOption + 1 > 5) ? 1 : selectedOption + 1;
+                                break;
+                            case "employee":
+                                selectedOption = (selectedOption + 1 > 3) ? 1 : selectedOption + 1;
+                                break;
+                            case "admin":
+                                selectedOption = (selectedOption + 1 > 4) ? 1 : selectedOption + 1;
+                                break;
+                        }
+                    }
                     break;
+                
                 case ConsoleKey.Enter:
                     Console.Clear();
-                    isMenuOpen = HandleMenuOption(selectedOption, restaurant, restaurantInfo, adminRestaurantInfo);
+                    if (!roleManager.IsLoggedIn)
+                    {
+                        if (selectedOption == 1)
+                        {
+                            Login();
+                        }
+                        else if (selectedOption == 2)
+                        {
+                            MakeNewAccount();
+                        }
+                        else if (selectedOption == 3)
+                        {
+                            ReservationMenu();
+                        }
+                        else if (selectedOption == 4)
+                        {
+                            FilterMenu.FilterOptions();
+                        }
+                        else if (selectedOption == 5)
+                        {
+                            restaurant.PrintTableMap();
+                        }
+                        else if (selectedOption == 6)
+                        {
+                            Console.Clear();
+                            restaurantInfo.RestaurantInfoMenu();
+                        }
+                    }
+                    else if (roleManager.IsLoggedIn)
+                    {
+                        if (roleManager.CurrentUserRole == "user")
+                        {
+                            if (selectedOption == 1)
+                            {
+                                ReservationMenu();
+                            }
+                            else if (selectedOption == 2)
+                            {
+                                FilterMenu.FilterOptions();
+                            }
+                            else if (selectedOption == 3)
+                            {
+                                restaurant.PrintTableMap();
+                            }
+                            else if (selectedOption == 4)
+                            {
+                                Console.Clear();
+                                restaurantInfo.RestaurantInfoMenu();
+                            }
+                            else if (selectedOption == 5)
+                            {
+                                roleManager.Logout();
+                            }
+                        }
+                        else if (roleManager.CurrentUserRole == "employee")
+                        {
+                            if (selectedOption == 1)
+                            {
+                                restaurant.DisplayReservationOverview();
+                            }
+                            else if (selectedOption == 2)
+                            {
+                                removeReservation.RemoveReservationMenu();
+                            }
+                            else if (selectedOption == 3)
+                            {
+                                roleManager.Logout();
+                            }
+                        }
+                        else if (roleManager.CurrentUserRole == "admin")
+                        {
+                            if (selectedOption == 1)
+                            {
+                                restaurant.DisplayReservationOverview();
+                            }
+                            else if (selectedOption == 2)
+                            {
+                                removeReservation.RemoveReservationMenu();
+                            }
+                            else if (selectedOption == 3)
+                            {
+                                adminRestaurantInfo.RestaurantInfoAdminMenu();
+                            }
+                            else if (selectedOption == 4)
+                            {
+                                roleManager.Logout();
+                            }
+                        }
+                    }
                     break;
             }
         }
     }
 
-        public static bool HandleMenuOption(int option, Restaurant restaurant, RestaurantInfo restaurantInfo, RestaurantInfoAdmin adminRestaurantInfo)
-        {
-            RemoveReservation removeReservation = new RemoveReservation();
-
-            switch (option)
-            {
-                case 1:
-                    ReservationMenu();
-                    break;
-                case 2:
-                    LoginMenu();
-                    break;
-                case 3:
-                    MakeNewAccount();
-                    Console.ReadKey();
-                    Console.Clear();
-                    break;
-                case 4:
-                    FilterMenu.FilterOptions();
-                    break;
-                case 5:
-                    restaurant.PrintTableMap();
-                    Console.WriteLine("Press a key to continue...");
-                    Console.ReadKey();
-                    Console.Clear();
-                    break;
-                case 6:
-                    restaurant.DisplayReservationOverview();
-                    Console.WriteLine("Press a key to continue...");
-                    Console.ReadKey();
-                    Console.Clear();
-                    break;
-                case 7:
-                    removeReservation.RemoveReservationMenu();
-                    Console.WriteLine("Press a key to continue...");
-                    Console.ReadKey();
-                    Console.Clear();
-                    break;
-                case 8:
-                    adminRestaurantInfo.RestaurantInfoAdminMenu();
-                    Console.Clear();
-                    break;
-                case 9:
-                    restaurantInfo.RestaurantInfoMenu();
-                    Console.Clear();
-                    break;
-            }
-
-            return true;
-            Console.Clear();
-        }
     public static void ReservationMenu()
     {
         // Ask for which table they want to go for.
@@ -357,56 +461,34 @@ public static class NavigationMenu
         Console.Clear();
     }
 
-    public static void LoginMenu()
+    public static void Login()
     {
-        System.Console.WriteLine("Select an option:");
-        System.Console.WriteLine("(1) Log in");
-        System.Console.WriteLine("(2) Create a new account");
-        int UserInput = int.Parse(Console.ReadLine()!);
-        switch (UserInput)
-        {
-            case 1:
-                Login();
-                break;
-            case 2:
-                MakeNewAccount();
-                break;
-            default:
-                System.Console.WriteLine("Invalid input");
-                break;
-        }
-        Console.Clear();
-    }
-
-    public static User Login()
-    {
-        User? CurrentUser = null;
-        do
-        {   
+        User? foundAccount = null;
+        while(true){   
             System.Console.Write("Enter your username: ");
             string userName = Console.ReadLine()!;
-            System.Console.Write("Enter your password");
+            System.Console.Write("Enter your password: ");
             string password = Console.ReadLine()!;
-            System.Console.Write("Enter your email: ");
-            string mail = Console.ReadLine()!;
-            CurrentUser = AccountManager.users.FirstOrDefault(user => user.UserName == userName && user.PassWord == password && user.Mail == mail);
-            if (CurrentUser == null)
+            foundAccount = AccountManager.users.FirstOrDefault(user => user.UserName == userName && user.PassWord == password);
+            if (foundAccount == null)
             {
                 Console.WriteLine("Invalid username or password, please try again.");
+            } else{
+                roleManager.Login(foundAccount.Role);
+                break;
             }
-        } while (CurrentUser != null);
-        return CurrentUser!;
+        }
         Console.Clear();
     }
     public static void MakeNewAccount()
     {
+        System.Console.Write("Enter your email: ");
+        string mail = Console.ReadLine()!;
         System.Console.Write("Enter an username: ");
         string userName = Console.ReadLine()!;
         System.Console.Write("Enter a password: ");
         string passWord = Console.ReadLine()!;
-        System.Console.Write("Enter your email: ");
-        string mail = Console.ReadLine()!;
-        AccountManager.AddUser(new User(userName, passWord, mail));
+        AccountManager.AddUser(new User(userName, passWord, mail, "user"));
         System.Console.WriteLine($"Congrats {userName}! You successfully created your account!");
         System.Console.WriteLine("\nPress enter to continue...");
         Console.ReadLine();

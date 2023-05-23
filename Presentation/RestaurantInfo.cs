@@ -19,5 +19,6 @@ public class RestaurantInfo
         Console.WriteLine($"Sunday: {restaurantInfo[0].OpeningHours["Sunday"]}");
         Console.WriteLine("------------------------------------------------------");
         Console.WriteLine("Press enter to return back to home.");
+        Console.ReadKey();
     }
 }

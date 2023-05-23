@@ -1,26 +1,29 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jurwi\\Documents\\C#\\Week 1\\project-b\\project-b.csproj": {}
+    "C:\\Users\\Ahmet\\Desktop\\projectb\\project-b\\project-b.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jurwi\\Documents\\C#\\Week 1\\project-b\\project-b.csproj": {
+    "C:\\Users\\Ahmet\\Desktop\\projectb\\project-b\\project-b.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jurwi\\Documents\\C#\\Week 1\\project-b\\project-b.csproj",
+        "projectUniqueName": "C:\\Users\\Ahmet\\Desktop\\projectb\\project-b\\project-b.csproj",
         "projectName": "project-b",
-        "projectPath": "C:\\Users\\jurwi\\Documents\\C#\\Week 1\\project-b\\project-b.csproj",
-        "packagesPath": "C:\\Users\\jurwi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jurwi\\Documents\\C#\\Week 1\\project-b\\obj\\",
+        "projectPath": "C:\\Users\\Ahmet\\Desktop\\projectb\\project-b\\project-b.csproj",
+        "packagesPath": "C:\\Users\\Ahmet\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ahmet\\Desktop\\projectb\\project-b\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jurwi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Ahmet\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.nuget.org/api/v2": {}
         },
         "frameworks": {
           "net6.0": {
@@ -59,7 +62,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

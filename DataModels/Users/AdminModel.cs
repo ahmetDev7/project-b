@@ -1,6 +1,6 @@
 class Admin : User
 {   
-    public Admin(string userName, string passWord, string mail) : base(userName, passWord, mail)
+    public Admin(string userName, string passWord, string mail, string role) : base(userName, passWord, mail, role)
     {
         if (!AccountManager.users.Any(user => user.UserName == userName))
         {

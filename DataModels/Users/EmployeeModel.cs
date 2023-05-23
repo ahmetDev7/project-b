@@ -1,4 +1,4 @@
 class Employee : User
 {
-    public Employee(string userName, string passWord, string mail) : base(userName, passWord, mail) {}
+    public Employee(string userName, string passWord, string mail, string role) : base(userName, passWord, mail, role) {}
 }
