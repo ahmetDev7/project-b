@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "FirstName": "Jurwin",
+    "LastName": "evertsz",
+    "NumberOfPeople": 3,
+    "Time": "2023-05-23T21:00:00",
+    "TableNumber": 12,
+    "ReservationCode": 3844
+  },
+  {
+    "FirstName": "Jurwin",
+    "LastName": "evertsz",
+    "NumberOfPeople": 3,
+    "Time": "2023-05-23T21:00:00",
+    "TableNumber": 13,
+    "ReservationCode": 7936
+  }
+]

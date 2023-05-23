@@ -29,4 +29,17 @@ public static class ReservationList
         _reservations.Clear();
         JsonDataAccessor<Reservation>.WriteData("DataSources/Reservations.json", _reservations);
     }
+    public static bool CheckReservationCode(int rscode)
+    {
+        bool reservationExists = _reservations?.Any(r => r.ReservationCode == rscode) ?? false;
+        while (true)
+        if (reservationExists)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

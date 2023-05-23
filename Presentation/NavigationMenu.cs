@@ -212,8 +212,10 @@ public static class NavigationMenu
                 // Make the reservation for the selected table.
                 table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber);
                 Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
+                Console.WriteLine($"This is your reservation code: {table.Reservation.ReservationCode}");
                 System.Console.WriteLine("Press enter to continue...");
                 Console.ReadLine();
+
                 break;
             }
             else
