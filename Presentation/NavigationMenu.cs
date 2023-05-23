@@ -134,6 +134,8 @@ public static class NavigationMenu
                         else if (selectedOption == 5)
                         {
                             restaurant.PrintTableMap();
+                            System.Console.WriteLine("Press enter to continue...");
+                            Console.ReadKey();
                         }
                         else if (selectedOption == 6)
                         {
@@ -156,6 +158,8 @@ public static class NavigationMenu
                             else if (selectedOption == 3)
                             {
                                 restaurant.PrintTableMap();
+                                System.Console.WriteLine("Press enter to continue...");
+                                Console.ReadKey();
                             }
                             else if (selectedOption == 4)
                             {
