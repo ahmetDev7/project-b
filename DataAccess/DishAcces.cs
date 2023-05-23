@@ -1,12 +1,12 @@
 public static class DishesDataAccess
 {
-    public static void AddDishToMenu(string Title, string Ingredients, string Catagory, string Discription, string Price, string Country)
+    public static void AddDishToMenu(string Title, string Ingredients, string Catagory, string Discription, string Price, string Country, string Month)
     {
         try
         {
             using (System.IO.StreamWriter file = new System.IO.StreamWriter("DataSources/Dishes.csv", true))
             {
-                file.WriteLine(Title + ";" + Ingredients + ";" + Catagory + ";" + Discription + ";" + Price + ";" + Country);
+                file.WriteLine(Title + ";" + Ingredients + ";" + Catagory + ";" + Discription + ";" + Price + ";" + Country + ";" + Month);
             }
         }
         catch (Exception ex)
@@ -25,6 +25,7 @@ public static class DishesDataAccess
         string Discription = fields[3];
         string price = fields[4];
         string Country = fields[5];
+        string Month = fields[6];
 
         Console.WriteLine($"\u001b[0m{Title}\n€{price}\n{Ingredients}\n{Catagory} {Country}\n\n{Discription}");
     }

@@ -1,8 +1,14 @@
 using System;
 using System.Text;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-public static class FilterMenu
+
+public class FilterMenu
 {
+
+    public static List<Dish> dishes = CsvToClass();
     public static void FilterOptions(string filter = "all")
     {
         SetUpConsole();
@@ -24,7 +30,7 @@ public static class FilterMenu
             Console.WriteLine($"{(option == 2 ? decorator : "   ")}categories\u001b[0m");
             Console.WriteLine($"{(option == 3 ? decorator : "   ")}ingredient\u001b[0m");
             Console.WriteLine($"{(option == 4 ? decorator : "   ")}country\u001b[0m");
-            Console.WriteLine($"{(option == 5 ? decorator : "   ")}price\u001b[0m");
+            Console.WriteLine($"{(option == 5 ? decorator : "   ")}search ingredient\u001b[0m");
             Console.WriteLine($"{(option == 6 ? decorator : "   ")}Back\u001b[0m");
 
             // Get user input
@@ -44,31 +50,68 @@ public static class FilterMenu
         }
 
         // Handle user selection
-        Console.Clear();
+
         if (option == 1)
-        {
-            FilterMenu.Build("All");
-        }
-        else if (option == 2)
-        {
-            FilterMenu.FilterCatagory();
-        }
-        else if (option == 3)
-        {
-            FilterMenu.FilterCatagory("all", 1);
-        }
-        else if (option == 4)
-        {
-            FilterMenu.FilterCatagory("all", 5);
-        }
-        else if (option == 5)
-        {
-            FilterMenu.FilterCatagory();
-        }
-        else if (option == 6)
         {
 
         }
+        else if (option == 2)
+
+        {
+            FilterMenu.FilterCatagory("catagory");
+        }
+        else if (option == 3)
+        {
+            FilterMenu.FilterCatagory("ingredient");
+        }
+        else if (option == 4)
+        {
+            FilterMenu.FilterCatagory("country");
+        }
+        else if (option == 5)
+        {
+            FilterMenu.SearchIngredient();
+        }
+        else if (option == 6)
+        {
+            NavigationMenu.Menu();
+        }
+    }
+    public static void SearchIngredient()
+    {
+        Console.WriteLine("Enter Ingredient:");
+
+        // Create a string variable and get user input from the keyboard and store it in the variable
+        string ingredient = Console.ReadLine();
+        SortList("ingredient", ingredient);
+
+    }
+    public static List<Dish> CsvToClass()
+    {
+        // Read the CSV file
+        var lines = File.ReadAllLines("DataSources/Dishes.csv");
+
+        // Parse the CSV data into Dish objects
+        int i = 1;
+        var dishes = lines
+            .Skip(1)
+            .Select(line =>
+            {
+                var parts = line.Split(';');
+                return new Dish
+                {
+                    ID = i++,
+                    Title = parts[0],
+                    Ingredients = parts[1].Split(','),
+                    Category = parts[2],
+                    Description = parts[3],
+                    Price = int.Parse(parts[4]),
+                    Country = parts[5],
+                    Month = parts[6]
+                };
+            })
+            .ToList();
+        return dishes;
     }
     public static void SetUpConsole()
     {
@@ -81,139 +124,53 @@ public static class FilterMenu
         // Display instructions
         Console.WriteLine("\nUse ⬆️  and ⬇️  to navigate and press \u001b[32mEnter/Return\u001b[0m to select:");
     }
-    public static void FilterCatagory(string filter = "all", int collom = 2)
+
+
+
+    static List<string> GetUniqueCategories(List<Dish> dishes, string type)
+    {
+        List<string> categories = dishes.Select(dish => dish.Category).Distinct().ToList();
+        if (type == "catagory")
+        {
+            categories = dishes.Select(dish => dish.Category).Distinct().ToList();
+        }
+        else if (type == "country")
+        {
+            categories = dishes.Select(dish => dish.Country).Distinct().ToList();
+        }
+        else if (type == "ingredient")
+        {
+            categories = dishes.SelectMany(dish => dish.Ingredients).Distinct().ToList();
+        }
+        return categories;
+    }
+
+    public static void FilterCatagory(string type)
     {
         SetUpConsole();
+        Console.WriteLine("Sorted by price (from lowest to highest):");
+        var decorator = $"\u001B[34m>  ";
+        ConsoleKeyInfo key;
 
         // Initialize variables
-        bool isSelected = false;
         int num = 0;
         var option = 1;
 
-        var decorator = $"\u001B[34m>  ";
-        ConsoleKeyInfo key;
         (int left, int top) = Console.GetCursorPosition();
-
-        // Get dishes and categories
-        string[] lines = DishesDataAccess.GetLines();
-        var categories = lines
-            .Skip(1) // Skip the first line (header)
-            .SelectMany(line => line.Split(';')[collom]
-                .Split(',')
-                .Select(ingredient => ingredient.Trim().ToLower())
-                .Distinct())
-            .Distinct();
-
-        // Remove categories with no dishes
-        if (filter.ToLower() != "all")
-        {
-            categories = categories.Where(category =>
-                lines.Any(line =>
-                    line.Split(';')[collom]
-                    .Split(',')
-                    .Select(ingredient => ingredient.Trim().ToLower())
-                    .Contains(category)
-                    && filter.ToLower() == category));
-        }
-
-        // Loop until user selects an option
+        // Write the sorted dishes to the terminal
+        bool isSelected = false;
+        List<string> categories = GetUniqueCategories(dishes, type);
+        categories.Sort();
         while (!isSelected)
         {
-            // Display menu options
+            int i = 0;
             Console.SetCursorPosition(left, top);
-            Console.WriteLine($"{(option == 1 ? decorator : "   ")}All\u001b[0m");
-
-            int i = 2;
-            foreach (var category in categories)
+            foreach (string category in categories)
             {
                 Console.WriteLine($"{(option == i ? decorator : "   ")}{category}\u001b[0m");
                 i++;
             }
-
-            Console.WriteLine($"{(option == i ? decorator : "   ")}Back\u001b[0m");
             num = i;
-
-            // Get user input
-            key = Console.ReadKey(false);
-            switch (key.Key)
-            {
-                case ConsoleKey.UpArrow:
-                    option = option == 1 ? num : option - 1;
-                    break;
-                case ConsoleKey.DownArrow:
-                    option = option == num ? 1 : option + 1;
-                    break;
-                case ConsoleKey.Enter:
-                    isSelected = true;
-                    break;
-            }
-        }
-
-        // Handle user selection
-        Console.Clear();
-        if (option == 1)
-        {
-            FilterMenu.Build("All");
-        }
-        else if (option == num)
-        {
-            FilterMenu.FilterOptions();
-        }
-        else
-        {
-            FilterMenu.Build(categories.ElementAt(option - 2), collom);
-        }
-    }
-
-    public static void Build(string filter = "all", int collom = 2)
-    {
-        SetUpConsole();
-
-        // Initialize variables
-        bool isSelected = false;
-        int num = 0;
-        var option = 1;
-
-        var decorator = $"\u001B[34m>  ";
-        ConsoleKeyInfo key;
-        (int left, int top) = Console.GetCursorPosition();
-
-        // Get dishes and filter by category
-        string[] lines = DishesDataAccess.GetLines();
-        var filteredDishes = new string[][] { };
-
-        if (collom == 1)
-        {
-            filteredDishes = lines
-                .Select(line => line.Split(';'))
-                .Where(fields => fields[1].Split(',').Contains(filter))
-                .ToArray();
-        }
-        else if (collom == 4)
-        {
-
-        }
-        else
-        {
-            filteredDishes = lines
-                .Select(line => line.Split(';'))
-                .Where(fields => filter.ToLower() == "all" || fields[collom].ToLower() == filter.ToLower())
-                .ToArray();
-        }
-        // Loop until user selects an option
-        while (!isSelected)
-        {
-            // Display menu options
-            int i = 0;
-            Console.SetCursorPosition(left, top);
-            Console.WriteLine($"{(option == i ? decorator : "   ")}Add Dish\u001b[0m");
-            foreach (var dish in filteredDishes)
-            {
-                string Title = dish[0];
-                Console.WriteLine($"{(option == i + 1 ? decorator : "   ")}{Title}\u001b[0m");
-                i++;
-            }
-            num = i + 1;
             Console.WriteLine($"{(option == num ? decorator : "   ")}Back\u001b[0m");
 
             // Get user input
@@ -221,10 +178,112 @@ public static class FilterMenu
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    option = option == 0 ? num : option - 1;
+                    option = option == 0 ? i : option - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    option = option == num ? 0 : option + 1;
+                    option = option == i ? 0 : option + 1;
+                    break;
+                case ConsoleKey.Enter:
+                    isSelected = true;
+                    break;
+            }
+        }
+        Console.Clear();
+        if (option == num)
+        {
+            FilterMenu.FilterOptions();
+        }
+        else
+        {
+            string SelectedCatagory = categories[option];
+            SortList(type, SelectedCatagory);
+        }
+
+
+
+    }
+    public static void SortList(string type, string sort, string PriceORTitle = "price", bool UpORDown = true)
+    {
+        var sortedDishes = dishes.ToList();
+
+        if (type == "catagory")
+        {
+            sortedDishes = dishes.Where(dish => dish.Category.Contains(sort)).ToList();
+        }
+        else if (type == "country")
+        {
+            sortedDishes = dishes.Where(dish => dish.Country.Contains(sort)).ToList();
+        }
+        else if (type == "ingredient")
+        {
+            sortedDishes = dishes.Where(dish => dish.Ingredients.Contains(sort)).ToList();
+        }
+
+        if (PriceORTitle == "price")
+        {
+            if (UpORDown == true)
+            {
+                sortedDishes = sortedDishes.OrderBy(dish => dish.Price).ToList();
+            }
+            else if (UpORDown == false)
+            {
+                sortedDishes = sortedDishes.OrderByDescending(dish => dish.Price).ToList();
+            }
+        }
+        else if (PriceORTitle == "title")
+        {
+            if (UpORDown == true)
+            {
+                sortedDishes = sortedDishes.OrderBy(dish => dish.Title).ToList();
+            }
+            else if (UpORDown == false)
+            {
+                sortedDishes = sortedDishes.OrderByDescending(dish => dish.Title).ToList();
+            }
+        }
+
+        BuildMenu(sortedDishes, type, sort, UpORDown);
+    }
+    public static void BuildMenu(List<Dish> sortedDishes, string type, string sort, bool UpORDown)
+    {
+        // Print the unique categories to the console
+
+        SetUpConsole();
+        Console.WriteLine("Sorted by price (from lowest to highest):");
+        var decorator = $"\u001B[34m>  ";
+        ConsoleKeyInfo key;
+
+        // Initialize variables
+        int num = 0;
+        var option = 1;
+
+        (int left, int top) = Console.GetCursorPosition();
+        // Write the sorted dishes to the terminal
+        bool isSelected = false;
+        while (!isSelected)
+        {
+            int i = 2;
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine($"{(option == 0 ? decorator : "   ")}sort on price\u001b[0m");
+            Console.WriteLine($"{(option == 1 ? decorator : "   ")}sort on Title\u001b[0m");
+
+            foreach (var dish in sortedDishes)
+            {
+                Console.WriteLine($"{(option == i ? decorator : "   ")}{dish.ID} {dish.Title} ({dish.Price}$)\u001b[0m");
+                i++;
+            }
+            num = i;
+            Console.WriteLine($"{(option == num ? decorator : "   ")}Back\u001b[0m");
+
+            // Get user input
+            key = Console.ReadKey(false);
+            switch (key.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    option = option == 0 ? i : option - 1;
+                    break;
+                case ConsoleKey.DownArrow:
+                    option = option == i ? 0 : option + 1;
                     break;
                 case ConsoleKey.Enter:
                     isSelected = true;
@@ -234,43 +293,67 @@ public static class FilterMenu
 
         // Handle user selection
         Console.Clear();
-        if (option == num)
+        if (option == 0)
         {
-            FilterMenu.FilterCatagory("all", collom);
+            SortList(type, sort, "price", !UpORDown);
         }
-        else if (option == 0)
+        if (option == 1)
         {
-            LogicDishes.Add();
+            SortList(type, sort, "title", !UpORDown);
+        }
+        else if (option == num)
+        {
+            FilterMenu.FilterCatagory(type);
         }
         else
         {
-            string[] fields = filteredDishes[option - 1];
-            string Title = fields[0];
-            string Ingredients = fields[1];
-            string Category = fields[2];
-            string Discription = fields[3];
-            string Price = fields[4];
-            string Country = fields[5];
-            Console.WriteLine($"Title: {Title}");
-            Console.WriteLine($"Ingredients: {Ingredients}");
-            Console.WriteLine($"Category: {Category}");
-            Console.WriteLine($"Country: {Country}");
-            Console.WriteLine($"Price: {Price}");
-            Console.WriteLine($"Discription: {Discription}");
-            (left, top) = Console.GetCursorPosition();
-            while (isSelected)
-            {
-                Console.SetCursorPosition(left, top);
-                Console.WriteLine($"{decorator}Back\u001b[0m");
-                key = Console.ReadKey(false);
-                switch (key.Key)
-                {
-                    case ConsoleKey.Enter:
-                        isSelected = false;
-                        Build(filter, collom);
-                        break;
-                }
-            }
+            var dish = sortedDishes[option - 2];
+            FilterMenu.BuildDish(dish, type, sort);
         }
     }
+
+    public static void BuildDish(Dish dish, string type, string sort)
+    {
+        //clears and setstup the console
+        SetUpConsole();
+        var decorator = $"\u001B[34m>  ";
+        ConsoleKeyInfo key;
+
+        var option = 1;
+        (int left, int top) = Console.GetCursorPosition();
+        bool isSelected = false;
+        while (!isSelected)
+        {
+
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine($"{dish.ID} {dish.Title} ({dish.Price}$)");
+            Console.WriteLine("Ingredients: " + string.Join(", ", dish.Ingredients));
+            Console.WriteLine("Category: " + dish.Category);
+            Console.WriteLine("Description: " + dish.Description);
+            Console.WriteLine("Country: " + dish.Country);
+            Console.WriteLine("Month: " + dish.Month);
+            Console.WriteLine($"{(option == 1 ? decorator : "   ")}Back\u001b[0m");
+            key = Console.ReadKey(false);
+            switch (key.Key)
+            {
+                case ConsoleKey.Enter:
+                    isSelected = true;
+                    SortList(type, sort);
+                    break;
+            }
+        }
+        Console.Clear();
+    }
+}
+
+public class Dish
+{
+    public int ID { get; set; }
+    public string Title { get; set; }
+    public string[] Ingredients { get; set; }
+    public string Category { get; set; }
+    public string Description { get; set; }
+    public int Price { get; set; }
+    public string Country { get; set; }
+    public string Month { get; set; }
 }

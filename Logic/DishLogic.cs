@@ -22,8 +22,10 @@ public static class LogicDishes
         string price = Console.ReadLine()!;
         Console.WriteLine("Enter dish county");
         string county = Console.ReadLine()!;
-        DishesDataAccess.AddDishToMenu(title, ingredient, catagory, discription, price, county);
-        FilterMenu.Build();
+        Console.WriteLine("Enter Month");
+        string Month = Console.ReadLine()!;
+        DishesDataAccess.AddDishToMenu(title, ingredient, catagory, discription, price, county, Month);
+
     }
 
     public static void ShowDishesMenu()
