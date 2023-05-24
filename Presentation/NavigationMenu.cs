@@ -176,6 +176,8 @@ public static class NavigationMenu
                             if (selectedOption == 1)
                             {
                                 restaurant.DisplayReservationOverview();
+                                System.Console.WriteLine("Press enter to continue...");
+                                Console.ReadKey();
                             }
                             else if (selectedOption == 2)
                             {
@@ -191,10 +193,13 @@ public static class NavigationMenu
                             if (selectedOption == 1)
                             {
                                 restaurant.DisplayReservationOverview();
+                                System.Console.WriteLine("Press enter to continue...");
+                                Console.ReadKey();
                             }
                             else if (selectedOption == 2)
                             {
                                 removeReservation.RemoveReservationMenu();
+                                
                             }
                             else if (selectedOption == 3)
                             {
