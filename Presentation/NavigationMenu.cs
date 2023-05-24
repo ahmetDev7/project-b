@@ -9,6 +9,8 @@ public static class NavigationMenu
     private static RestaurantInfoAdmin adminRestaurantInfo = new RestaurantInfoAdmin();
     private static RemoveReservation removeReservation = new RemoveReservation();
     private static UserRoleManager roleManager = new UserRoleManager();
+
+    private static ManageEmployees manageEmployees = new ManageEmployees();
     public static void Menu()
     {
         Console.OutputEncoding = Encoding.UTF8;
@@ -60,7 +62,8 @@ public static class NavigationMenu
                 Console.WriteLine($"{(selectedOption == 1 ? decorator : "   ")}View reservations\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Remove a reservation\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Change Restaurant info & opening hours\u001b[0m");
-                Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Log Out\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Manage Employees\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Log Out\u001b[0m");
             }
 
             ConsoleKeyInfo key = Console.ReadKey(true);
@@ -83,7 +86,7 @@ public static class NavigationMenu
                                 selectedOption = (selectedOption - 1 < 1) ? 3 : selectedOption - 1;
                                 break;
                             case "admin":
-                                selectedOption = (selectedOption - 1 < 1) ? 4 : selectedOption - 1;
+                                selectedOption = (selectedOption - 1 < 1) ? 5 : selectedOption - 1;
                                 break;
                         }
                     }
@@ -105,7 +108,7 @@ public static class NavigationMenu
                                 selectedOption = (selectedOption + 1 > 3) ? 1 : selectedOption + 1;
                                 break;
                             case "admin":
-                                selectedOption = (selectedOption + 1 > 4) ? 1 : selectedOption + 1;
+                                selectedOption = (selectedOption + 1 > 5) ? 1 : selectedOption + 1;
                                 break;
                         }
                     }
@@ -206,6 +209,10 @@ public static class NavigationMenu
                                 adminRestaurantInfo.RestaurantInfoAdminMenu();
                             }
                             else if (selectedOption == 4)
+                            {
+                                manageEmployees.ManageEmployeesMenu();
+                            }
+                            else if (selectedOption == 5)
                             {
                                 roleManager.Logout();
                             }
