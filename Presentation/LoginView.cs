@@ -1,4 +1,4 @@
-public class Login
+public class LoginView
 {
     public void viewLogin()
     {   

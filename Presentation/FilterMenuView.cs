@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 
 
-public class FilterMenu
+public class FilterMenuView
 {
     public static List<Dish> dishes = CsvToClass();
     public static void FilterOptions(string filter = "all")
@@ -57,23 +57,23 @@ public class FilterMenu
         else if (option == 2)
 
         {
-            FilterMenu.FilterCatagory("catagory");
+            FilterMenuView.FilterCatagory("catagory");
         }
         else if (option == 3)
         {
-            FilterMenu.FilterCatagory("ingredient");
+            FilterMenuView.FilterCatagory("ingredient");
         }
         else if (option == 4)
         {
-            FilterMenu.FilterCatagory("country");
+            FilterMenuView.FilterCatagory("country");
         }
         else if (option == 5)
         {
-            FilterMenu.SearchIngredient();
+            FilterMenuView.SearchIngredient();
         }
         else if (option == 6)
         {
-            NavigationMenu.Menu();
+            NavigationMenuView.Menu();
         }
     }
     public static void SearchIngredient()
@@ -190,7 +190,7 @@ public class FilterMenu
         Console.Clear();
         if (option == num)
         {
-            FilterMenu.FilterOptions();
+            FilterMenuView.FilterOptions();
         }
         else
         {
@@ -302,12 +302,12 @@ public class FilterMenu
         }
         else if (option == num)
         {
-            FilterMenu.FilterCatagory(type);
+            FilterMenuView.FilterCatagory(type);
         }
         else
         {
             var dish = sortedDishes[option - 2];
-            FilterMenu.BuildDish(dish, type, sort);
+            FilterMenuView.BuildDish(dish, type, sort);
         }
     }
 

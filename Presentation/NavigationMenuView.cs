@@ -1,8 +1,8 @@
 using System;
 using System.Text;
-using static RemoveReservation;
+using static RemoveReservationView;
 
-public static class NavigationMenu
+public static class NavigationMenuView
 {
     public static void Menu()
     {
@@ -126,7 +126,7 @@ public static class NavigationMenu
                         }
                         else if (selectedOption == 4)
                         {
-                            FilterMenu.FilterOptions();
+                            FilterMenuView.FilterOptions();
                         }
                         else if (selectedOption == 5)
                         {
@@ -154,7 +154,7 @@ public static class NavigationMenu
                             }
                             else if (selectedOption == 2)
                             {
-                                FilterMenu.FilterOptions();
+                                FilterMenuView.FilterOptions();
                             }
                             else if (selectedOption == 3)
                             {

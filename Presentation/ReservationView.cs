@@ -1,4 +1,4 @@
-public class ReservationMenu
+public class ReservationMenuView
 {
     List<ISeatable> tables = Ultilities.restaurant.Seats;
 

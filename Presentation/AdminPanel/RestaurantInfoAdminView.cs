@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class RestaurantInfoAdmin
+public class RestaurantInfoAdminView
 {
     public void RestaurantInfoAdminMenu()
     {

@@ -1,13 +1,15 @@
 public static class Ultilities
 {
-    public static Restaurant restaurant = new Restaurant("Restaurant");
-    public static RestaurantInfo restaurantInfo = new RestaurantInfo();
-    public static RestaurantInfoAdmin adminRestaurantInfo = new RestaurantInfoAdmin();
-    public static RemoveReservation removeReservation = new RemoveReservation();
+    // Logic
+    public static RestaurantLogic restaurant = new RestaurantLogic("Restaurant");
+    public static RestaurantInfoView restaurantInfo = new RestaurantInfoView();
+    public static RestaurantInfoAdminView adminRestaurantInfo = new RestaurantInfoAdminView();
     public static UserRoleManager roleManager = new UserRoleManager();
-    public static ReservationMenu reservationMenu = new ReservationMenu();
-    public static Login login = new Login();
-    public static ManageEmployees manageEmployees = new ManageEmployees();
-    public static MakeNewAccount makeNewAccount = new MakeNewAccount();
-    public static FilterMenu filterMenu = new FilterMenu();
+    // Presentation
+    public static RemoveReservationView removeReservation = new RemoveReservationView();
+    public static ReservationMenuView reservationMenu = new ReservationMenuView();
+    public static LoginView login = new LoginView();
+    public static ManageEmployeesView manageEmployees = new ManageEmployeesView();
+    public static MakeNewAccountView makeNewAccount = new MakeNewAccountView();
+    public static FilterMenuView filterMenu = new FilterMenuView();
 }

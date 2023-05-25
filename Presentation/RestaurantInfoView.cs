@@ -1,4 +1,4 @@
-public class RestaurantInfo
+public class RestaurantInfoView
 {
     public void RestaurantInfoMenu()
     {

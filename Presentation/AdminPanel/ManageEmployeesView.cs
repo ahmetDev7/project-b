@@ -1,4 +1,4 @@
-public class ManageEmployees
+public class ManageEmployeesView
 {
     
     public void ManageEmployeesMenu(){

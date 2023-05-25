@@ -1,4 +1,4 @@
-public class MakeNewAccount
+public class MakeNewAccountView
 {
     public void ViewMakeNewAccount()
     {

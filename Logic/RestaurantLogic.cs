@@ -1,6 +1,6 @@
 using static ReservationList;
 
-public class Restaurant
+public class RestaurantLogic
 {   
     List<Reservation> _reservations = ReservationList._reservations;
     private string RestaurantName { get; set; }
@@ -38,7 +38,7 @@ public class Restaurant
         new BarSeat(23, 1)
     };
 
-    public Restaurant(string restaurantName) => RestaurantName = restaurantName;
+    public RestaurantLogic(string restaurantName) => RestaurantName = restaurantName;
 
     public void DisplayReservationOverview()
     {
