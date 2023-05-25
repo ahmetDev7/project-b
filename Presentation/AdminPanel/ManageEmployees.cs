@@ -161,6 +161,8 @@ public class ManageEmployees
                     System.Console.WriteLine("\nPress enter to continue...");
                     Console.ReadKey();
                     break;
+                case "5":
+                    return;
                 default:
                     break;
             }
