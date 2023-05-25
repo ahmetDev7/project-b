@@ -7,7 +7,6 @@ using System.Linq;
 
 public class FilterMenu
 {
-
     public static List<Dish> dishes = CsvToClass();
     public static void FilterOptions(string filter = "all")
     {
