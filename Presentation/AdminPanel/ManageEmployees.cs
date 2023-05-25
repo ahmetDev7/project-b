@@ -33,6 +33,92 @@ public class ManageEmployees
                     Console.Clear();
                     break;
 
+                case "2":
+                    Console.Clear();
+                    Console.WriteLine("List of all employees:\n");
+                    foreach (var employee in employees){
+                        Console.WriteLine($"Name: {employee.UserName}");
+                        Console.WriteLine($"Email: {employee.Mail}");
+                        Console.WriteLine($"Role: {employee.Role}");
+                        Console.WriteLine("--------------------------");
+                    }
+                    Console.Write("\nTo edit an employee enter the email of the employee: ");
+                    string editEmployeeEmail = Console.ReadLine();
+                    
+                    string editEmployeeNameInsert;
+                    string editEmployeeEmailInsert;
+                    string editEmployeePasswordInsert;
+                    
+                    User? editFoundAccount = null;
+                    editFoundAccount = AccountManager.users.FirstOrDefault(user => user.Mail == editEmployeeEmail);
+
+                    if (editFoundAccount == null)
+                    {
+                        Console.WriteLine("\nInvalid email, please try again.");
+                        Console.ReadKey();
+                    } else{
+                        editEmployeeNameInsert = editFoundAccount.UserName;
+                        editEmployeeEmailInsert = editFoundAccount.Mail;
+                        editEmployeePasswordInsert = editFoundAccount.PassWord;
+
+                        Console.Clear();
+                        while(true){
+                            Console.WriteLine("Do you want to change the name of the employee?");
+                            Console.WriteLine("1) Yes");
+                            Console.WriteLine("2) No");
+                            string userSelection = Console.ReadLine();
+                            if (userSelection == "1"){
+                                Console.Clear();
+                                Console.Write("Type in employee new name: ");
+                                editEmployeeNameInsert = Console.ReadLine();
+                                break;
+                            } else if(userSelection == "2"){
+                                break;
+                            }
+                        }
+
+                        Console.Clear();
+                        while(true){
+                            Console.WriteLine("Do you want to change the email of the employee?");
+                            Console.WriteLine("1) Yes");
+                            Console.WriteLine("2) No");
+                            string userSelection = Console.ReadLine();
+                            if (userSelection == "1"){
+                                Console.Clear();
+                                Console.Write("Type in employee new email: ");
+                                editEmployeeEmailInsert = Console.ReadLine();
+                                break;
+                            } else if(userSelection == "2"){
+                                break;
+                            }
+                        }
+
+                        Console.Clear();
+                        while(true){
+                            Console.WriteLine("Do you want to change the password of the employee?");
+                            Console.WriteLine("1) Yes");
+                            Console.WriteLine("2) No");
+                            string userSelection = Console.ReadLine();
+                            if (userSelection == "1"){
+                                Console.Clear();
+                                Console.Write("Type in employee new password: ");
+                                editEmployeePasswordInsert = Console.ReadLine();
+                                break;
+                            } else if(userSelection == "2"){
+                                break;
+                            }
+                        }
+
+                        AccountManager.users.Remove(editFoundAccount);
+                        AccountManager.RemoveUser(editFoundAccount);
+                        AccountManager.AddUser(new User(editEmployeeNameInsert, editEmployeePasswordInsert, editEmployeeEmailInsert, "employee"));
+
+                        Console.WriteLine($"\nYou have succesfully changed {editEmployeeEmailInsert}!");
+                        Console.ReadKey();
+                        break;
+                    }
+                    break;
+
                 case "3":
                     Console.Clear();
                     Console.WriteLine("List of all employees:\n");
