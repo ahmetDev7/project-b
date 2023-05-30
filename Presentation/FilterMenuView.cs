@@ -200,9 +200,11 @@ public class FilterMenuView
                 case ConsoleKey.LeftArrow:
                     if (page == 0) { page = (categories.Count - 1) / pageSize; }
                     else { page--; }
+                    option = 1;
                     break;
                 case ConsoleKey.RightArrow:
                     page = (page + 1) * pageSize >= categories.Count ? 0 : page + 1;
+                    option = 1;
                     break;
 
                 case ConsoleKey.Enter:
