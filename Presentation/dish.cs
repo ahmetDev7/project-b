@@ -53,20 +53,20 @@ public class FilterMenu
 
         if (option == 1)
         {
-
+            FilterMenu.SortList("all", "all");
         }
         else if (option == 2)
 
         {
-            FilterMenu.FilterCatagory("catagory");
+            FilterMenu.FilterCategory("catagory");
         }
         else if (option == 3)
         {
-            FilterMenu.FilterCatagory("ingredient");
+            FilterMenu.FilterCategory("ingredient");
         }
         else if (option == 4)
         {
-            FilterMenu.FilterCatagory("country");
+            FilterMenu.FilterCategory("country");
         }
         else if (option == 5)
         {
@@ -144,8 +144,7 @@ public class FilterMenu
         }
         return categories;
     }
-
-    public static void FilterCatagory(string type)
+    public static void FilterCategory(string type)
     {
         SetUpConsole();
         Console.WriteLine("Sorted by price (from lowest to highest):");
@@ -155,18 +154,34 @@ public class FilterMenu
         // Initialize variables
         int num = 0;
         var option = 1;
+        int page = 0;
+        int pageSize = 20;
 
         (int left, int top) = Console.GetCursorPosition();
-        // Write the sorted dishes to the terminal
+
         bool isSelected = false;
         List<string> categories = GetUniqueCategories(dishes, type);
         categories.Sort();
+
         while (!isSelected)
         {
-            int i = 0;
-            Console.SetCursorPosition(left, top);
-            foreach (string category in categories)
+            Console.Clear(); // Clear the console before displaying new categories
+            if (type == "ingredient")
             {
+                Console.WriteLine("\nUse ⬆️  and ⬇️  to navigate, use ⬅️  and ➡️ for other page and press \u001b[32mEnter/Return\u001b[0m to select:");
+
+            }
+            else
+            {
+                Console.WriteLine("\nUse ⬆️  and ⬇️  to navigate and press \u001b[32mEnter/Return\u001b[0m to select:");
+            }
+            int i = 0;
+            int x = page * pageSize;
+
+            Console.SetCursorPosition(left, top);
+            for (int j = x; j < categories.Count && j < x + pageSize; j++)
+            {
+                string category = categories[j];
                 Console.WriteLine($"{(option == i ? decorator : "   ")}{category}\u001b[0m");
                 i++;
             }
@@ -178,30 +193,39 @@ public class FilterMenu
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    option = option == 0 ? i : option - 1;
+                    option = option == 0 ? num : option - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    option = option == i ? 0 : option + 1;
+                    option = option == num ? 0 : option + 1;
                     break;
+                case ConsoleKey.LeftArrow:
+                    if (page == 0) { page = (categories.Count - 1) / pageSize; }
+                    else { page--; }
+                    break;
+                case ConsoleKey.RightArrow:
+                    page = (page + 1) * pageSize >= categories.Count ? 0 : page + 1;
+                    break;
+
                 case ConsoleKey.Enter:
                     isSelected = true;
                     break;
             }
         }
+
         Console.Clear();
+
         if (option == num)
         {
             FilterMenu.FilterOptions();
         }
         else
         {
-            string SelectedCatagory = categories[option];
-            SortList(type, SelectedCatagory);
+            string selectedCategory = categories[(page * pageSize) + option];
+            SortList(type, selectedCategory);
         }
-
-
-
     }
+
+
     public static void SortList(string type, string sort, string PriceORTitle = "price", bool UpORDown = true)
     {
         var sortedDishes = dishes.ToList();
@@ -217,6 +241,10 @@ public class FilterMenu
         else if (type == "ingredient")
         {
             sortedDishes = dishes.Where(dish => dish.Ingredients.Contains(sort)).ToList();
+        }
+        else if (type == "all")
+        {
+
         }
 
         if (PriceORTitle == "price")
@@ -303,7 +331,7 @@ public class FilterMenu
         }
         else if (option == num)
         {
-            FilterMenu.FilterCatagory(type);
+            FilterMenu.FilterCategory(type);
         }
         else
         {
