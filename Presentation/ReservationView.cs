@@ -116,7 +116,6 @@ public class ReservationMenuView
 
             if (amountOfPeople <= table.Capacity)
             {
-                Console.WriteLine(Ultilities.roleManager.IsLoggedIn);
                 if(!Ultilities.roleManager.IsLoggedIn){
                     Console.WriteLine("To finish your reservation you need to create an account first.");
                     registerObligation();
@@ -189,7 +188,6 @@ public class ReservationMenuView
 
                     if (amountOfPeople <= newTable.Capacity)
                     {
-                        Console.WriteLine(Ultilities.roleManager.IsLoggedIn);
                         if(!Ultilities.roleManager.IsLoggedIn){
                             Console.WriteLine("To finish your reservation you need to create an account first.");
                             registerObligation();
@@ -254,7 +252,6 @@ public class ReservationMenuView
                         }
                     }
                     // Make the reservation for the combined tables
-                    Console.WriteLine(Ultilities.roleManager.IsLoggedIn);
                     if(!Ultilities.roleManager.IsLoggedIn){
                         Console.WriteLine("To finish your reservation you need to create an account first.");
                         registerObligation();
