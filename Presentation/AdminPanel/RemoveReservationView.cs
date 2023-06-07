@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using static ReservationList;
 using System;
 
-public class RemoveReservation
+public class RemoveReservationView
 {
-    Restaurant restaurant = new("Restaurant");
+    RestaurantLogic restaurant = new("Restaurant");
 
     public void RemoveReservationMenu()
     {

@@ -1,7 +1,9 @@
-﻿class ProgramTesting
+﻿using System;
+
+class ProgramTesting
 {
     public static void Main(string[] args)
     {   
-        NavigationMenu.Menu();
+        NavigationMenuView.Menu();
     }
 }

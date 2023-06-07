@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-public class FilterMenu
+public class FilterMenuView
 {
     public static string csvfile = "DataSources/Dishes.csv";
     public static List<Dish> dishes = CsvToClass(csvfile);
@@ -55,24 +55,24 @@ public class FilterMenu
 
         if (option == 1)
         {
-            FilterMenu.SortList("all", "all");
+            FilterMenuView.SortList("all", "all");
         }
         else if (option == 2)
 
         {
-            FilterMenu.FilterCategory("catagory");
+            FilterMenuView.FilterCategory("catagory");
         }
         else if (option == 3)
         {
-            FilterMenu.FilterCategory("ingredient");
+            FilterMenuView.FilterCategory("ingredient");
         }
         else if (option == 4)
         {
-            FilterMenu.FilterCategory("country");
+            FilterMenuView.FilterCategory("country");
         }
         else if (option == 5)
         {
-            FilterMenu.SearchIngredient();
+            FilterMenuView.SearchIngredient();
         }
         else if (option == 6)
         {
@@ -86,7 +86,7 @@ public class FilterMenu
         }
         else if (option == 8)
         {
-            NavigationMenu.Menu();
+            NavigationMenuView.Menu();
         }
     }
     public static void SearchIngredient()
@@ -159,7 +159,6 @@ public class FilterMenu
     public static void FilterCategory(string type)
     {
         SetUpConsole();
-        Console.WriteLine("Sorted by price (from lowest to highest):");
         var decorator = $"\u001B[34m>  ";
         ConsoleKeyInfo key;
 
@@ -217,7 +216,6 @@ public class FilterMenu
                 case ConsoleKey.RightArrow:
                     page = (page + 1) * pageSize >= categories.Count ? 0 : page + 1;
                     break;
-
                 case ConsoleKey.Enter:
                     isSelected = true;
                     break;
@@ -228,7 +226,7 @@ public class FilterMenu
 
         if (option == num)
         {
-            FilterMenu.FilterOptions();
+            FilterMenuView.FilterOptions();
         }
         else
         {
@@ -257,12 +255,8 @@ public class FilterMenu
         }
         else if (type == "all")
         {
+
         }
-        /* the get month dishes 
-            DateTime date = new DateTime(2001, 04, 08); ;
-            string month_name = date.ToString("MMMM");
-            sortedDishes = dishes.Where(dish => dish.Month.Contains(month_name)).ToList();
-        */
 
         if (PriceORTitle == "price")
         {
@@ -348,12 +342,12 @@ public class FilterMenu
         }
         else if (option == num)
         {
-            FilterMenu.FilterCategory(type);
+            FilterMenuView.FilterCategory(type);
         }
         else
         {
             var dish = sortedDishes[option - 2];
-            FilterMenu.BuildDish(dish, type, sort);
+            FilterMenuView.BuildDish(dish, type, sort);
         }
     }
 
