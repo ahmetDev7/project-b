@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-
 public class FilterMenuView
 {
-
-    public static List<Dish> dishes = CsvToClass();
+    public static string csvfile = "DataSources/Dishes.csv";
+    public static List<Dish> dishes = CsvToClass(csvfile);
     public static void FilterOptions(string filter = "all")
     {
+
         SetUpConsole();
 
         // Initialize variables
@@ -31,17 +31,19 @@ public class FilterMenuView
             Console.WriteLine($"{(option == 3 ? decorator : "   ")}ingredient\u001b[0m");
             Console.WriteLine($"{(option == 4 ? decorator : "   ")}country\u001b[0m");
             Console.WriteLine($"{(option == 5 ? decorator : "   ")}search ingredient\u001b[0m");
-            Console.WriteLine($"{(option == 6 ? decorator : "   ")}Back\u001b[0m");
+            Console.WriteLine($"{(option == 6 ? decorator : "   ")}next month\u001b[0m");
+            Console.WriteLine($"{(option == 7 ? decorator : "   ")}this month\u001b[0m");
+            Console.WriteLine($"{(option == 8 ? decorator : "   ")}Back\u001b[0m");
 
             // Get user input
             key = Console.ReadKey(false);
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    option = option == 1 ? 6 : option - 1;
+                    option = option == 1 ? 8 : option - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    option = option == 6 ? 1 : option + 1;
+                    option = option == 8 ? 1 : option + 1;
                     break;
                 case ConsoleKey.Enter:
                     isSelected = true;
@@ -74,6 +76,16 @@ public class FilterMenuView
         }
         else if (option == 6)
         {
+            dishes = CsvToClass("DataSources/NextMonthDishes.csv");
+            FilterOptions();
+        }
+        else if (option == 7)
+        {
+            dishes = CsvToClass("DataSources/Dishes.csv");
+            FilterOptions();
+        }
+        else if (option == 8)
+        {
             NavigationMenuView.Menu();
         }
     }
@@ -86,10 +98,10 @@ public class FilterMenuView
         SortList("ingredient", ingredient);
 
     }
-    public static List<Dish> CsvToClass()
+    public static List<Dish> CsvToClass(string csvfile)
     {
         // Read the CSV file
-        var lines = File.ReadAllLines("DataSources/Dishes.csv");
+        var lines = File.ReadAllLines(csvfile);
 
         // Parse the CSV data into Dish objects
         int i = 1;
@@ -200,13 +212,10 @@ public class FilterMenuView
                 case ConsoleKey.LeftArrow:
                     if (page == 0) { page = (categories.Count - 1) / pageSize; }
                     else { page--; }
-                    option = 1;
                     break;
                 case ConsoleKey.RightArrow:
                     page = (page + 1) * pageSize >= categories.Count ? 0 : page + 1;
-                    option = 1;
                     break;
-
                 case ConsoleKey.Enter:
                     isSelected = true;
                     break;
@@ -237,6 +246,7 @@ public class FilterMenuView
         }
         else if (type == "country")
         {
+
             sortedDishes = dishes.Where(dish => dish.Country.Contains(sort)).ToList();
         }
         else if (type == "ingredient")

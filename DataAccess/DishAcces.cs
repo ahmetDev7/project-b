@@ -4,7 +4,7 @@ public static class DishesDataAccess
     {
         try
         {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter("DataSources/Dishes.csv", true))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("DataSources/NextMonthDishes.csv", true))
             {
                 file.WriteLine(Title + ";" + Ingredients + ";" + Catagory + ";" + Discription + ";" + Price + ";" + Country + ";" + Month);
             }
@@ -16,7 +16,7 @@ public static class DishesDataAccess
     }
     public static void ShowInfoMenu(int line)
     {
-        string filePaths = "DataSources/Dishes.csv";
+        string filePaths = "DataSources/NextMonthDishes.csv";
         string[] lines = File.ReadAllLines(filePaths);
         string[] fields = lines[line].Split(';');
         string Title = fields[0];
@@ -31,7 +31,7 @@ public static class DishesDataAccess
     }
     public static string[] GetLines()
     {
-        string filePath = "DataSources/Dishes.csv";
+        string filePath = "DataSources/NextMonthDishes.csv";
         string[] lines = File.ReadAllLines(filePath);
         return lines;
     }
