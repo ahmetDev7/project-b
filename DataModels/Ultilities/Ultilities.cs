@@ -12,4 +12,7 @@ public static class Ultilities
     public static ManageEmployeesView manageEmployees = new ManageEmployeesView();
     public static MakeNewAccountView makeNewAccount = new MakeNewAccountView();
     public static FilterMenuView filterMenu = new FilterMenuView();
+    
+    // Future Menu
+    public static FutureMenu futureMenu = new FutureMenu();
 }

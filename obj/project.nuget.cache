@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "lzuWWqgmLgTOb/iDqedYjyXApx/DKO8xaqo+3di/Ox78yWNPQwaQFskNrLBxqt+0zRJlqCatrKCBezw8Un2OGg==",
+  "dgSpecHash": "Z9bX8UUHg/jQnz0+F/cOc5pNHO4I5a9zRTL8L4G+yguFc73puNpqL1Sme7od6CHv81SnynG09gTYtA7IL4l5ow==",
   "success": true,
-  "projectFilePath": "/Users/denniszhu/Informatica/ProjectB/project-b/project-b.csproj",
+  "projectFilePath": "C:\\Users\\Jurry\\Documents\\GitHub\\project-b\\project-b.csproj",
   "expectedPackageFiles": [
-    "/Users/denniszhu/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\Jurry\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }

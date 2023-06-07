@@ -31,6 +31,7 @@ public static class NavigationMenuView
                 Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Restaurant information\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 7 ? decorator : "   ")}Quit the program\u001b[0m");
             }
+            // User role has logged in.
             else if (Ultilities.roleManager.IsLoggedIn && Ultilities.roleManager.CurrentUserRole == "user")
             {
                 Console.Clear();
@@ -41,6 +42,7 @@ public static class NavigationMenuView
                 Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Restaurant information\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Log Out\u001b[0m");
             }
+            // Employee role has logged in.
             else if (Ultilities.roleManager.IsLoggedIn && Ultilities.roleManager.CurrentUserRole == "employee")
             {
                 Console.Clear();
@@ -49,6 +51,7 @@ public static class NavigationMenuView
                 Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Remove a reservation\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Log Out\u001b[0m");
             }
+            // User role has logged in.
             else if (Ultilities.roleManager.IsLoggedIn && Ultilities.roleManager.CurrentUserRole == "admin")
             {
                 Console.Clear();
@@ -57,7 +60,8 @@ public static class NavigationMenuView
                 Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Remove a reservation\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Change Restaurant info & opening hours\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Manage Employees\u001b[0m");
-                Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Log Out\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Manage Menu of The Month\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Log Out\u001b[0m");
             }
 
             ConsoleKeyInfo key = Console.ReadKey(true);
@@ -80,7 +84,7 @@ public static class NavigationMenuView
                                 selectedOption = (selectedOption - 1 < 1) ? 3 : selectedOption - 1;
                                 break;
                             case "admin":
-                                selectedOption = (selectedOption - 1 < 1) ? 5 : selectedOption - 1;
+                                selectedOption = (selectedOption - 1 < 1) ? 6 : selectedOption - 1;
                                 break;
                         }
                     }
@@ -102,7 +106,7 @@ public static class NavigationMenuView
                                 selectedOption = (selectedOption + 1 > 3) ? 1 : selectedOption + 1;
                                 break;
                             case "admin":
-                                selectedOption = (selectedOption + 1 > 5) ? 1 : selectedOption + 1;
+                                selectedOption = (selectedOption + 1 > 6) ? 1 : selectedOption + 1;
                                 break;
                         }
                     }
@@ -212,6 +216,11 @@ public static class NavigationMenuView
                                 Ultilities.manageEmployees.ManageEmployeesMenu();
                             }
                             else if (selectedOption == 5)
+                            {
+                                //Ultilities.roleManager.Createmenu();
+                                Ultilities.futureMenu.FutureMenuOptions();
+                            }
+                            else if (selectedOption == 6)
                             {
                                 Ultilities.roleManager.Logout();
                             }
