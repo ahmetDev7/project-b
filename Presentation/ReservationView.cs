@@ -138,7 +138,7 @@ public class ReservationMenuView
                 // Make the reservation for the selected table.
                 table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber, ReservationCode, Ultilities.roleManager.UserId);
                 Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
-                Console.WriteLine($"This is your reservation code: {ReservationCode}");
+                Console.WriteLine($"This is your reservation code:{ReservationCode} ");
                 System.Console.WriteLine("Press enter to continue...");
                 Console.ReadLine();
 
@@ -209,7 +209,7 @@ public class ReservationMenuView
                         // Make the reservation for the new table
                         newTable.ReserveTable(firstName, lastName, amountOfPeople, time, newTableNumber, ReservationCode, Ultilities.roleManager.UserId);
                         Console.WriteLine($"Table {newTable.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
-                        Console.WriteLine($"This is your reservation code: {ReservationCode}");
+                        Console.WriteLine($"This is your reservation code:{ReservationCode} ");
                         System.Console.WriteLine("Press enter to continue...");
                         Console.ReadLine();
                         break;
@@ -281,7 +281,7 @@ public class ReservationMenuView
                     }
 
                     Console.WriteLine($" are reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
-                    Console.WriteLine($"This is your reservation code: {ReservationCode}");
+                    Console.WriteLine($"This is your reservation code:{ReservationCode} ");
                     System.Console.WriteLine("Press enter to continue...");
                     Console.ReadLine();
                     break;
