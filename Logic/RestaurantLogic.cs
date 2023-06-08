@@ -28,14 +28,14 @@ public class RestaurantLogic
         new DineTable(15, 6),
 
         // Eigh one-person BarSeats.
-        new BarSeat(16, 1),
-        new BarSeat(17, 1),
-        new BarSeat(18, 1),
-        new BarSeat(19, 1),
-        new BarSeat(20, 1),
-        new BarSeat(21, 1),
-        new BarSeat(22, 1),
-        new BarSeat(23, 1)
+        new BarSeat(16),
+        new BarSeat(17),
+        new BarSeat(18),
+        new BarSeat(19),
+        new BarSeat(20),
+        new BarSeat(21),
+        new BarSeat(22),
+        new BarSeat(23)
     };
 
     public RestaurantLogic(string restaurantName) => RestaurantName = restaurantName;

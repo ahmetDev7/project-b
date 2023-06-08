@@ -1,14 +1,13 @@
 class BarSeat : ISeatable
 {
     public int TableNumber { get; set; }
-    public int Capacity { get; set; }
+    public int Capacity => 1;
     public bool Available { get; set; }
     public Reservation? Reservation { get; set; }
 
-    public BarSeat(int tableNumber, int capacity)
+    public BarSeat(int tableNumber)
     {
         TableNumber = tableNumber;
-        Capacity = capacity;
         Available = true;
     }
 

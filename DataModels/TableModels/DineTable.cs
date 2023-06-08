@@ -1,14 +1,16 @@
 public class DineTable : ISeatable
 {
     public int TableNumber { get; set; }
-    public int Capacity { get; set; }
+    public int Capacity => _capacity;
     public bool Available { get; set; }
     public Reservation? Reservation { get; set; }
+
+    private int _capacity;
 
     public DineTable(int tableNumber, int capacity)
     {
         TableNumber = tableNumber;
-        Capacity = capacity;
+        _capacity = capacity;
         Available = true;
     }
 
