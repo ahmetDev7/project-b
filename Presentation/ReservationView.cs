@@ -3,10 +3,10 @@ public class ReservationMenuView
     List<ISeatable> tables = Ultilities.restaurant.Seats;
 
     public void loginOrRegisterObligation(){
-        Console.WriteLine("To finish your reservation you need to login in or create an account first.");
+        Console.WriteLine("\nTo finish your reservation you need to login in or create an account first.");
         Console.WriteLine("(1) Login");
         Console.WriteLine("(2) Register");
-        Console.Write("Select an option:");
+        Console.Write("Select an option: ");
 
         string userChoice = Console.ReadLine();
 
@@ -48,7 +48,7 @@ public class ReservationMenuView
                 Console.WriteLine("Error: Please enter a valid table number.\n");
                 continue;
             }
-            else if (tableNumber >= tables.Count || tableNumber < 0)
+            else if (tableNumber > tables.Count || tableNumber <= 0)
             {
                 Console.WriteLine($"Table number {tableNumber} does not exist.\n");
                 continue;
@@ -137,16 +137,16 @@ public class ReservationMenuView
                 };
                 // Make the reservation for the selected table.
                 table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber, ReservationCode, Ultilities.roleManager.UserId);
-                Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
-                Console.WriteLine($"This is your reservation code:{ReservationCode} ");
-                System.Console.WriteLine("Press enter to continue...");
+                Console.WriteLine($"\nTable {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
+                Console.WriteLine($"This is your reservation code: {ReservationCode} ");
+                System.Console.WriteLine("\nPress enter to continue...");
                 Console.ReadLine();
 
                 break;
             }
             else
             {
-                Console.WriteLine($"Error: The selected table number {tableNumber} has a capacity of {table.Capacity} people.\n");
+                Console.WriteLine($"The selected table number {tableNumber} has a capacity of {table.Capacity} people.\n");
                 Console.WriteLine("You have two options:");
                 Console.WriteLine("(1) Choose another table");
                 Console.WriteLine("(2) Combine tables");
@@ -166,7 +166,7 @@ public class ReservationMenuView
 
                     if (choice != 1 && choice != 2)
                     {
-                        Console.WriteLine("Error: Invalid choice. Please enter either 1 or 2.\n");
+                        Console.WriteLine("Invalid choice. Please enter either 1 or 2.\n");
                         continue;
                     }
 
@@ -185,7 +185,7 @@ public class ReservationMenuView
 
                         if (string.IsNullOrEmpty(inputNewTable) || !int.TryParse(inputNewTable, out newTableNumber))
                         {
-                            Console.WriteLine("Error: Please enter a valid table number.\n");
+                            Console.WriteLine("Please enter a valid table number.\n");
                             continue;
                         }
 
@@ -208,15 +208,15 @@ public class ReservationMenuView
                         };
                         // Make the reservation for the new table
                         newTable.ReserveTable(firstName, lastName, amountOfPeople, time, newTableNumber, ReservationCode, Ultilities.roleManager.UserId);
-                        Console.WriteLine($"Table {newTable.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
-                        Console.WriteLine($"This is your reservation code:{ReservationCode} ");
-                        System.Console.WriteLine("Press enter to continue...");
+                        Console.WriteLine($"\nTable {newTable.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
+                        Console.WriteLine($"This is your reservation code: {ReservationCode} ");
+                        System.Console.WriteLine("\nPress enter to continue...");
                         Console.ReadLine();
                         break;
                     }
                     else
                     {
-                        Console.WriteLine($"Error: The selected table number {newTableNumber} has a capacity of {newTable.Capacity} people. Please enter a valid amount of people.\n");
+                        Console.WriteLine($"The selected table number {newTableNumber} has a capacity of {newTable.Capacity} people. Please enter a valid amount of people.\n");
                         continue;
                     }
                 }
@@ -281,8 +281,8 @@ public class ReservationMenuView
                     }
 
                     Console.WriteLine($" are reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
-                    Console.WriteLine($"This is your reservation code:{ReservationCode} ");
-                    System.Console.WriteLine("Press enter to continue...");
+                    Console.WriteLine($"This is your reservation code: {ReservationCode} ");
+                    System.Console.WriteLine("\nPress enter to continue...");
                     Console.ReadLine();
                     break;
                 }
