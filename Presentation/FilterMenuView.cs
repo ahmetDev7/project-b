@@ -31,10 +31,21 @@ public class FilterMenuView
             Console.WriteLine($"{(option == 3 ? decorator : "   ")}ingredient\u001b[0m");
             Console.WriteLine($"{(option == 4 ? decorator : "   ")}country\u001b[0m");
             Console.WriteLine($"{(option == 5 ? decorator : "   ")}search ingredient\u001b[0m");
-            Console.WriteLine($"{(option == 6 ? decorator : "   ")}Future Menu\u001b[0m");
-            Console.WriteLine($"{(option == 7 ? decorator : "   ")}Current Menu\u001b[0m");
-            Console.WriteLine($"{(option == 8 ? decorator : "   ")}Wine Menu\u001b[0m");
-            Console.WriteLine($"{(option == 9 ? decorator : "   ")}Back\u001b[0m");
+            int i =6;
+            if (CurrentMenu != "Current"){
+                Console.WriteLine($"{(option == i ? decorator : "   ")}Current Menu\u001b[0m");
+                i++;
+            }
+            if (CurrentMenu != "Future"){
+                Console.WriteLine($"{(option == i ? decorator : "   ")}Future Menu\u001b[0m");
+                i++;
+            }
+            if (CurrentMenu != "Wine"){
+                Console.WriteLine($"{(option == i ? decorator : "   ")}Wine Menu\u001b[0m");
+                i++;
+            }
+            
+            Console.WriteLine($"{(option == 8 ? decorator : "   ")}Back\u001b[0m");
 
             // Get user input
             key = Console.ReadKey(false);
@@ -75,25 +86,25 @@ public class FilterMenuView
         {
             FilterMenuView.SearchIngredient();
         }
-        else if (option == 6)
-        {
-            CurrentMenu = "Future";
-            dishes = CsvToClass("DataSources/FutureMenu.csv");
-            FilterMenuView.FilterOptions();
-        }
-        else if (option == 7)
+        else if (option == 6 && CurrentMenu !="Current")
         {
             CurrentMenu = "Current";
             dishes = CsvToClass("DataSources/Dishes.csv");
             FilterMenuView.FilterOptions();
         }
-        else if (option == 8)
+        else if (option == 7 && CurrentMenu !="Future"||option == 6 && CurrentMenu !="Future")
+        {
+            CurrentMenu = "Future";
+            dishes = CsvToClass("DataSources/FutureMenu.csv");
+            FilterMenuView.FilterOptions();
+        }
+        else if (option == 7 && CurrentMenu !="Wine")
         {
             CurrentMenu = "Wine";
             dishes = CsvToClass("DataSources/Wine.csv");
             FilterMenuView.FilterOptions();
         }
-        else if (option == 9)
+        else if (option == 8)
         {
             NavigationMenuView.Menu();
         }
@@ -144,13 +155,13 @@ public class FilterMenuView
         Console.WriteLine("\nUse ⬆️  and ⬇️  to navigate and press \u001b[32mEnter/Return\u001b[0m to select:");
         // Display instructions
         if(CurrentMenu == "Current"){
-        Console.WriteLine("\n \u001b[32mCurrent Menu");
+        Console.WriteLine("\n \u001b[32mCurrent Menu\u001b[0m");
         }
         else if(CurrentMenu == "Future"){
-        Console.WriteLine("\n \u001b[32mFuture Menu");
+        Console.WriteLine("\n \u001b[32mFuture Menu\u001b[0m");
         }
         else if(CurrentMenu == "Wine"){
-        Console.WriteLine("\n \u001b[32mWine Menu");
+        Console.WriteLine("\n \u001b[32mWine Menu\u001b[0m");
         }
         
     }
@@ -306,7 +317,6 @@ public class FilterMenuView
         // Print the unique categories to the console
 
         SetUpConsole();
-        Console.WriteLine("Sorted by price (from lowest to highest):");
         var decorator = $"\u001B[34m>  ";
         ConsoleKeyInfo key;
 
