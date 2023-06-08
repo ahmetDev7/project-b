@@ -76,7 +76,7 @@ public class FilterMenuView
         }
         else if (option == 6)
         {
-            dishes = CsvToClass("DataSources/NextMonthDishes.csv");
+            dishes = CsvToClass("DataSources/FutureMenu.csv");
             FilterOptions();
         }
         else if (option == 7)
