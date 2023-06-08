@@ -7,12 +7,12 @@ using System.Linq;
 public class FilterMenuView
 {
     public static string csvfile = "DataSources/Dishes.csv";
+    public static string CurrentMenu = "Current";
     public static List<Dish> dishes = CsvToClass(csvfile);
     public static void FilterOptions(string filter = "all")
     {
 
         SetUpConsole();
-
         // Initialize variables
         bool isSelected = false;
         var option = 1;
@@ -31,19 +31,20 @@ public class FilterMenuView
             Console.WriteLine($"{(option == 3 ? decorator : "   ")}ingredient\u001b[0m");
             Console.WriteLine($"{(option == 4 ? decorator : "   ")}country\u001b[0m");
             Console.WriteLine($"{(option == 5 ? decorator : "   ")}search ingredient\u001b[0m");
-            Console.WriteLine($"{(option == 6 ? decorator : "   ")}next month\u001b[0m");
-            Console.WriteLine($"{(option == 7 ? decorator : "   ")}this month\u001b[0m");
-            Console.WriteLine($"{(option == 8 ? decorator : "   ")}Back\u001b[0m");
+            Console.WriteLine($"{(option == 6 ? decorator : "   ")}Future Menu\u001b[0m");
+            Console.WriteLine($"{(option == 7 ? decorator : "   ")}Current Menu\u001b[0m");
+            Console.WriteLine($"{(option == 8 ? decorator : "   ")}Wine Menu\u001b[0m");
+            Console.WriteLine($"{(option == 9 ? decorator : "   ")}Back\u001b[0m");
 
             // Get user input
             key = Console.ReadKey(false);
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    option = option == 1 ? 8 : option - 1;
+                    option = option == 1 ? 9 : option - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    option = option == 8 ? 1 : option + 1;
+                    option = option == 9 ? 1 : option + 1;
                     break;
                 case ConsoleKey.Enter:
                     isSelected = true;
@@ -76,15 +77,23 @@ public class FilterMenuView
         }
         else if (option == 6)
         {
+            CurrentMenu = "Future";
             dishes = CsvToClass("DataSources/FutureMenu.csv");
-            FilterOptions();
+            FilterMenuView.FilterOptions();
         }
         else if (option == 7)
         {
+            CurrentMenu = "Current";
             dishes = CsvToClass("DataSources/Dishes.csv");
-            FilterOptions();
+            FilterMenuView.FilterOptions();
         }
         else if (option == 8)
+        {
+            CurrentMenu = "Wine";
+            dishes = CsvToClass("DataSources/Wine.csv");
+            FilterMenuView.FilterOptions();
+        }
+        else if (option == 9)
         {
             NavigationMenuView.Menu();
         }
@@ -117,7 +126,7 @@ public class FilterMenuView
                     Ingredients = parts[1].Split(','),
                     Category = parts[2],
                     Description = parts[3],
-                    Price = int.Parse(parts[4]),
+                    Price = double.Parse(parts[4]),
                     Country = parts[5],
                     Month = parts[6]
                 };
@@ -132,9 +141,18 @@ public class FilterMenuView
         Console.CursorVisible = false;
         Console.Clear();
         Console.ResetColor();
-
-        // Display instructions
         Console.WriteLine("\nUse ⬆️  and ⬇️  to navigate and press \u001b[32mEnter/Return\u001b[0m to select:");
+        // Display instructions
+        if(CurrentMenu == "Current"){
+        Console.WriteLine("\n \u001b[32mCurrent Menu");
+        }
+        else if(CurrentMenu == "Future"){
+        Console.WriteLine("\n \u001b[32mFuture Menu");
+        }
+        else if(CurrentMenu == "Wine"){
+        Console.WriteLine("\n \u001b[32mWine Menu");
+        }
+        
     }
 
 
@@ -342,7 +360,13 @@ public class FilterMenuView
         }
         else if (option == num)
         {
-            FilterMenuView.FilterCategory(type);
+            if(type == "all"){
+                FilterMenuView.FilterOptions();
+            }
+            else{
+                FilterMenuView.FilterCategory(type);
+            }
+            
         }
         else
         {
@@ -392,7 +416,7 @@ public class Dish
     public string[] Ingredients { get; set; }
     public string Category { get; set; }
     public string Description { get; set; }
-    public int Price { get; set; }
+    public double Price { get; set; }
     public string Country { get; set; }
     public string Month { get; set; }
 }
