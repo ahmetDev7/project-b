@@ -21,7 +21,9 @@ public class ReservationMenuView
                 string userName = Console.ReadLine()!;
                 System.Console.Write("Enter a password: ");
                 string passWord = Console.ReadLine()!;
-                AccountManager.AddUser(new User(userName, passWord, mail, "user", AccountManager.users.Last().UserId + 1));
+                int newUserid = AccountManager.users.Last().UserId + 1;
+                AccountManager.AddUser(new User(userName, passWord, mail, "user", newUserid));
+                Ultilities.roleManager.Login("user", newUserid);
                 break;
         }
     }
