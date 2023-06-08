@@ -12,14 +12,14 @@ public class DineTable : ISeatable
         Available = true;
     }
 
-    public void ReserveTable(string firstName, string lastName, int numberOfPeople, DateTime time, int tableNumber)
+    public void ReserveTable(string firstName, string lastName, int numberOfPeople, DateTime time, int tableNumber, int ReservationCode)
     {
         if (!Available)
         {
             throw new InvalidOperationException("Table is already reserved.");
         }
 
-        Reservation = new Reservation(firstName, lastName, numberOfPeople, time, tableNumber);
+        Reservation = new Reservation(firstName, lastName, numberOfPeople, time, tableNumber, ReservationCode);
         ReservationList.AddReservation(Reservation);
         Available = false;
     }

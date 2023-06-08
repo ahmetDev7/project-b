@@ -26,11 +26,12 @@ public class ReservationMenuView
         }
     }
 
-    public void ViewReservationMenu()
+   public void ViewReservationMenu()
     {
         // Ask for which table they want to go for.
         Ultilities.restaurant.PrintTableMap();
         int tableNumber;
+        int ReservationCode = Reservation.GenerateReservationCode();
 
         while (true)
         {
@@ -114,6 +115,7 @@ public class ReservationMenuView
 
         // Asks for the amount of people.
         int amountOfPeople;
+        
         while (true)
         {   
             Console.Write("Enter the number of people: ");
@@ -134,9 +136,9 @@ public class ReservationMenuView
                     loginOrRegisterObligation();
                 };
                 // Make the reservation for the selected table.
-                table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber);
+                table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber, ReservationCode);
                 Console.WriteLine($"Table {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
-                Console.WriteLine($"This is your reservation code: {table.Reservation.ReservationCode}");
+                Console.WriteLine($"This is your reservation code: ");
                 System.Console.WriteLine("Press enter to continue...");
                 Console.ReadLine();
 
@@ -205,7 +207,7 @@ public class ReservationMenuView
                             loginOrRegisterObligation();
                         };
                         // Make the reservation for the new table
-                        newTable.ReserveTable(firstName, lastName, amountOfPeople, time, newTableNumber);
+                        newTable.ReserveTable(firstName, lastName, amountOfPeople, time, newTableNumber, ReservationCode);
                         Console.WriteLine($"Table {newTable.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
                         System.Console.WriteLine("Press enter to continue...");
                         Console.ReadLine();
@@ -267,13 +269,13 @@ public class ReservationMenuView
                     if(!Ultilities.roleManager.IsLoggedIn){
                         loginOrRegisterObligation();
                     };
-                    table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber);
+                    table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber,ReservationCode);
                     Console.Write($"\nTables {table.TableNumber}");
 
                     foreach (int additionalTableNumber in additionalTableNumbers)
                     {
                         ISeatable additionalTable = tables[additionalTableNumber - 1];
-                        additionalTable.ReserveTable(firstName, lastName, amountOfPeople, time, additionalTableNumber);
+                        additionalTable.ReserveTable(firstName, lastName, amountOfPeople, time, additionalTableNumber,ReservationCode);
                         Console.Write($" and {additionalTableNumber}");
                     }
 
