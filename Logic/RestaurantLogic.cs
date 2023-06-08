@@ -42,6 +42,7 @@ public class RestaurantLogic
 
     public void DisplayReservationOverview()
     {
+        Console.Clear();
         Console.WriteLine($"{RestaurantName}'s reservations of the current day:");
         Console.WriteLine();
 
@@ -85,6 +86,7 @@ public class RestaurantLogic
     
     public void PrintTableMap()
 {
+    Console.Clear();
     Console.WriteLine("┌──────────────────────────────────────────────────────────────────────────────────────────┐");
     Console.WriteLine("│                                        Dining Area                                       │");
     Console.WriteLine("└──────────────────────────────────────────────────────────────────────────────────────────┘");

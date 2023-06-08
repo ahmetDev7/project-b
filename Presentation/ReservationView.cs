@@ -34,9 +34,10 @@ public class ReservationMenuView
         Ultilities.restaurant.PrintTableMap();
         int tableNumber;
         int ReservationCode = Reservation.GenerateReservationCode();
-
+        
         while (true)
-        {
+        {   
+            System.Console.WriteLine("Enter 0 to quit the reservation page!\n");
             Console.Write("Enter the table number you want to reserve: ");
             string input = Console.ReadLine();
 
@@ -49,6 +50,10 @@ public class ReservationMenuView
             {
                 Console.WriteLine("Error: Please enter a valid table number.\n");
                 continue;
+            }
+            else if (tableNumber == 0)
+            {
+                NavigationMenuView.Menu();
             }
             else if (tableNumber > tables.Count || tableNumber <= 0)
             {
