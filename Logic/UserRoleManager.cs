@@ -2,6 +2,7 @@ public class UserRoleManager
 {   
     private bool loggedIn;
     private string currentUserRole;
+    private int userId;
 
     public bool IsLoggedIn
     {
@@ -13,10 +14,16 @@ public class UserRoleManager
         get { return currentUserRole; }
     }
 
-    public void Login(string role)
+    public int UserId
+    {
+        get { return userId; }
+    }
+
+    public void Login(string role, int userid)
     {
         loggedIn = true;
         currentUserRole = role;
+        userId = userid;
     }
 
     public void Logout()

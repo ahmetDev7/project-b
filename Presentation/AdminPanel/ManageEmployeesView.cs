@@ -26,7 +26,7 @@ public class ManageEmployeesView
                     string employeeEmail = Console.ReadLine();
                     System.Console.Write("Type in employee password: ");
                     string employeePassword = Console.ReadLine();
-                    AccountManager.AddUser(new User(employeeName, employeeEmail, employeePassword, "employee"));
+                    AccountManager.AddUser(new User(employeeName, employeeEmail, employeePassword, "employee", AccountManager.users.Last().UserId + 1));
                     System.Console.WriteLine($"You successfully created a new employee account!");
                     System.Console.WriteLine("\nPress enter to continue...");
                     Console.ReadLine();
@@ -111,7 +111,7 @@ public class ManageEmployeesView
 
                         AccountManager.users.Remove(editFoundAccount);
                         AccountManager.RemoveUser(editFoundAccount);
-                        AccountManager.AddUser(new User(editEmployeeNameInsert, editEmployeePasswordInsert, editEmployeeEmailInsert, "employee"));
+                        AccountManager.AddUser(new User(editEmployeeNameInsert, editEmployeePasswordInsert, editEmployeeEmailInsert, "employee", AccountManager.users.Last().UserId + 1));
 
                         Console.WriteLine($"\nYou have succesfully changed {editEmployeeEmailInsert}!");
                         Console.ReadKey();

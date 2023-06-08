@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "FirstName": "xd",
+    "LastName": "xd",
+    "NumberOfPeople": 1,
+    "Time": "2023-06-08T16:30:00",
+    "TableNumber": 16,
+    "ReservationCode": 1913,
+    "UserId": 2
+  },
+  {
+    "FirstName": "ahmet",
+    "LastName": "xd",
+    "NumberOfPeople": 1,
+    "Time": "2023-06-08T16:30:00",
+    "TableNumber": 17,
+    "ReservationCode": 5716,
+    "UserId": 2
+  },
+  {
+    "FirstName": "xd",
+    "LastName": "xd",
+    "NumberOfPeople": 1,
+    "Time": "2023-06-08T16:20:00",
+    "TableNumber": 19,
+    "ReservationCode": 8286,
+    "UserId": 4
+  },
+  {
+    "FirstName": "hoi",
+    "LastName": "hallo",
+    "NumberOfPeople": 1,
+    "Time": "2023-06-08T16:20:00",
+    "TableNumber": 20,
+    "ReservationCode": 2940,
+    "UserId": 4
+  }
+]

@@ -13,7 +13,7 @@ public class LoginView
             {
                 Console.WriteLine("Invalid username or password, please try again.");
             } else{
-                Ultilities.roleManager.Login(foundAccount.Role);
+                Ultilities.roleManager.Login(foundAccount.Role, foundAccount.UserId);
                 break;
             }
         }

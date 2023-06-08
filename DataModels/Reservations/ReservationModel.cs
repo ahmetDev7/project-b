@@ -6,8 +6,9 @@ public class Reservation
     public DateTime Time { get; private set; }
     public int TableNumber { get; set; }
     public int ReservationCode { get; set; }
+    public int UserId { get; set; }
     // Constructor for reserving a single table.
-    public Reservation(string firstName, string lastName, int numberOfPeople, DateTime time, int tableNumber, int reservationCode)
+    public Reservation(string firstName, string lastName, int numberOfPeople, DateTime time, int tableNumber, int reservationCode, int userid)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -15,6 +16,7 @@ public class Reservation
         Time = time;
         TableNumber = tableNumber;
         ReservationCode = reservationCode;
+        UserId = userid;
     }
 
     public static int GenerateReservationCode()

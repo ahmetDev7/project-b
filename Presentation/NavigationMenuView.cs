@@ -40,7 +40,8 @@ public static class NavigationMenuView
                 Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Show Menu\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Show Map\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Restaurant information\u001b[0m");
-                Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Log Out\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Show Reservations\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Log Out\u001b[0m");
             }
             // Employee role has logged in.
             else if (Ultilities.roleManager.IsLoggedIn && Ultilities.roleManager.CurrentUserRole == "employee")
@@ -78,7 +79,7 @@ public static class NavigationMenuView
                         switch (Ultilities.roleManager.CurrentUserRole)
                         {
                             case "user":
-                                selectedOption = (selectedOption - 1 < 1) ? 5 : selectedOption - 1;
+                                selectedOption = (selectedOption - 1 < 1) ? 6 : selectedOption - 1;
                                 break;
                             case "employee":
                                 selectedOption = (selectedOption - 1 < 1) ? 3 : selectedOption - 1;
@@ -100,7 +101,7 @@ public static class NavigationMenuView
                         switch (Ultilities.roleManager.CurrentUserRole)
                         {
                             case "user":
-                                selectedOption = (selectedOption + 1 > 5) ? 1 : selectedOption + 1;
+                                selectedOption = (selectedOption + 1 > 6) ? 1 : selectedOption + 1;
                                 break;
                             case "employee":
                                 selectedOption = (selectedOption + 1 > 3) ? 1 : selectedOption + 1;
@@ -171,8 +172,14 @@ public static class NavigationMenuView
                                 Console.Clear();
                                 Ultilities.restaurantInfo.RestaurantInfoMenu();
                             }
-
+                            
                             else if (selectedOption == 5)
+                            {
+                                Console.Clear();
+                                Ultilities.cusResView.CustomerResViewMenu();
+                            }
+
+                            else if (selectedOption == 6)
                             {
                                 Ultilities.roleManager.Logout();
                             }

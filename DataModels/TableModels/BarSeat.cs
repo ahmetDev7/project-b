@@ -12,14 +12,14 @@ class BarSeat : ISeatable
         Available = true;
     }
 
-    public void ReserveTable(string firstName, string lastName, int numberOfPeople, DateTime time, int tableNumber, int reservationCode)
+    public void ReserveTable(string firstName, string lastName, int numberOfPeople, DateTime time, int tableNumber, int reservationCode, int userid)
     {
         if (!Available)
         {
             throw new InvalidOperationException("Table is already reserved.");
         }
 
-        Reservation = new Reservation(firstName, lastName, numberOfPeople, time, tableNumber, reservationCode);
+        Reservation = new Reservation(firstName, lastName, numberOfPeople, time, tableNumber, reservationCode, userid);
         ReservationList.AddReservation(Reservation);
         Available = false;
     }

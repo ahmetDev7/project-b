@@ -8,7 +8,7 @@ public class MakeNewAccountView
         string userName = Console.ReadLine()!;
         System.Console.Write("Enter a password: ");
         string passWord = Console.ReadLine()!;
-        AccountManager.AddUser(new User(userName, passWord, mail, "user"));
+        AccountManager.AddUser(new User(userName, passWord, mail, "user", AccountManager.users.Last().UserId + 1));
         System.Console.WriteLine($"Congrats {userName}! You successfully created your account!");
         System.Console.WriteLine("\nPress enter to continue...");
         Console.ReadLine();
