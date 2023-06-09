@@ -95,7 +95,7 @@ public class FilterMenuView
             dishes = CsvToClass("DataSources/Dishes.csv");
             FilterMenuView.FilterOptions();
         }
-        else if (option == 7 && CurrentMenu != "Future" || option == 6 && CurrentMenu != "Future")
+        else if (option == 7 && CurrentMenu != "Future" && CurrentMenu != "Current" || option == 6 && CurrentMenu != "Future")
         {
             CurrentMenu = "Future";
             dishes = CsvToClass("DataSources/FutureMenu.csv");
