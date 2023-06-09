@@ -27,24 +27,27 @@ public class FilterMenuView
             // Display menu options
             Console.SetCursorPosition(left, top);
             Console.WriteLine($"{(option == 1 ? decorator : "   ")}All\u001b[0m");
-            Console.WriteLine($"{(option == 2 ? decorator : "   ")}categories\u001b[0m");
-            Console.WriteLine($"{(option == 3 ? decorator : "   ")}ingredient\u001b[0m");
-            Console.WriteLine($"{(option == 4 ? decorator : "   ")}country\u001b[0m");
-            Console.WriteLine($"{(option == 5 ? decorator : "   ")}search ingredient\u001b[0m");
-            int i =6;
-            if (CurrentMenu != "Current"){
+            Console.WriteLine($"{(option == 2 ? decorator : "   ")}Categories\u001b[0m");
+            Console.WriteLine($"{(option == 3 ? decorator : "   ")}Ingredient\u001b[0m");
+            Console.WriteLine($"{(option == 4 ? decorator : "   ")}Country of Origin\u001b[0m");
+            Console.WriteLine($"{(option == 5 ? decorator : "   ")}Search Ingredient\u001b[0m");
+            int i = 6;
+            if (CurrentMenu != "Current")
+            {
                 Console.WriteLine($"{(option == i ? decorator : "   ")}Current Menu\u001b[0m");
                 i++;
             }
-            if (CurrentMenu != "Future"){
+            if (CurrentMenu != "Future")
+            {
                 Console.WriteLine($"{(option == i ? decorator : "   ")}Future Menu\u001b[0m");
                 i++;
             }
-            if (CurrentMenu != "Wine"){
+            if (CurrentMenu != "Wine")
+            {
                 Console.WriteLine($"{(option == i ? decorator : "   ")}Wine Menu\u001b[0m");
                 i++;
             }
-            
+
             Console.WriteLine($"{(option == 8 ? decorator : "   ")}Back\u001b[0m");
 
             // Get user input
@@ -52,10 +55,10 @@ public class FilterMenuView
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    option = option == 1 ? 9 : option - 1;
+                    option = option == 1 ? 8 : option - 1;
                     break;
                 case ConsoleKey.DownArrow:
-                    option = option == 9 ? 1 : option + 1;
+                    option = option == 8 ? 1 : option + 1;
                     break;
                 case ConsoleKey.Enter:
                     isSelected = true;
@@ -86,19 +89,19 @@ public class FilterMenuView
         {
             FilterMenuView.SearchIngredient();
         }
-        else if (option == 6 && CurrentMenu !="Current")
+        else if (option == 6 && CurrentMenu != "Current")
         {
             CurrentMenu = "Current";
             dishes = CsvToClass("DataSources/Dishes.csv");
             FilterMenuView.FilterOptions();
         }
-        else if (option == 7 && CurrentMenu !="Future"||option == 6 && CurrentMenu !="Future")
+        else if (option == 7 && CurrentMenu != "Future" || option == 6 && CurrentMenu != "Future")
         {
             CurrentMenu = "Future";
             dishes = CsvToClass("DataSources/FutureMenu.csv");
             FilterMenuView.FilterOptions();
         }
-        else if (option == 7 && CurrentMenu !="Wine")
+        else if (option == 7 && CurrentMenu != "Wine")
         {
             CurrentMenu = "Wine";
             dishes = CsvToClass("DataSources/Wine.csv");
@@ -154,16 +157,19 @@ public class FilterMenuView
         Console.ResetColor();
         Console.WriteLine("\nUse ⬆️  and ⬇️  to navigate and press \u001b[32mEnter/Return\u001b[0m to select:");
         // Display instructions
-        if(CurrentMenu == "Current"){
-        Console.WriteLine("\n \u001b[32mCurrent Menu\u001b[0m");
+        if (CurrentMenu == "Current")
+        {
+            Console.WriteLine("\n \u001b[32mCurrent Menu\u001b[0m");
         }
-        else if(CurrentMenu == "Future"){
-        Console.WriteLine("\n \u001b[32mFuture Menu\u001b[0m");
+        else if (CurrentMenu == "Future")
+        {
+            Console.WriteLine("\n \u001b[32mFuture Menu\u001b[0m");
         }
-        else if(CurrentMenu == "Wine"){
-        Console.WriteLine("\n \u001b[32mWine Menu\u001b[0m");
+        else if (CurrentMenu == "Wine")
+        {
+            Console.WriteLine("\n \u001b[32mWine Menu\u001b[0m");
         }
-        
+
     }
 
 
@@ -280,7 +286,7 @@ public class FilterMenuView
         }
         else if (type == "ingredient")
         {
-            sortedDishes = dishes.Where(dish => dish.Ingredients.Contains(sort)).ToList();
+            sortedDishes = dishes.Where(dish => dish.Ingredients.Contains(sort, StringComparer.OrdinalIgnoreCase)).ToList();
         }
         else if (type == "all")
         {
@@ -318,6 +324,7 @@ public class FilterMenuView
 
         SetUpConsole();
         var decorator = $"\u001B[34m>  ";
+        var Sorting = $"\u001b[32m> ";
         ConsoleKeyInfo key;
 
         // Initialize variables
@@ -331,16 +338,16 @@ public class FilterMenuView
         {
             int i = 2;
             Console.SetCursorPosition(left, top);
-            Console.WriteLine($"{(option == 0 ? decorator : "   ")}sort on price\u001b[0m");
-            Console.WriteLine($"{(option == 1 ? decorator : "   ")}sort on Title\u001b[0m");
+            Console.WriteLine($"{(option == 0 ? Sorting : "  ")}Sort on price\u001b[0m");
+            Console.WriteLine($"{(option == 1 ? Sorting : "  ")}Sort on Title\u001b[0m");
 
             foreach (var dish in sortedDishes)
             {
-                Console.WriteLine($"{(option == i ? decorator : "   ")}{dish.ID} {dish.Title} ({dish.Price}$)\u001b[0m");
+                Console.WriteLine($"{(option == i ? decorator : "   ")}{dish.Title} ({dish.Price}$)\u001b[0m");
                 i++;
             }
             num = i;
-            Console.WriteLine($"{(option == num ? decorator : "   ")}Back\u001b[0m");
+            Console.WriteLine($"{(option == num ? Sorting : "  ")}Back\u001b[0m");
 
             // Get user input
             key = Console.ReadKey(false);
@@ -370,13 +377,15 @@ public class FilterMenuView
         }
         else if (option == num)
         {
-            if(type == "all"){
+            if (type == "all")
+            {
                 FilterMenuView.FilterOptions();
             }
-            else{
+            else
+            {
                 FilterMenuView.FilterCategory(type);
             }
-            
+
         }
         else
         {
@@ -390,6 +399,7 @@ public class FilterMenuView
         //clears and setstup the console
         SetUpConsole();
         var decorator = $"\u001B[34m>  ";
+        var Sorting = $"\u001b[32m> ";
         ConsoleKeyInfo key;
 
         var option = 1;
@@ -399,13 +409,13 @@ public class FilterMenuView
         {
 
             Console.SetCursorPosition(left, top);
-            Console.WriteLine($"{dish.ID} {dish.Title} ({dish.Price}$)");
-            Console.WriteLine("Ingredients: " + string.Join(", ", dish.Ingredients));
-            Console.WriteLine("Category: " + dish.Category);
-            Console.WriteLine("Description: " + dish.Description);
-            Console.WriteLine("Country: " + dish.Country);
-            Console.WriteLine("Month: " + dish.Month);
-            Console.WriteLine($"{(option == 1 ? decorator : "   ")}Back\u001b[0m");
+            Console.WriteLine($"  {dish.Title} ({dish.Price}$)");
+            Console.WriteLine("   Ingredients: " + string.Join(", ", dish.Ingredients));
+            Console.WriteLine("   Category: " + dish.Category);
+            Console.WriteLine("   Country: " + dish.Country);
+            Console.WriteLine("   Month: " + dish.Month);
+            Console.WriteLine("   Description: " + dish.Description);
+            Console.WriteLine($"{(option == 1 ? Sorting : "  ")}Back\u001b[0m");
             key = Console.ReadKey(false);
             switch (key.Key)
             {
