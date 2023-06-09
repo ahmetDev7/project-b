@@ -286,7 +286,7 @@ public class FilterMenuView
         }
         else if (type == "ingredient")
         {
-            sortedDishes = dishes.Where(dish => dish.Ingredients.Contains(sort, StringComparer.OrdinalIgnoreCase)).ToList();
+            sortedDishes = dishes.Where(dish => dish.Ingredients.Any(ingredient => ingredient.IndexOf(sort, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
         }
         else if (type == "all")
         {
