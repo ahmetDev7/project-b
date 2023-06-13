@@ -1,4 +1,4 @@
-namespace LoginTest;
+namespace UnitTests;
 
 [TestClass]
 public class UnitTest1
