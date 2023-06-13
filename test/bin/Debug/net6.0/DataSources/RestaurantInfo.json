@@ -1,0 +1,15 @@
+[
+  {
+    "RestaurantName": "Jake's Restaurant",
+    "Description": "This is the restaurant of Jake...",
+    "OpeningHours": {
+      "Monday": "10am-22pm",
+      "Tuesday": "10am-22pm",
+      "Wednesday": "12am-2fdsaf32",
+      "Thursday": "10am-22pm",
+      "Friday": "10am-1am",
+      "Saturday": "10am-1am",
+      "Sunday": "Closed"
+    }
+  }
+]

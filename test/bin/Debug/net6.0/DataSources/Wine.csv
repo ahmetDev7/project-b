@@ -1,0 +1,18 @@
+Title;Ingredients;Category;Description;Price;Country;Month
+Chardonnay;Grapes,Lemon;White Wine;Chardonnay is a white wine that comes from the green-skinned grape variety of the same name;14;France;15 Years
+Merlot;Grapes;Red Wine;Merlot is a red wine known for its soft and velvety texture, with flavors of blackberries and plums;18;United States;10 Years
+Cabernet Sauvignon;Grapes;Red Wine;Cabernet Sauvignon is a full-bodied red wine with rich flavors of blackcurrant, cedar, and spice;20;Argentina;8 Years
+Pinot Noir;Grapes;Red Wine;Pinot Noir is a red wine with elegant flavors of cherries, raspberries, and a hint of earthiness;16;New Zealand;12 Years
+Sauvignon Blanc;Grapes,Citrus;White Wine;Sauvignon Blanc is a refreshing white wine with bright acidity and notes of tropical fruits and citrus;15;Australia;5 Years
+Malbec;Grapes;Red Wine;Malbec is a red wine with bold flavors of blackberries, plum, and dark chocolate, often associated with Argentina;22;Argentina;7 Years
+Syrah;Grapes;Red Wine;Syrah, also known as Shiraz, is a bold and spicy red wine with flavors of black fruits and black pepper;19;France;10 Years
+Riesling;Grapes;White Wine;Riesling is a white wine known for its aromatic profile, with notes of citrus, apricot, and honey;17;Germany;8 Years
+Zinfandel;Grapes;Red Wine;Zinfandel is a versatile red wine with flavors ranging from blackberry and raspberry to spicy pepper and vanilla;21;United States;9 Years
+Grenache;Grapes;Red Wine;Grenache is a red wine with fruity flavors of red berries and spices, often used in blends;18;Spain;7 Years
+Prosecco;Glera Grapes;Sparkling Wine;Prosecco is a sparkling wine known for its light and refreshing character, with notes of green apple and citrus;14;Italy;3 Years
+Chenin Blanc;Grapes;White Wine;Chenin Blanc is a versatile white wine with a range of flavors, from tropical fruits and honey to floral and mineral notes;16;South Africa;6 Years
+Malvasia;Grapes;White Wine;Malvasia is a white wine with aromatic and floral characteristics, often found in sweet or fortified styles;19;Portugal;10 Years
+Tempranillo;Grapes;Red Wine;Tempranillo is a red wine with flavors of red berries, plum, and vanilla, commonly associated with Spain;17;Spain;8 Years
+Sangiovese;Grapes;Red Wine;Sangiovese is a red wine known for its bright acidity and flavors of red cherries, herbs, and spices;18;Italy;9 Years
+Gewürztraminer;Grapes;White Wine;Gewürztraminer is a white wine with intense aromas of lychee, rose petals, and exotic spices;20;France;7 Years
+Viognier;Grapes;White Wine;Viognier is a white wine with rich and aromatic flavors of peach, apricot, and floral notes;15;United States;5 Years
