@@ -2,6 +2,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 [TestClass]
 public class ReservationTest
@@ -29,15 +31,31 @@ public class ReservationTest
         if(tableAvailable)
         {
            table.ReserveTable(firstNameInput, lastNameInput, numberOfPeopleInput, time, tableNumberInput, ReservationCode, Ultilities.roleManager.UserId);
-         
+         string jsonpath = "DataSources/Reservations.json";
+
+            // Read the JSON file
+            string jsonContent = File.ReadAllText(jsonpath);
+
+            // Create an empty JSON array
+            JArray jsonArray = new JArray();
+
+            // Write the empty JSON array back to the file
+            File.WriteAllText(jsonpath, jsonArray.ToString());
         }
         else
         {
+            string jsonpath = "DataSources/Reservations.json";
+
+        // Read the JSON file
+        string jsonContent = File.ReadAllText(jsonpath);
+
+        // Create an empty JSON array
+        JArray jsonArray = new JArray();
+
+        // Write the empty JSON array back to the file
+        File.WriteAllText(jsonpath, jsonArray.ToString());
             bool condition = false;
         Assert.IsTrue(condition, "The condition is false.");
         }
-
-
     }
-    //empty json file after test
 }
