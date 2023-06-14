@@ -8,7 +8,7 @@ public class FilterMenuView
 {
     public static string csvfile = "DataSources/Dishes.csv";
     public static string CurrentMenu = "Current";
-    public static List<Dish> dishes = CsvToClass(csvfile);
+    public static List<Dish> dishes = DishesDataAccess.CsvToClass(csvfile);
     public static void FilterOptions(string filter = "all")
     {
 
@@ -92,19 +92,19 @@ public class FilterMenuView
         else if (option == 6 && CurrentMenu != "Current")
         {
             CurrentMenu = "Current";
-            dishes = CsvToClass("DataSources/Dishes.csv");
+            dishes = DishesDataAccess.CsvToClass("DataSources/Dishes.csv");
             FilterMenuView.FilterOptions();
         }
         else if (option == 7 && CurrentMenu != "Future" && CurrentMenu != "Current" || option == 6 && CurrentMenu != "Future")
         {
             CurrentMenu = "Future";
-            dishes = CsvToClass("DataSources/FutureMenu.csv");
+            dishes = DishesDataAccess.CsvToClass("DataSources/FutureMenu.csv");
             FilterMenuView.FilterOptions();
         }
         else if (option == 7 && CurrentMenu != "Wine")
         {
             CurrentMenu = "Wine";
-            dishes = CsvToClass("DataSources/Wine.csv");
+            dishes = DishesDataAccess.CsvToClass("DataSources/Wine.csv");
             FilterMenuView.FilterOptions();
         }
         else if (option == 8)
@@ -121,33 +121,7 @@ public class FilterMenuView
         SortList("ingredient", ingredient);
 
     }
-    public static List<Dish> CsvToClass(string csvfile)
-    {
-        // Read the CSV file
-        var lines = File.ReadAllLines(csvfile);
 
-        // Parse the CSV data into Dish objects
-        int i = 1;
-        var dishes = lines
-            .Skip(1)
-            .Select(line =>
-            {
-                var parts = line.Split(';');
-                return new Dish
-                {
-                    ID = i++,
-                    Title = parts[0],
-                    Ingredients = parts[1].Split(','),
-                    Category = parts[2],
-                    Description = parts[3],
-                    Price = double.Parse(parts[4]),
-                    Country = parts[5],
-                    Month = parts[6]
-                };
-            })
-            .ToList();
-        return dishes;
-    }
     public static void SetUpConsole()
     {
         // Set up console
@@ -174,7 +148,7 @@ public class FilterMenuView
 
 
 
-    static List<string> GetUniqueCategories(List<Dish> dishes, string type)
+    public static List<string> GetUniqueCategories(List<Dish> dishes, string type)
     {
         List<string> categories = dishes.Select(dish => dish.Category).Distinct().ToList();
         if (type == "catagory")

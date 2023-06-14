@@ -1,39 +1,31 @@
 public static class DishesDataAccess
 {
-    public static void AddDishToMenu(string Title, string Ingredients, string Catagory, string Discription, string Price, string Country, string Month)
+       public static List<Dish> CsvToClass(string csvfile)
     {
-        try
-        {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter("DataSources/NextMonthDishes.csv", true))
-            {
-                file.WriteLine(Title + ";" + Ingredients + ";" + Catagory + ";" + Discription + ";" + Price + ";" + Country + ";" + Month);
-            }
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("This program did an oopsie :", ex);
-        }
-    }
-    public static void ShowInfoMenu(int line)
-    {
-        string filePaths = "DataSources/NextMonthDishes.csv";
-        string[] lines = File.ReadAllLines(filePaths);
-        string[] fields = lines[line].Split(';');
-        string Title = fields[0];
-        string Ingredients = fields[1];
-        string Catagory = fields[2];
-        string Discription = fields[3];
-        string price = fields[4];
-        string Country = fields[5];
-        string Month = fields[6];
+        // Read the CSV file
+        var lines = File.ReadAllLines(csvfile);
 
-        Console.WriteLine($"\u001b[0m{Title}\n€{price}\n{Ingredients}\n{Catagory} {Country}\n\n{Discription}");
-    }
-    public static string[] GetLines()
-    {
-        string filePath = "DataSources/NextMonthDishes.csv";
-        string[] lines = File.ReadAllLines(filePath);
-        return lines;
+        // Parse the CSV data into Dish objects
+        int i = 1;
+        var dishes = lines
+            .Skip(1)
+            .Select(line =>
+            {
+                var parts = line.Split(';');
+                return new Dish
+                {
+                    ID = i++,
+                    Title = parts[0],
+                    Ingredients = parts[1].Split(','),
+                    Category = parts[2],
+                    Description = parts[3],
+                    Price = double.Parse(parts[4]),
+                    Country = parts[5],
+                    Month = parts[6]
+                };
+            })
+            .ToList();
+        return dishes;
     }
 }
 public static class DishesDataAccessMonth
