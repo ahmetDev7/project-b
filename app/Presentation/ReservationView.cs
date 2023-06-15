@@ -36,11 +36,12 @@ public class ReservationMenuView
         int ReservationCode = Reservation.GenerateReservationCode();
 
         // Asks for the time of reservation.
-        bool validDate= false;
+        bool validDate = false;
         DateTime selectedDate = DateTime.MinValue; // Declare the variable outside the while loop
+
         while (!validDate)
         {
-            Console.Write("Enter the day you want to see (MM/dd/yyyy): ");
+            Console.Write("Enter the day you want to reserve (MM/dd/yyyy): ");
             string inputDate = Console.ReadLine();
 
             if (!DateTime.TryParseExact(inputDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out selectedDate))
@@ -48,6 +49,14 @@ public class ReservationMenuView
                 Console.WriteLine("Invalid date format. Please enter the date in MM/dd/yyyy format.\n");
                 continue;
             }
+
+            // Check if the selected date is prior to the current day
+            if (selectedDate < DateTime.Today)
+            {
+                Console.WriteLine("Invalid date. Please enter a future date.\n");
+                continue;
+            }
+
             validDate = true;
         }
         
