@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using static RemoveReservationView;
+using System.Globalization;
 
 public static class NavigationMenuView
 {
@@ -8,7 +9,6 @@ public static class NavigationMenuView
     {
         Console.OutputEncoding = Encoding.UTF8;
         Console.CursorVisible = false;
-        Console.Clear();
         (int left, int top) = Console.GetCursorPosition();
         int selectedOption = 1;
         bool isMenuOpen = true;
@@ -135,8 +135,9 @@ public static class NavigationMenuView
                         }
                         else if (selectedOption == 5)
                         {
-                            Ultilities.restaurant.PrintTableMap();
-                            System.Console.WriteLine("Press enter to continue...");
+                            DateTime date = GetDate();
+                            Ultilities.restaurant.PrintTableMap(date);
+                            System.Console.Write("Press enter to continue...");
                             Console.ReadKey();
                         }
                         else if (selectedOption == 6)
@@ -163,9 +164,10 @@ public static class NavigationMenuView
                             }
                             else if (selectedOption == 3)
                             {
-                                Ultilities.restaurant.PrintTableMap();
-                                System.Console.WriteLine("Press enter to continue...");
-                                Console.ReadKey();
+                                DateTime date = GetDate();
+                                Ultilities.restaurant.PrintTableMap(date);
+                                System.Console.WriteLine("\nPress enter to continue...");
+                                Console.ReadLine();
                             }
                             else if (selectedOption == 4)
                             {
@@ -236,5 +238,23 @@ public static class NavigationMenuView
                     break;
             }
         }
+    }
+    public static DateTime GetDate()
+    {
+        bool validDate= false;
+        DateTime selectedDate = DateTime.MinValue; // Declare the variable outside the while loop
+        while (!validDate)
+        {
+            Console.Write("Enter the day you want to see (MM/dd/yyyy): ");
+            string inputDate = Console.ReadLine();
+
+            if (!DateTime.TryParseExact(inputDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out selectedDate))
+            {
+                Console.WriteLine("Invalid date format. Please enter the date in MM/dd/yyyy format.\n");
+                continue;
+            }
+            validDate = true;
+        }
+        return selectedDate;
     }
 }

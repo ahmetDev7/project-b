@@ -7,35 +7,35 @@ public class RemoveReservationView
     RestaurantLogic restaurant = new("Restaurant");
 
     public void RemoveReservationMenu()
-    {
+    {   
+        DateTime date = DateTime.MinValue;
         while (true)
         {
-            restaurant.DisplayReservationOverview();
-            System.Console.WriteLine("(1) Remove reservation by number\n(2) Remove all reservations");
+            date = restaurant.DisplayReservationOverview();
+            System.Console.WriteLine("\n(1) Remove reservation by number\n(2) Remove all reservations");
             System.Console.Write("Enter your option: ");
             int userOption = int.Parse(Console.ReadLine()!);
             if (userOption == 1)
             {
-                RemoveReservationByNumber();
+                RemoveReservationByNumber(date);
                 break;
             }
             else if (userOption == 2)
             {
-                ReservationList.DeleteAllReservations();
+                ReservationList.DeleteAllReservations(date);
                 System.Console.WriteLine("\nSuccessfully deleted all reservations.\n");
                 break;
             }
         }
-        Console.Clear();
+        System.Console.WriteLine("\nPress enter to continue...");
+        Console.ReadLine();
     }
-    public void RemoveReservationByNumber()
+    public void RemoveReservationByNumber(DateTime date)
     {   
-        Console.WriteLine("Enter a table number to delete: ");
+        Console.Write("Enter a table number to delete: ");
         string userDeleteInput = Console.ReadLine();
         int selectedTable = int.Parse(userDeleteInput);
-        ReservationList.DeleteReservationByTableNumber(selectedTable);
-        restaurant.DisplayReservationOverview();
-        Console.WriteLine("Removed from reservations..");
-
+        ReservationList.DeleteReservationByTableNumber(selectedTable, date);
+        Console.WriteLine($"\nSuccessfully deleted table number {selectedTable} from the reservations.");
     }
 }

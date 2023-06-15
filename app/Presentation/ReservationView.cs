@@ -1,3 +1,4 @@
+using System.Globalization;
 public class ReservationMenuView
 {
     List<ISeatable> tables = Ultilities.restaurant.Seats;
@@ -28,16 +29,63 @@ public class ReservationMenuView
         }
     }
 
-   public void ViewReservationMenu()
+    public void ViewReservationMenu()
     {
-        // Ask for which table they want to go for.
-        Ultilities.restaurant.PrintTableMap();
+        Console.Clear();
         int tableNumber;
         int ReservationCode = Reservation.GenerateReservationCode();
+
+        // Asks for the time of reservation.
+        bool validDate = false;
+        DateTime selectedDate = DateTime.MinValue; // Declare the variable outside the while loop
+
+        while (!validDate)
+        {
+            Console.Write("Enter the day you want to reserve (MM/dd/yyyy): ");
+            string inputDate = Console.ReadLine();
+
+            if (!DateTime.TryParseExact(inputDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out selectedDate))
+            {
+                Console.WriteLine("Invalid date format. Please enter the date in MM/dd/yyyy format.\n");
+                continue;
+            }
+
+            // Check if the selected date is prior to the current day
+            if (selectedDate < DateTime.Today)
+            {
+                Console.WriteLine("Invalid date. Please enter a future date.\n");
+                continue;
+            }
+
+            validDate = true;
+        }
         
+        // Ask for which table they want to go for.
+        Ultilities.restaurant.PrintTableMap(selectedDate);
+
+        bool validTime = false;
+        DateTime selectedTime = DateTime.MinValue; // Declare the variable outside the while loop
+        while (!validTime)
+        {
+            Console.Write("Enter the time you want to visit (HH:mm): ");
+            string inputTime = Console.ReadLine();
+
+            if (!DateTime.TryParseExact(inputTime, "HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out selectedTime))
+            {
+                Console.WriteLine("Invalid time format. Please enter the time in HH:mm format.\n");
+                continue;
+            }
+            validTime = true;
+        }
+        
+        DateTime reservationDateTime = selectedDate.Date + selectedTime.TimeOfDay;
+        var SelectedDateReservations = ReservationList._reservations.Where(r => r.Time.Date == selectedDate);
+
+        // Ask for which table they want to go for.
+        Console.WriteLine($"Selected date and time: {reservationDateTime}");
         while (true)
         {   
-            System.Console.WriteLine("Enter 0 to quit the reservation page!\n");
+            System.Console.WriteLine("\nEnter 0 to quit the reservation page!\n");
             Console.Write("Enter the table number you want to reserve: ");
             string input = Console.ReadLine();
 
@@ -61,7 +109,7 @@ public class ReservationMenuView
                 continue;
             }
 
-            bool tableAvailable = !ReservationList._reservations.Any(reservation => reservation.TableNumber == tableNumber);
+            bool tableAvailable = !SelectedDateReservations.Any(reservation => reservation.TableNumber == tableNumber);
 
             if (!tableAvailable)
             {
@@ -74,31 +122,6 @@ public class ReservationMenuView
 
         // Find the table in the list with the matching table number.
         ISeatable table = tables[tableNumber - 1];
-
-        // Asks for the time of reservation.
-        bool validTime = false;
-        DateTime time = DateTime.MinValue;
-
-        while (!validTime)
-        {
-            Console.Write("Enter the reservation time (HH:mm): ");
-            string inputTime = Console.ReadLine();
-
-            try
-            {
-                time = DateTime.Parse(inputTime);
-                validTime = true; // Set validTime to true if parsing succeeds
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Invalid time format. Please enter the time in HH:mm format.\n");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred: " + ex.Message);
-                System.Console.WriteLine();
-            }
-        }
 
         // Asks for the first name.
         Console.Write("Enter your first name: ");
@@ -143,12 +166,11 @@ public class ReservationMenuView
                     loginOrRegisterObligation();
                 };
                 // Make the reservation for the selected table.
-                table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber, ReservationCode, Ultilities.roleManager.UserId);
-                Console.WriteLine($"\nTable {table.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
+                table.ReserveTable(firstName, lastName, amountOfPeople, reservationDateTime, tableNumber, ReservationCode, Ultilities.roleManager.UserId);
+                Console.WriteLine($"\nTable {table.TableNumber} is reserved for {firstName} {lastName} at {reservationDateTime.ToString("MM/dd/yyyy HH:mm")}\n");
                 Console.WriteLine($"This is your reservation code: {ReservationCode} ");
                 System.Console.WriteLine("\nPress enter to continue...");
                 Console.ReadLine();
-
                 break;
             }
             else
@@ -214,8 +236,8 @@ public class ReservationMenuView
                             loginOrRegisterObligation();
                         };
                         // Make the reservation for the new table
-                        newTable.ReserveTable(firstName, lastName, amountOfPeople, time, newTableNumber, ReservationCode, Ultilities.roleManager.UserId);
-                        Console.WriteLine($"\nTable {newTable.TableNumber} is reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
+                        newTable.ReserveTable(firstName, lastName, amountOfPeople, reservationDateTime, newTableNumber, ReservationCode, Ultilities.roleManager.UserId);
+                        Console.WriteLine($"\nTable {newTable.TableNumber} is reserved for {firstName} {lastName} at {reservationDateTime.ToString("MM/dd/yyyy HH:mm")}\n");
                         Console.WriteLine($"This is your reservation code: {ReservationCode} ");
                         System.Console.WriteLine("\nPress enter to continue...");
                         Console.ReadLine();
@@ -277,17 +299,17 @@ public class ReservationMenuView
                     if(!Ultilities.roleManager.IsLoggedIn){
                         loginOrRegisterObligation();
                     };
-                    table.ReserveTable(firstName, lastName, amountOfPeople, time, tableNumber,ReservationCode,Ultilities.roleManager.UserId);
+                    table.ReserveTable(firstName, lastName, amountOfPeople, reservationDateTime, tableNumber,ReservationCode,Ultilities.roleManager.UserId);
                     Console.Write($"\nTables {table.TableNumber}");
 
                     foreach (int additionalTableNumber in additionalTableNumbers)
                     {
                         ISeatable additionalTable = tables[additionalTableNumber - 1];
-                        additionalTable.ReserveTable(firstName, lastName, amountOfPeople, time, additionalTableNumber,ReservationCode,Ultilities.roleManager.UserId);
+                        additionalTable.ReserveTable(firstName, lastName, amountOfPeople, reservationDateTime, additionalTableNumber,ReservationCode,Ultilities.roleManager.UserId);
                         Console.Write($" and {additionalTableNumber}");
                     }
 
-                    Console.WriteLine($" are reserved for {firstName} {lastName} at {time.ToString("HH:mm")}\n");
+                    Console.WriteLine($" are reserved for {firstName} {lastName} at {reservationDateTime.ToString("MM/dd/yyyy HH:mm")}\n");
                     Console.WriteLine($"This is your reservation code: {ReservationCode} ");
                     System.Console.WriteLine("\nPress enter to continue...");
                     Console.ReadLine();
@@ -295,6 +317,5 @@ public class ReservationMenuView
                 }
             }
         }
-        Console.Clear();
     }
 }
