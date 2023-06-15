@@ -1,48 +1,42 @@
 public static class DishesDataAccess
 {
-    public static void AddDishToMenu(string Title, string Ingredients, string Catagory, string Discription, string Price, string Country, string Month)
+       public static List<Dish> CsvToClass(string csvfile)
     {
-        try
-        {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter("DataSources/NextMonthDishes.csv", true))
-            {
-                file.WriteLine(Title + ";" + Ingredients + ";" + Catagory + ";" + Discription + ";" + Price + ";" + Country + ";" + Month);
-            }
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("This program did an oopsie :", ex);
-        }
-    }
-    public static void ShowInfoMenu(int line)
-    {
-        string filePaths = "DataSources/NextMonthDishes.csv";
-        string[] lines = File.ReadAllLines(filePaths);
-        string[] fields = lines[line].Split(';');
-        string Title = fields[0];
-        string Ingredients = fields[1];
-        string Catagory = fields[2];
-        string Discription = fields[3];
-        string price = fields[4];
-        string Country = fields[5];
-        string Month = fields[6];
+        // Read the CSV file
+        var lines = File.ReadAllLines(csvfile);
 
-        Console.WriteLine($"\u001b[0m{Title}\n€{price}\n{Ingredients}\n{Catagory} {Country}\n\n{Discription}");
-    }
-    public static string[] GetLines()
-    {
-        string filePath = "DataSources/NextMonthDishes.csv";
-        string[] lines = File.ReadAllLines(filePath);
-        return lines;
+        // Parse the CSV data into Dish objects
+        int i = 1;
+        var dishes = lines
+            .Skip(1)
+            .Select(line =>
+            {
+                var parts = line.Split(';');
+                return new Dish
+                {
+                    ID = i++,
+                    Title = parts[0],
+                    Ingredients = parts[1].Split(','),
+                    Category = parts[2],
+                    Description = parts[3],
+                    Price = double.Parse(parts[4]),
+                    Country = parts[5],
+                    Month = parts[6]
+                };
+            })
+            .ToList();
+        return dishes;
     }
 }
+
 public static class DishesDataAccessMonth
 {
-        public static bool FutureMenuExists()
+
+        public static bool FutureMenuExists(string filePath = "DataSources/FutureMenu.csv")
         {
-            return File.Exists("DataSources/FutureMenu.csv");
+            return File.Exists(filePath);
         }
-        public static void ShowFutureMenu()
+        public static void ShowFutureMenu(string filePath = "DataSources/FutureMenu.csv")
     {
         if (!FutureMenuExists())
         {
@@ -50,8 +44,6 @@ public static class DishesDataAccessMonth
             Console.ReadLine();
             return;
         }
-
-        string filePath = "DataSources/FutureMenu.csv";
 
         if (File.Exists(filePath))
         {
@@ -86,41 +78,47 @@ public static class DishesDataAccessMonth
         }
     }
 
-        public static void AddDishToFutureMenu(string title, string ingredients, string category, string description, string price, string country, string month)
+        public static void AddDishToFutureMenu(string title, string ingredients, string category, string description, string price, string country, string month, string filePath = "DataSources/FutureMenu.csv")
     {
         try
         {
-            string filePath = "DataSources/FutureMenu.csv";
 
-            // Check if the file exists
-            bool fileExists = File.Exists(filePath);
+        // Check if the file exists
+        bool fileExists = File.Exists(filePath);
 
-            // Create a new file or append to an existing file
-            using (StreamWriter file = new StreamWriter(filePath, true))
-            {
-                // If the file is newly created, write the header
-                if (!fileExists)
-                {
-                    file.WriteLine("Title;Ingredients;Category;Description;Price;Country;Month");
-                }
+        // Read existing lines from the file
+        List<string> lines = new List<string>();
 
-                // Write the new dish entry
-                file.WriteLine($"{title};{ingredients};{category};{description};{price};{country};{month}");
-            }
-
-            Console.WriteLine("Dish added to the Future Menu.");
-        }
-        catch (Exception ex)
+        if (fileExists)
         {
-            throw new ApplicationException("An error occurred while adding the dish to the Future Menu.", ex);
+            lines = File.ReadAllLines(filePath).ToList();
         }
+
+        // Insert the new line at the appropriate position
+        if (lines.Count <= 1 || string.IsNullOrEmpty(lines[1]))
+        {
+            lines.Insert(1, $"{title};{ingredients};{category};{description};{price};{country};{month}");
+        }
+        else
+        {
+            lines.Add($"{title};{ingredients};{category};{description};{price};{country};{month}");
+        }
+
+        // Write the updated lines back to the file
+        File.WriteAllLines(filePath, lines);
+
+        Console.WriteLine("Dish added to the Future Menu.");
+    }
+    catch (Exception ex)
+    {
+        throw new ApplicationException("An error occurred while adding the dish to the Future Menu.", ex);
+    }
     }
 
-        public static void EditDishOnFutureMenu(int line, string title, string ingredients, string category, string description, string price, string country, string month)
+        public static void EditDishOnFutureMenu(int line, string title, string ingredients, string category, string description, string price, string country, string month, string filePath = "DataSources/FutureMenu.csv")
         {
             try
             {
-                string filePath = "DataSources/FutureMenu.csv";
 
                 if (!FutureMenuExists())
                 {
@@ -149,9 +147,9 @@ public static class DishesDataAccessMonth
             }
         }
 
-            public static void ShowDishTitles()
+            public static void ShowDishTitles(string filePath = "DataSources/FutureMenu.csv")
     {
-        string[] lines = File.ReadAllLines("DataSources/FutureMenu.csv");
+        string[] lines = File.ReadAllLines(filePath);
 
         Console.WriteLine("Dish Titles:");
 
@@ -163,12 +161,10 @@ public static class DishesDataAccessMonth
             Console.WriteLine($"{i}. {title}");
         }
     }
-    public static void DeleteMenuFile()
+    public static void DeleteMenuFile(string filePath = "DataSources/FutureMenu.csv")
 {
     try
     {
-        string filePath = "DataSources/FutureMenu.csv";
-
         // Check if the file exists
         if (File.Exists(filePath))
         {
@@ -187,5 +183,4 @@ public static class DishesDataAccessMonth
     }
 }
 }
-
 

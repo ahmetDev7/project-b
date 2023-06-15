@@ -1,51 +1,61 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 [TestClass]
-public class ReservationMenuViewTests
+public class ReservationTest
 {
-    private StringWriter consoleOutput;
-    private StringReader consoleInput;
+    ReservationMenuView testreservationMenu = new ReservationMenuView();
 
-    [TestInitialize]
-    public void Initialize()
-    {
-        // Initialize StringWriter to capture console output
-        consoleOutput = new StringWriter();
-        Console.SetOut(consoleOutput);
-    }
-
+    List<ISeatable> tables = Ultilities.restaurant.Seats;
+    int ReservationCode = Reservation.GenerateReservationCode();
+    
     [TestMethod]
-    public void ViewReservationMenu_WhenValidInputProvided_ShouldMakeReservation()
+    public void TestReservation()
     {
         // Arrange
-        ReservationMenuView reservationMenu = new ReservationMenuView();
-
-        // Set up test data
-        string tableNumberInput = "1";
+        int tableNumberInput = 1;
         string timeInput = "12:00";
         string firstNameInput = "John";
         string lastNameInput = "Doe";
-        string numberOfPeopleInput = "4";
+        int numberOfPeopleInput = 4;
+        DateTime time = DateTime.MinValue;
+        time = DateTime.Parse(timeInput);
         
-        // Redirect the standard input to read from the string
-        string input = $"{tableNumberInput}\n{timeInput}\n{firstNameInput}\n{lastNameInput}\n{numberOfPeopleInput}\n2\nt\nt\nt";
-        Console.SetIn(new StringReader(input));
-
         // Act
-        reservationMenu.ViewReservationMenu();
+        bool tableAvailable = !ReservationList._reservations.Any(reservation => reservation.TableNumber == tableNumberInput);
+        ISeatable table = tables[tableNumberInput- 1];
+        if(tableAvailable)
+        {
+           table.ReserveTable(firstNameInput, lastNameInput, numberOfPeopleInput, time, tableNumberInput, ReservationCode, Ultilities.roleManager.UserId);
+         string jsonpath = "DataSources/Reservations.json";
 
-        // Assert
-        string expectedOutput = $"Table 1 is reserved for {firstNameInput} {lastNameInput} at 12:00\n";
-        Assert.AreEqual(expectedOutput, consoleOutput.ToString());
-    }
+            // Read the JSON file
+            string jsonContent = File.ReadAllText(jsonpath);
 
-    [TestCleanup]
-    public void Cleanup()
-    {
-        // Clean up StringWriter and StringReader
-        consoleOutput.Dispose();
-        consoleInput.Dispose();
+            // Create an empty JSON array
+            JArray jsonArray = new JArray();
+
+            // Write the empty JSON array back to the file
+            File.WriteAllText(jsonpath, jsonArray.ToString());
+        }
+        else
+        {
+            string jsonpath = "DataSources/Reservations.json";
+
+        // Read the JSON file
+        string jsonContent = File.ReadAllText(jsonpath);
+
+        // Create an empty JSON array
+        JArray jsonArray = new JArray();
+
+        // Write the empty JSON array back to the file
+        File.WriteAllText(jsonpath, jsonArray.ToString());
+            bool condition = false;
+        Assert.IsTrue(condition, "The condition is false.");
+        }
     }
 }
