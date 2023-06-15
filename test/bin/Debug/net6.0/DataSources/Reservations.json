@@ -79,5 +79,14 @@
     "TableNumber": 18,
     "ReservationCode": 9327,
     "UserId": 5
+  },
+  {
+    "FirstName": "Dennis",
+    "LastName": "Zhu",
+    "NumberOfPeople": 4,
+    "Time": "2023-06-14T13:30:00",
+    "TableNumber": 1,
+    "ReservationCode": 1443,
+    "UserId": 0
   }
 ]

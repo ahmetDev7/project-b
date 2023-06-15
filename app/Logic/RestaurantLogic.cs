@@ -1,4 +1,5 @@
 using static ReservationList;
+using System.Globalization;
 
 public class RestaurantLogic
 {   
@@ -40,21 +41,36 @@ public class RestaurantLogic
 
     public RestaurantLogic(string restaurantName) => RestaurantName = restaurantName;
 
-    public void DisplayReservationOverview()
-    {
-        Console.Clear();
-        Console.WriteLine($"{RestaurantName}'s reservations of the current day:");
-        Console.WriteLine();
+    public DateTime DisplayReservationOverview()
+    {   
+        bool validDate = false;
+        DateTime selectedDate = DateTime.MinValue;
+        
+        while (!validDate)
+        {
+            Console.Write("Enter the day you want to see (MM/dd/yyyy): ");
+            string inputDate = Console.ReadLine();
+            
+            if (!DateTime.TryParseExact(inputDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out selectedDate))
+            {
+                Console.WriteLine("Invalid date format. Please enter the date in MM/dd/yyyy format.\n");
+                continue;
+            }
+            validDate = true;
+        }
+        
+        // Filter reservations for the selected date
+        var SelectedDateReservations = _reservations.Where(r => r.Time.Date == selectedDate.Date);
 
         // Display the layout of the restaurant's Seats.
-        Console.WriteLine("Reservations:");
+        Console.WriteLine($"{RestaurantName}'s reservations for {selectedDate.ToString("MM/dd/yyyy")}:");
         Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+------------+");
         Console.WriteLine("|    Seat #     |  Reserved By Name    |  Amount Of People |  Time arriving |  Res. Code |   Status   |");
         Console.WriteLine("+---------------+----------------------+-------------------+----------------+------------+------------+");
         foreach (var Seat in Seats)
         {
             // Check if the reservation is for the current table
-            var reservation = _reservations.FirstOrDefault(r => r.TableNumber == Seat.TableNumber);
+            var reservation = SelectedDateReservations.FirstOrDefault(r => r.TableNumber == Seat.TableNumber);
             if (reservation != null)
             {
                 string reservationName = reservation.FirstName ?? "-";
@@ -82,122 +98,127 @@ public class RestaurantLogic
         Console.WriteLine("  - Available: Seat is unoccupied and available for seating.");
         Console.WriteLine("  - Occupied: Seat is currently occupied by guests.");
         Console.WriteLine("  - Out of Order: Seat is currently unavailable due to maintenance or other issues.");
+
+        return selectedDate;
     }
     
-    public void PrintTableMap()
-{
-    Console.Clear();
-    Console.WriteLine("┌──────────────────────────────────────────────────────────────────────────────────────────┐");
-    Console.WriteLine("│                                        Dining Area                                       │");
-    Console.WriteLine("└──────────────────────────────────────────────────────────────────────────────────────────┘");
-
-    // Iterate through the list of seats
-    for (int i = 0; i < Seats.Count; i++)
+    public void PrintTableMap(DateTime date)
     {
-        ISeatable seat = Seats[i];
+        Console.Clear();
+        var SelectedDateReservations = _reservations.Where(r => r.Time.Date == date);
 
-        // Check if the seat is not a BarSeat, print it in the dining area
-        if (seat.GetType() != typeof(BarSeat))
+        Console.WriteLine($"{RestaurantName}'s reservations for {date.ToString("MM/dd/yyyy")}:");
+        Console.WriteLine("┌──────────────────────────────────────────────────────────────────────────────────────────┐");
+        Console.WriteLine("│                                        Dining Area                                       │");
+        Console.WriteLine("└──────────────────────────────────────────────────────────────────────────────────────────┘");
+
+        // Iterate through the list of seats
+        for (int i = 0; i < Seats.Count; i++)
         {
-            // Check if the table number is present in the reservations JSON file
-            bool isTableReserved = _reservations.Any(r => r.TableNumber == seat.TableNumber);
+            ISeatable seat = Seats[i];
 
-            // Print the table number and capacity
-            Console.Write($"  ");
-
-            // Print the seats based on the capacity
-            for (int j = 0; j < seat.Capacity; j++)
+            // Check if the seat is not a BarSeat, print it in the dining area
+            if (seat.GetType() != typeof(BarSeat))
             {
-                Console.Write(" ");
+                // Check if the table number is present in the reservations JSON file
+                bool isTableReserved = SelectedDateReservations.Any(r => r.TableNumber == seat.TableNumber);
 
-                if (isTableReserved)
+                // Print the table number and capacity
+                Console.Write($"  ");
+
+                // Print the seats based on the capacity
+                for (int j = 0; j < seat.Capacity; j++)
                 {
-                    var reservation = _reservations.FirstOrDefault(r => r.TableNumber == seat.TableNumber);
+                    Console.Write(" ");
 
-                    if (reservation != null && reservation.NumberOfPeople > j)
+                    if (isTableReserved)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("☒");
+                        var reservation = SelectedDateReservations.FirstOrDefault(r => r.TableNumber == seat.TableNumber);
+
+                        if (reservation != null && reservation.NumberOfPeople > j)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("☒");
+                        }
+                        else
+                        {
+                            Console.Write("☐");
+                        }
                     }
                     else
                     {
-                        Console.Write("☐");
+                        if (j < seat.Capacity)
+                        {
+                            Console.Write("☐");
+                        }
+                        else
+                        {
+                            Console.Write(" ");
+                        }
                     }
+
+                    Console.ResetColor();
                 }
-                else
+
+                Console.WriteLine("");
+                Console.WriteLine("  _______________ ");
+                Console.WriteLine($" │   Table {seat.TableNumber.ToString().PadLeft(2)}    │  ");
+                Console.WriteLine(" └───────────────┘ \n");
+            }
+        }
+
+        // Get the list of bar seats and print them
+        var BarSeats = Seats.Where(s => s.GetType() == typeof(BarSeat)).ToList();
+        if (BarSeats.Any())
+        {
+            Console.Write("  ");
+            for (int i = 0; i < BarSeats.Count; i++)
+            {
+                ISeatable seat = BarSeats[i];
+
+                // Check if the table number is present in the reservations JSON file
+                bool isTableReserved = SelectedDateReservations.Any(r => r.TableNumber == seat.TableNumber);
+
+                for (int j = 0; j < seat.Capacity; j++)
                 {
-                    if (j < seat.Capacity)
+                    Console.Write(" ");
+
+                    if (isTableReserved)
                     {
-                        Console.Write("☐");
+                        var reservation = SelectedDateReservations.FirstOrDefault(r => r.TableNumber == seat.TableNumber);
+
+                        if (reservation != null && reservation.NumberOfPeople > j)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write($"{seat.TableNumber.ToString().PadLeft(2)}☒");
+                        }
+                        else
+                        {
+                            Console.Write($"{seat.TableNumber.ToString().PadLeft(2)}☐");
+                        }
                     }
                     else
                     {
-                        Console.Write(" ");
+                        if (j < seat.Capacity)
+                        {
+                            Console.Write($"{seat.TableNumber.ToString().PadLeft(2)}☐");
+                        }
+                        else
+                        {
+                            Console.Write(" ");
+                        }
                     }
+
+                    Console.ResetColor();
                 }
 
-                Console.ResetColor();
+                Console.Write("    ");
             }
 
             Console.WriteLine("");
-            Console.WriteLine("  _______________ ");
-            Console.WriteLine($" │   Table {seat.TableNumber.ToString().PadLeft(2)}    │  ");
-            Console.WriteLine(" └───────────────┘ \n");
+            Console.WriteLine("  ________________________________________________________________  ");
+            Console.WriteLine($" │                              BAR                               │   ");
+            Console.WriteLine(" └────────────────────────────────────────────────────────────────┘ \n");
         }
     }
-
-    // Get the list of bar seats and print them
-    var BarSeats = Seats.Where(s => s.GetType() == typeof(BarSeat)).ToList();
-    if (BarSeats.Any())
-    {
-        Console.Write("  ");
-        for (int i = 0; i < BarSeats.Count; i++)
-        {
-            ISeatable seat = BarSeats[i];
-
-            // Check if the table number is present in the reservations JSON file
-            bool isTableReserved = _reservations.Any(r => r.TableNumber == seat.TableNumber);
-
-            for (int j = 0; j < seat.Capacity; j++)
-            {
-                Console.Write(" ");
-
-                if (isTableReserved)
-                {
-                    var reservation = _reservations.FirstOrDefault(r => r.TableNumber == seat.TableNumber);
-
-                    if (reservation != null && reservation.NumberOfPeople > j)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write($"{seat.TableNumber.ToString().PadLeft(2)}☒");
-                    }
-                    else
-                    {
-                        Console.Write($"{seat.TableNumber.ToString().PadLeft(2)}☐");
-                    }
-                }
-                else
-                {
-                    if (j < seat.Capacity)
-                    {
-                        Console.Write($"{seat.TableNumber.ToString().PadLeft(2)}☐");
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
-                }
-
-                Console.ResetColor();
-            }
-
-            Console.Write("    ");
-        }
-
-        Console.WriteLine("");
-        Console.WriteLine("  ________________________________________________________________  ");
-        Console.WriteLine($" │                              BAR                               │   ");
-        Console.WriteLine(" └────────────────────────────────────────────────────────────────┘ \n");
-    }
-}
 }

@@ -14,3 +14,4 @@ public static class AccountManager
     }
     public static void GetUsers() => users.ForEach(x => System.Console.WriteLine($"Username: {x.UserName}\nEmail: {x.Mail}\n"));
 }
+
