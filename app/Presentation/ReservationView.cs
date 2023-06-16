@@ -109,13 +109,15 @@ public class ReservationMenuView
                 continue;
             }
 
-            bool tableAvailable = !SelectedDateReservations.Any(reservation => reservation.TableNumber == tableNumber);
+            // bool tableAvailable = !SelectedDateReservations.Any(reservation => reservation.TableNumber == tableNumber);
+            bool tableAvailable = !SelectedDateReservations.Any(reservation => reservation.TableNumber == tableNumber && reservation.ReservationCode != ReservationCode);
 
             if (!tableAvailable)
             {
-                Console.WriteLine($"Table number {tableNumber} is not available.\nPlease choose another table.\n");
+                Console.WriteLine($"Table number {tableNumber} is not available for this reservation.\nPlease choose another table.\n");
                 continue;
             }
+
             break;
         }
 
@@ -224,6 +226,15 @@ public class ReservationMenuView
                             continue;
                         }
 
+                        // Check table availability for the selected table
+                        bool newTableAvailable = !SelectedDateReservations.Any(reservation => reservation.TableNumber == newTableNumber && reservation.ReservationCode != ReservationCode);
+
+                        if (!newTableAvailable)
+                        {
+                            Console.WriteLine($"Table number {newTableNumber} is not available for this reservation.\nPlease choose another table.\n");
+                            continue;
+                        }
+
                         break;
                     }
 
@@ -232,14 +243,15 @@ public class ReservationMenuView
 
                     if (amountOfPeople <= newTable.Capacity)
                     {
-                        if(!Ultilities.roleManager.IsLoggedIn){
-                            loginOrRegisterObligation();
-                        };
                         // Make the reservation for the new table
+                        if (!Ultilities.roleManager.IsLoggedIn)
+                        {
+                            loginOrRegisterObligation();
+                        }
                         newTable.ReserveTable(firstName, lastName, amountOfPeople, reservationDateTime, newTableNumber, ReservationCode, Ultilities.roleManager.UserId);
                         Console.WriteLine($"\nTable {newTable.TableNumber} is reserved for {firstName} {lastName} at {reservationDateTime.ToString("MM/dd/yyyy HH:mm")}\n");
                         Console.WriteLine($"This is your reservation code: {ReservationCode} ");
-                        System.Console.WriteLine("\nPress enter to continue...");
+                        Console.WriteLine("\nPress enter to continue...");
                         Console.ReadLine();
                         break;
                     }
@@ -249,6 +261,7 @@ public class ReservationMenuView
                         continue;
                     }
                 }
+
                 if (choice == 2)
                 {
                     // Combine tables
@@ -272,49 +285,63 @@ public class ReservationMenuView
                             continue;
                         }
 
-                        if (ReservationList._reservations.Any(reservation => reservation.TableNumber == additionalTableNumber))
-                        {   
-                            System.Console.WriteLine($"Table number {additionalTableNumber} is already reserved. Please choose a different table.\n");
+                        if (additionalTableNumber >= tables.Count || additionalTableNumber < 0)
+                        {
+                            Console.WriteLine($"Table number {additionalTableNumber} does not exist.\n");
                             continue;
                         }
-    
-                        ISeatable additionalTable = tables[additionalTableNumber];
+
+                        // Check table availability for the additional table
+                        bool additionalTableAvailable = !SelectedDateReservations.Any(reservation => reservation.TableNumber == additionalTableNumber && reservation.ReservationCode != ReservationCode);
+
+                        if (!additionalTableAvailable)
+                        {
+                            Console.WriteLine($"Table number {additionalTableNumber} is not available for this reservation.\nPlease choose another table.\n");
+                            continue;
+                        }
+
+                        ISeatable additionalTable = tables[additionalTableNumber - 1];
 
                         totalCapacity += additionalTable.Capacity;
                         additionalTableNumbers.Add(additionalTableNumber);
 
                         if (amountOfPeople > totalCapacity)
-                        {   
-                            System.Console.Write($"\nTable number {tableNumber}");
-                            for (int i = 0; i < additionalTableNumbers.Count(); i++)
+                        {
+                            Console.Write($"\nTable number {tableNumber}");
+                            foreach (int number in additionalTableNumbers)
                             {
-                                System.Console.Write($" and {additionalTableNumbers[i]}");
+                                Console.Write($" and {number}");
                             }
-                            System.Console.WriteLine($" totals the capacity of {totalCapacity} people, do not reach the desired amount of {amountOfPeople} people.");
-                            System.Console.WriteLine($"You have {amountOfPeople - totalCapacity} more {(amountOfPeople - totalCapacity == 1 ? "person" : "people")}!");
-                            System.Console.WriteLine("Choose another table.\n");
+                            Console.WriteLine($" totals the capacity of {totalCapacity} people and does not reach the desired amount of {amountOfPeople} people.");
+                            Console.WriteLine($"You need {amountOfPeople - totalCapacity} more {(amountOfPeople - totalCapacity == 1 ? "person" : "people")}!");
+                            Console.WriteLine("Choose another table.\n");
                         }
                     }
+
                     // Make the reservation for the combined tables
-                    if(!Ultilities.roleManager.IsLoggedIn){
+                    if (!Ultilities.roleManager.IsLoggedIn)
+                    {
                         loginOrRegisterObligation();
-                    };
-                    table.ReserveTable(firstName, lastName, amountOfPeople, reservationDateTime, tableNumber,ReservationCode,Ultilities.roleManager.UserId);
+                    }
+
+                    table.ReserveTable(firstName, lastName, amountOfPeople, reservationDateTime, tableNumber, ReservationCode, Ultilities.roleManager.UserId);
                     Console.Write($"\nTables {table.TableNumber}");
 
                     foreach (int additionalTableNumber in additionalTableNumbers)
                     {
                         ISeatable additionalTable = tables[additionalTableNumber - 1];
-                        additionalTable.ReserveTable(firstName, lastName, amountOfPeople, reservationDateTime, additionalTableNumber,ReservationCode,Ultilities.roleManager.UserId);
+
+                        additionalTable.ReserveTable(firstName, lastName, amountOfPeople, reservationDateTime, additionalTableNumber, ReservationCode, Ultilities.roleManager.UserId);
                         Console.Write($" and {additionalTableNumber}");
                     }
 
                     Console.WriteLine($" are reserved for {firstName} {lastName} at {reservationDateTime.ToString("MM/dd/yyyy HH:mm")}\n");
                     Console.WriteLine($"This is your reservation code: {ReservationCode} ");
-                    System.Console.WriteLine("\nPress enter to continue...");
+                    Console.WriteLine("\nPress enter to continue...");
                     Console.ReadLine();
                     break;
                 }
+
             }
         }
     }

@@ -30,7 +30,7 @@ public class RemoveReservationView
         System.Console.WriteLine("\nPress enter to continue...");
         Console.ReadLine();
     }
-    public void RemoveReservationByNumber(DateTime date)
+    private static void RemoveReservationByNumber(DateTime date)
     {   
         Console.Write("Enter a table number to delete: ");
         string userDeleteInput = Console.ReadLine();
