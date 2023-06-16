@@ -208,7 +208,7 @@ public static class NavigationMenuView
                         {
                             if (selectedOption == 1)
                             {
-                                Ultilities.restaurant.DisplayReservationOverview();
+                                restaurant.DisplayReservationOverview();
                                 System.Console.WriteLine("Press enter to continue...");
                                 Console.ReadKey();
                             }
