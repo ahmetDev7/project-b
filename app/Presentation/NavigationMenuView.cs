@@ -12,6 +12,7 @@ public static class NavigationMenuView
         (int left, int top) = Console.GetCursorPosition();
         int selectedOption = 1;
         bool isMenuOpen = true;
+        RestaurantLogic restaurant = new("Jacks restaurant");
         var decorator = $"\u001B[34m>  ";
         Console.Clear();
 
@@ -190,7 +191,7 @@ public static class NavigationMenuView
                         {
                             if (selectedOption == 1)
                             {
-                                Ultilities.restaurant.DisplayReservationOverview();
+                                restaurant.DisplayReservationOverview();
                                 System.Console.WriteLine("Press enter to continue...");
                                 Console.ReadKey();
                             }
