@@ -62,8 +62,8 @@ public static class NavigationMenuView
                 Console.WriteLine($"{(selectedOption == 2 ? decorator : "   ")}Remove a reservation\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Change Restaurant info & opening hours\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Manage Employees\u001b[0m");
-                Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Manage Menu of The Month\u001b[0m");
-                Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Manage current Menu\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Manage Next Months Menu\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Manage Current Menu\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 7 ? decorator : "   ")}Log Out\u001b[0m");
             }
 
