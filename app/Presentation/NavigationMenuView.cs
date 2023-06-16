@@ -63,7 +63,8 @@ public static class NavigationMenuView
                 Console.WriteLine($"{(selectedOption == 3 ? decorator : "   ")}Change Restaurant info & opening hours\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 4 ? decorator : "   ")}Manage Employees\u001b[0m");
                 Console.WriteLine($"{(selectedOption == 5 ? decorator : "   ")}Manage Menu of The Month\u001b[0m");
-                Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Log Out\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 6 ? decorator : "   ")}Manage current Menu\u001b[0m");
+                Console.WriteLine($"{(selectedOption == 7 ? decorator : "   ")}Log Out\u001b[0m");
             }
 
             ConsoleKeyInfo key = Console.ReadKey(true);
@@ -227,10 +228,13 @@ public static class NavigationMenuView
                             }
                             else if (selectedOption == 5)
                             {
-                                //Ultilities.roleManager.Createmenu();
                                 Ultilities.futureMenu.FutureMenuOptions();
                             }
                             else if (selectedOption == 6)
+                            {
+                                Ultilities.manageMenu.MenuOptions();
+                            }
+                            else if (selectedOption == 7)
                             {
                                 Ultilities.roleManager.Logout();
                             }
