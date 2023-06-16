@@ -37,46 +37,52 @@ public static class DishesDataAccessMonth
             return File.Exists(filePath);
         }
         public static void ShowFutureMenu(string filePath = "DataSources/FutureMenu.csv")
+{
+    if (!FutureMenuExists())
     {
-        if (!FutureMenuExists())
+        Console.WriteLine("Monthly menu is not available.");
+        Console.ReadLine();
+        return;
+    }
+
+    if (File.Exists(filePath))
+    {
+        string[] lines = File.ReadAllLines(filePath);
+
+        if (lines.Length <= 1)
         {
-            Console.WriteLine("Future menu is not available.");
-            Console.ReadLine();
+            Console.WriteLine("Monthly Menu is empty.");
             return;
         }
 
-        if (File.Exists(filePath))
+        Console.WriteLine("Monthly Menu:");
+
+        for (int i = 1; i < lines.Length; i++)
         {
-            string[] lines = File.ReadAllLines(filePath);
+            Console.WriteLine($"Dish #{i}");
+            string[] fields = lines[i].Split(';');
+            string title = fields[0];
+            string ingredients = fields[1];
+            string category = fields[2];
+            string description = fields[3];
+            string price = fields[4];
+            string country = fields[5];
+            string month = fields[6];
 
-            Console.WriteLine("Future Menu:");
-
-            for (int i = 1; i < lines.Length; i++)
-            {
-                Console.WriteLine($"Dish #{i}");
-                string[] fields = lines[i].Split(';');
-                string title = fields[0];
-                string ingredients = fields[1];
-                string category = fields[2];
-                string description = fields[3];
-                string price = fields[4];
-                string country = fields[5];
-                string month = fields[6];
-
-                Console.WriteLine($"{title} - {category}");
-                Console.WriteLine($"Ingredients: {ingredients}");
-                Console.WriteLine($"Description: {description}");
-                Console.WriteLine($"Price: {price}");
-                Console.WriteLine($"Country: {country}");
-                Console.WriteLine($"Month: {month}");
-                Console.WriteLine();
-            }
-        }
-        else
-        {
-            Console.WriteLine("Future Menu is empty.");
+            Console.WriteLine($"{title} - {category}");
+            Console.WriteLine($"Ingredients: {ingredients}");
+            Console.WriteLine($"Description: {description}");
+            Console.WriteLine($"Price: {price}");
+            Console.WriteLine($"Country: {country}");
+            Console.WriteLine($"Month: {month}");
+            Console.WriteLine();
         }
     }
+    else
+    {
+        Console.WriteLine("Monthly Menu is empty.");
+    }
+}
 
         public static void AddDishToFutureMenu(string title, string ingredients, string category, string description, string price, string country, string month, string filePath = "DataSources/FutureMenu.csv")
     {
@@ -107,11 +113,10 @@ public static class DishesDataAccessMonth
         // Write the updated lines back to the file
         File.WriteAllLines(filePath, lines);
 
-        Console.WriteLine("Dish added to the Future Menu.");
     }
     catch (Exception ex)
     {
-        throw new ApplicationException("An error occurred while adding the dish to the Future Menu.", ex);
+        throw new ApplicationException("An error occurred while adding the dish to the Monthly Menu.", ex);
     }
     }
 
@@ -122,7 +127,7 @@ public static class DishesDataAccessMonth
 
                 if (!FutureMenuExists())
                 {
-                    Console.WriteLine("Future menu is not available.");
+                    Console.WriteLine("Monthly menu is not available.");
                     Console.ReadLine();
                     return;
                 }
@@ -134,7 +139,7 @@ public static class DishesDataAccessMonth
                     lines[line] = $"{title};{ingredients};{category};{description};{price};{country};{month}";
                     File.WriteAllLines(filePath, lines);
 
-                    Console.WriteLine("Dish updated on the Future Menu.");
+                    Console.WriteLine("Dish updated on the Monthly Menu.");
                 }
                 else
                 {
@@ -143,24 +148,38 @@ public static class DishesDataAccessMonth
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An error occurred while editing the dish on the Future Menu.", ex);
+                throw new ApplicationException("An error occurred while editing the dish on the Monthly Menu.", ex);
             }
         }
 
-            public static void ShowDishTitles(string filePath = "DataSources/FutureMenu.csv")
+            public static bool ShowDishTitles(string filePath = "DataSources/FutureMenu.csv")
+{
+    if (!File.Exists(filePath))
     {
-        string[] lines = File.ReadAllLines(filePath);
-
-        Console.WriteLine("Dish Titles:");
-
-        for (int i = 1; i < lines.Length; i++)
-        {
-            string[] fields = lines[i].Split(';');
-            string title = fields[0];
-
-            Console.WriteLine($"{i}. {title}");
-        }
+        Console.WriteLine("Monthly Menu is not available.");
+        return false;
     }
+
+    string[] lines = File.ReadAllLines(filePath);
+
+    if (lines.Length <= 1)
+    {
+        Console.WriteLine("Monthly Menu is empty.");
+        return false;
+    }
+
+    Console.WriteLine("Dish Titles:");
+
+    for (int i = 1; i < lines.Length; i++)
+    {
+        string[] fields = lines[i].Split(';');
+        string title = fields[0];
+
+        Console.WriteLine($"{i}. {title}");
+    }
+
+    return true;
+}
     public static void DeleteMenuFile(string filePath = "DataSources/FutureMenu.csv")
 {
     try
@@ -168,18 +187,22 @@ public static class DishesDataAccessMonth
         // Check if the file exists
         if (File.Exists(filePath))
         {
-            // Delete the file
-            File.Delete(filePath);
-            Console.WriteLine("Menu file deleted. The Future Menu is no longer available.");
+            // Read the header line
+            string header = File.ReadLines(filePath).First();
+
+            // Overwrite the file with the header line
+            File.WriteAllText(filePath, header + Environment.NewLine);
+            
+            Console.WriteLine("Menu file cleared. The next month Menu is now empty.");
         }
         else
         {
-            Console.WriteLine("Menu file does not exist. The Future Menu is already empty.");
+            Console.WriteLine("The Month Menu is already empty.");
         }
     }
     catch (Exception ex)
     {
-        throw new ApplicationException("An error occurred while deleting the menu file.", ex);
+        throw new ApplicationException("An error occurred while clearing the menu file.", ex);
     }
 }
 }
