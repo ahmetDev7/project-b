@@ -15,6 +15,9 @@ public static class Ultilities
     
     // Future Menu
     public static FutureMenu futureMenu = new FutureMenu();
+    
+    public static ManageMenu manageMenu = new ManageMenu();
+
 
     public static CustomerResView cusResView = new CustomerResView();
 }
