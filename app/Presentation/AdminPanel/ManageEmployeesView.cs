@@ -26,7 +26,7 @@ public class ManageEmployeesView
                     string employeeEmail = Console.ReadLine();
                     System.Console.Write("Type in employee password: ");
                     string employeePassword = Console.ReadLine();
-                    AccountManager.AddUser(new User(employeeName, employeeEmail, employeePassword, "employee", AccountManager.users.Last().UserId + 1));
+                    AccountManager.AddUser(new User(employeeName, employeePassword, employeeEmail, "employee", AccountManager.users.Last().UserId + 1));
                     System.Console.WriteLine($"You successfully created a new employee account!");
                     System.Console.WriteLine("\nPress enter to continue...");
                     Console.ReadLine();
